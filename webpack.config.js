@@ -1,4 +1,5 @@
-import HtmlWebpackPlugin from 'html-webpack-plugin'
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const src = path.resolve(__dirname, 'src')
 const dist = path.resolve(__dirname, 'dist')
@@ -6,6 +7,7 @@ const dist = path.resolve(__dirname, 'dist')
 const DEV_PORT = process.env.PORT || 3000;
 
 module.exports = {
+    mode: "development",
     entry: src + '/index.tsx',
     plugins: [
         new HtmlWebpackPlugin({
@@ -17,7 +19,7 @@ module.exports = {
         filename: 'bundle.js'
     },
     resolve: {
-        extensions: ['.ts','tsx','js']
+        extensions: ['.ts','.tsx','.js']
     },
     module: {
         rules: [
