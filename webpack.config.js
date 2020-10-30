@@ -15,17 +15,35 @@ module.exports = {
         }),
     ],
     output: {
-        path: dist ,
+        path: dist,
         filename: 'bundle.js'
     },
     resolve: {
-        extensions: ['.ts','.tsx','.js']
+        extensions: ['.ts', '.tsx', '.js','.css','.scss']
     },
     module: {
         rules: [
             {
                 test: /\.tsx?$/,
-                loader: 'ts-loader'
+                use: [
+                    {
+                        loader: 'ts-loader',
+                        options: {
+                            configFile: './tsconfig.json'
+                        }
+                    },
+                    {
+                        loader: 'tslint-loader',
+                        options: {
+                            typeCheck: true,
+                            // tslint時に自動的に修正しない
+                            fix: false,
+                            // warningをエラーにすることでその後のビルドを止める
+                            emitErros: true
+                        },
+                    },
+                ],
+                exclude: /(node_module|client)/
             },
             {
                 test: /\.css$/,

@@ -1,11 +1,17 @@
 {
     "compilerOptions": {
+        "allowSyntheticDefaultImports": true, /* 規定エクスポートのないモジュールのエラー回避 */
         "sourceMap": true,
-        "module": "commonjs",
-        "esModuleInterop": true,
-        "resolveJsonModule": true,
+        "module": "commonjs",   /* モジュールパターン指定 */
+        "moduleResolution": "node", /* モジュールの解決方式 node.js方式にするためnode指定 */
         "experimentalDecorators": true,
-        "target": "es5",
+        "removeComments": true, /* ビルド成果物からコメントをとる */
+        "strict":true, /* 怪しい書き方禁止 */
+        "noUnusedLocals": true, /* 未使用ローカル変数禁止 */
+        "noUnusedParameters": true, /* 未使用パラメータ禁止 */
+        "noImplicitReturns": true, /* 怪しげなReturn禁止 */
+        "noFallthroughCasesInSwitch": true, /* Switch文のdefault忘れ禁止 */
+        "target": "es5", /* 出力バージョン指定 */
         "jsx": "react",
         "lib": [
             "dom",
