@@ -1,8 +1,16 @@
 import React from 'react';
 import { Form, Button, Container, Row } from 'react-bootstrap';
 
-export default class Login extends React.Component {
-  constructor(props) {
+interface Props {
+  email: string;
+  password: string;
+  errMessage: string;
+  isLoggedIn: boolean;
+}
+
+export default class Login extends React.Component<Props, any> {
+
+  constructor(props: Props) {
     super(props);
     this.state = {
       email: '',
@@ -10,18 +18,20 @@ export default class Login extends React.Component {
       errMessage: '',
       isLoggedIn: false,
     };
-
+    
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleSubmit(e) {
+  handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    let email = document.getElementById('email').value;
-    let password = document.getElementById('password').value;
+    let email = document.getElementById('email');
+    let password = document.getElementById('password');
+    console.log("email=" + email);
+    console.log("password" + password);
     location.href="/";
   }
-  handleChange(e) {
+  handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     this.setState({ [e.target.id]: e.target.value });
   };
 
