@@ -26,3 +26,61 @@ form {
     border-radius: 10px;
     min-width: 500px;
 }
+
+/* -b button
+   -l label
+   -f form
+   -d dropdown
+*/
+
+/*Head*/
+
+.header{
+    background-color: rgb(51, 49, 56);
+    color: white;
+    padding-left: 25px;
+}
+
+.user_info{
+    display: flex;
+    align-items: center;
+}
+
+.user_info-d{
+    margin:10px;
+}
+
+#header-b{
+    margin-left: 25px;
+}
+
+.header-f{
+    padding-top: 12px;
+}
+
+.header-f > form{
+    padding: 0px;
+}
+
+
+/*Info*/
+
+.info{
+    width: 250px;
+}
+
+
+/*Foot*/
+
+.footer{
+    background-color: rgb(51, 49, 56);
+    color: white;
+    text-align: right;
+}
+
+
+/*Main*/
+
+.main_item{
+    margin-top: 30px;
+}
