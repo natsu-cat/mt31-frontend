@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Link }  from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav';
 
 class Side extends React.Component {
@@ -8,10 +7,10 @@ class Side extends React.Component {
         return(
             <div>
                 <Nav defaultActiveKey="/home" className="flex-column">
-                    <Nav.Link> <Link to="/">home</Link> </Nav.Link>
-                    <Nav.Link> <Link to="/ranking">ranking</Link> </Nav.Link>
-                    <Nav.Link> <Link to="/course">course</Link> </Nav.Link>
-                    <Nav.Link> <Link to="/About">about</Link> </Nav.Link>
+                    <Nav.Link href="/"> home </Nav.Link>
+                    <Nav.Link href="/ranking"> ranking </Nav.Link>
+                    <Nav.Link href="/course"> course </Nav.Link>
+                    <Nav.Link href="/about"> about </Nav.Link>
                 </Nav>
 
             </div>
