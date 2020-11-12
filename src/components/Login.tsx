@@ -25,8 +25,8 @@ export default class Login extends React.Component<Props, any> {
 
   handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    let email = document.getElementById('email');
-    let password = document.getElementById('password');
+    let email = (document.getElementById('email') as HTMLInputElement).value;
+    let password = (document.getElementById('password') as HTMLInputElement).value;
     console.log("email=" + email);
     console.log("password" + password);
     location.href="/";
