@@ -9,16 +9,16 @@ class Head extends React.Component {
 
         return(
             <Container className="header">
-                <Row xl={12} className="align-items-center">
-                    <Col sm={3} lg={2}><h1>rakudai</h1></Col>
-                    <Col sm={8} lg={4} className="header-f">
+                <Row className="align-items-center">
+                    <Col xs="auto" sm="auto" md="auto" lg="auto" xl="auto"><h1>rakudai</h1></Col>
+                    <Col xs="auto" sm="auto" md="auto" lg="auto" xl="auto" className="header-f">
                         <Form>
                             <Form.Group>
                                 <Form.Control type="text" placeholder="Seacrh.."></Form.Control>
                             </Form.Group>
                         </Form>
                     </Col>
-                    <Col lg={4} xl={2} className="user_info offset-lg-2 offset-xl-4">
+                    <Col xs="auto" sm="auto" md="auto" lg="auto" xl="auto" className="user_info ml-auto">
                         <FontAwesomeIcon icon={ faUser } />
                         <a>B8219</a>
                         <div className="user_info-d">
