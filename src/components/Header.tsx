@@ -11,14 +11,14 @@ class Head extends React.Component {
             <Container className="header">
                 <Row className="align-items-center">
                     <Col xs="auto" sm="auto" md="auto" lg="auto" xl="auto"><h1>rakudai</h1></Col>
-                    <Col xs="auto" sm="auto" md="auto" lg="auto" xl="auto" className="header-f">
+                    <Col xs="12" sm="auto" md="auto" lg="auto" xl="3" className="header-f">
                         <Form>
                             <Form.Group>
                                 <Form.Control type="text" placeholder="Seacrh.."></Form.Control>
                             </Form.Group>
                         </Form>
                     </Col>
-                    <Col xs="auto" sm="auto" md="auto" lg="auto" xl="auto" className="user_info ml-auto">
+                    <Col xs="12" sm="auto" md="auto" lg="auto" xl="auto" className="user_info ml-auto">
                         <FontAwesomeIcon icon={ faUser } />
                         <a>B8219</a>
                         <div className="user_info-d">
