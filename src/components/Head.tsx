@@ -1,31 +1,29 @@
 import * as React from 'react';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import { Button, Form, Dropdown, Container, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
-import Dropdown from 'react-bootstrap/Dropdown';
 
 class Head extends React.Component {
 
     render() {
 
         return(
-            <div className="header">
-                <div className="row align-items-center">
-                    <div className="col-lg-1 "><h1>rakudai</h1></div>
-                    <div className="col-lg-2 header-f">
+            <Container className="header">
+                <Row className="align-items-center">
+                    <Col xs="auto" sm="auto" md="auto" lg="auto" xl="auto"><h1>rakudai</h1></Col>
+                    <Col xs="12" sm="auto" md="auto" lg="auto" xl="3" className="header-f">
                         <Form>
                             <Form.Group>
-                                <Form.Control type="text" placeholder="Seacrh.."></Form.Control>
+                                <Form.Control type="text" placeholder="Seacrh.." className="mr-sm-2"></Form.Control>
                             </Form.Group>
                         </Form>
-                    </div>
-                    <div className="col-lg-2 offset-lg-7 user_info">
+                    </Col>
+                    <Col xs="12" sm="auto" md="auto" lg="auto" xl="auto" className="user_info ml-auto">
                         <FontAwesomeIcon icon={ faUser } />
                         <a>B8219</a>
                         <div className="user_info-d">
                             <Dropdown>
-                                <Dropdown.Toggle id="dropdown-basic-button">
+                                <Dropdown.Toggle variant="info" id="dropdown-basic-button">
                                     news
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu>
@@ -35,10 +33,10 @@ class Head extends React.Component {
                                 </Dropdown.Menu>
                             </Dropdown>
                         </div>
-                        <Button variant="outline-primary" size="sm" id="header-b">ログアウト</Button>{''}
-                    </div>
-                </div>
-            </div>
+                        <Button variant="outline-danger" size="sm" id="header-b">ログアウト</Button>{''}
+                    </Col>
+                </Row>
+            </Container>
         );
     }
 }
