@@ -1,16 +1,17 @@
 import * as React from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
 
 class Foot extends React.Component {
 
     render() {
-        return(
-            <div className="footer">
-                <div className="row align-items-center">
-                    <div className="col-lg-11">
+        return (
+            <Container className="footer">
+                <Row className="aligin-items-center">
+                    <Col>
                         <a>2020 MT-31</a>
-                    </div>
-                </div>
-            </div>
+                    </Col>
+                </Row>
+            </Container>
         );
     }
 }

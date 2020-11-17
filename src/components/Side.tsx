@@ -6,7 +6,7 @@ class Side extends React.Component {
     render() {
         return(
             <Container>
-                <Row>
+                <Row className="justify-content-center">
                     <Nav defaultActiveKey="/home">
                         <Col xs="3" sm="auto" md="auto" lg= "auto" xl="12"><Nav.Link href="/"> home </Nav.Link></Col>
                         <Col xs="3" sm="auto" md="auto" lg= "auto" xl="12"><Nav.Link href="/ranking"> ranking </Nav.Link></Col>
