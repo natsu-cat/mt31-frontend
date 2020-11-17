@@ -10,7 +10,7 @@ class Head extends React.Component {
         return(
             <Container className="header">
                 <Row className="align-items-center">
-                    <Col xs="auto" sm="auto" md="auto" lg="auto" xl="auto"><h1>rakudai</h1></Col>
+                    <Col xs="auto" sm="auto" md="auto" lg="auto" xl="auto"><h3>成績照会システム</h3></Col>
                     <Col xs="12" sm="auto" md="auto" lg="auto" xl="3" className="header-f">
                         <Form>
                             <Form.Group>
@@ -33,7 +33,7 @@ class Head extends React.Component {
                                 </Dropdown.Menu>
                             </Dropdown>
                         </div>
-                        <Button variant="outline-danger" size="sm" id="header-b">ログアウト</Button>{''}
+                        <Button href="/login" variant="outline-danger" size="sm" id="header-b">ログアウト</Button>{''}
                     </Col>
                 </Row>
             </Container>
