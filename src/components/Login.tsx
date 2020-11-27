@@ -1,10 +1,11 @@
 import React from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import { postUser } from './Auth';
 
 import '../stylesheets/login.css';
 
 interface Props {
-  email: string;
+  username: string;
   password: string;
   errMessage: string;
   isLoggedIn: boolean;
@@ -15,7 +16,7 @@ export default class Login extends React.Component<Props, any> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      email: '',
+      username: '',
       password: '',
       errMessage: '',
       isLoggedIn: false,
@@ -27,11 +28,13 @@ export default class Login extends React.Component<Props, any> {
 
   handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    let email = (document.getElementById('email') as HTMLInputElement).value;
+    let username = (document.getElementById('username') as HTMLInputElement).value;
     let password = (document.getElementById('password') as HTMLInputElement).value;
-    console.log("email=" + email);
-    console.log("password" + password);
-    location.href = "/";
+    console.log("username:",{username});
+    console.log("password:",{password});
+    let response = postUser(username, password);
+    console.log(response);
+
   }
   handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     this.setState({ [e.target.id]: e.target.value });
@@ -47,13 +50,13 @@ export default class Login extends React.Component<Props, any> {
               <p>
                 <b>ログイン</b>
               </p>
-              <Form.Group controlId="email">
-                <Form.Label>メールアドレス</Form.Label>
+              <Form.Group controlId="username">
+                <Form.Label>ユーザーネーム</Form.Label>
                 <Form.Control
-                  type="email"
+                  type="username"
                   placeholder="メールアドレスを入力してください"
                   onChange={this.handleChange}
-                  value={this.state.email}
+                  value={this.state.username}
                 />
               </Form.Group>
               <Form.Group controlId="password">
