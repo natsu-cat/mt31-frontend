@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
-import { postUser } from './Auth';
+import { postUser, getUser } from './Auth';
 
 import '../stylesheets/login.css';
 
@@ -28,12 +28,11 @@ export default class Login extends React.Component<Props, any> {
 
   handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    let username = (document.getElementById('username') as HTMLInputElement).value;
-    let password = (document.getElementById('password') as HTMLInputElement).value;
-    console.log("username:",{username});
-    console.log("password:",{password});
-    let response = postUser(username, password);
-    console.log(response);
+    let user = (document.getElementById('username') as HTMLInputElement).value;
+    let pwd = (document.getElementById('password') as HTMLInputElement).value;
+    postUser(user, pwd );
+    let flag = getUser();
+    console.log(flag);
 
   }
   handleChange(e: React.ChangeEvent<HTMLInputElement>) {
