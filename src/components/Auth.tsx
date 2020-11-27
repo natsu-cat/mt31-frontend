@@ -1,4 +1,3 @@
-//import React from 'react';
 import axios from 'axios';
 const URL = "http://localhost:8000/api/"
 
@@ -15,11 +14,12 @@ export async function postUser( user: string, pwd: string ) {
             "password":pwd
         });
         const TOKENS = response.data;
-        console.log(typeof(TOKENS["access"]));
         localStorage.setItem("access", TOKENS["access"]);
         localStorage.setItem("refresh", TOKENS["refresh"]);
+        return true;
     } catch (error) {
         console.error(error);
+        return false;
     }
 }
 
@@ -30,8 +30,8 @@ export async function getUser() {
             headers: { 
                 'Content-Type': 'application/json',
                 'Authorization': `JWT ${localStorage.getItem("access")}` }
-            });
-        return response.data[0].admin_flag;
+        });
+        return response.data[0].admin_flag;;
     } catch (error) {
         console.error(error);
         return -1;

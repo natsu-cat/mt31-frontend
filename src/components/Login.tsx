@@ -30,11 +30,12 @@ export default class Login extends React.Component<Props, any> {
     e.preventDefault();
     let user = (document.getElementById('username') as HTMLInputElement).value;
     let pwd = (document.getElementById('password') as HTMLInputElement).value;
-    postUser(user, pwd );
-    let flag = getUser();
-    console.log(flag);
-
+    if (postUser(user, pwd )) {
+      this.setState({ isLoggedIn: true});
+      let flag = getUser();
+    }
   }
+
   handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     this.setState({ [e.target.id]: e.target.value });
   };
