@@ -12,6 +12,7 @@ class Side extends React.Component {
                         <Col xs="3" sm="auto" md="auto" lg= "auto" xl="12"><Nav.Link href="/ranking"> ranking </Nav.Link></Col>
                         <Col xs="3" sm="auto" md="auto" lg= "auto" xl="12"><Nav.Link href="/course"> course </Nav.Link></Col>
                         <Col xs="3" sm="auto" md="auto" lg= "auto" xl="12"><Nav.Link href="/about"> about </Nav.Link></Col>
+                        <Col xs="3" sm="auto" md="auto" lg= "auto" xl="12"><Nav.Link href="/upload"> upload </Nav.Link></Col>
                     </Nav>
                 </Row>
             </Container>
