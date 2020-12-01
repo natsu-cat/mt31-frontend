@@ -6,6 +6,7 @@ import Info from './Info';
 import Side from './Side';
 import Home from './Home';
 import Foot from './Foot';
+import Upload from './Upload';
 
 
 class Main extends React.Component {
@@ -22,6 +23,7 @@ class Main extends React.Component {
                         </Col>
                         <Col lg="7">
                             <Route exact path="/" component={Home} />
+                            <Route exact path="/upload" component={Upload} />
                         </Col>
                         <Col lg="2">
                             <Info />
