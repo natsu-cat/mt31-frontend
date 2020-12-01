@@ -7,33 +7,126 @@ const URL = "http://localhost:8000/api/"
  * @param {String} user - ユーザー名
  * @param {String} pwd - パスワード
  */
-export async function postUser( user: string, pwd: string ) {
-    try {
-        const response = await axios.post(URL + "authenticate/jwt/create",{
-            "username":user,
-            "password":pwd
-        });
+export function postUser( user: string, pwd: string ) {
+    axios.post(URL + "authenticate/jwt/create",{
+        "username":user,
+        "password":pwd
+    }).then(function(response) {
         const TOKENS = response.data;
         localStorage.setItem("access", TOKENS["access"]);
         localStorage.setItem("refresh", TOKENS["refresh"]);
-        return true;
-    } catch (error) {
+        localStorage.setItem("isLoggedIn", "true");
+        getUser();
+    }).catch(function(error){
         console.error(error);
-        return false;
-    }
+        localStorage.setItem("isLoggedIn", "false");
+    });
 }
 
-//ログインするユーザーが生徒か管理者か判別するフラグを返す関数
-export async function getUser() {
-    try {
-        const response = await axios.get(URL + "login/", {
-            headers: { 
+/**
+ * ログインするユーザーが生徒か管理者か判別するフラグを返す関数
+ */
+export function getUser() {
+    axios.get(URL + "login/", {
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `JWT ${localStorage.getItem("access")}` }
+    }).then(function(response){
+        localStorage.setItem("flag",response.data[0].admin_flag);
+    }).catch(function(error){
+        console.error(error);
+        localStorage.setItem("flag", "-1");
+    });
+}
+
+/**
+ * 生徒個人の成績を取得する関数
+ */
+export function getIndivGrade() {
+    return new Promise((resolve, reject) => {
+        axios.get(URL + "student/indivgrade", {
+            headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `JWT ${localStorage.getItem("access")}` }
+                'Authorization': `JWT ${localStorage.getItem("access")}` }                
+        }).then(function(response) {
+            resolve(response.data);      
+        })
+        .catch(function(error){
+            reject(error);
         });
-        return response.data[0].admin_flag;;
-    } catch (error) {
+    })
+}
+
+
+/**
+ * 生徒全体の成績を取得する関数(管理者のみ)
+ */
+export function getAllGrade(){
+    let result;
+    axios.get(URL + "teacher/allgrade", {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `JWT ${localStorage.getItem("access")}` }  
+    }).then(function(response) {
+        result = response.data;
+        console.log(result);
+    }).catch(function(error) {
         console.error(error);
         return -1;
-    }
+    });
+    return result;
 }
+
+/**
+ * ここから先未実装(バックエンドが完成したら実装予定)のためコメントアウト
+ * @param data csvファイル予定?
+ */
+// export async function postGrade(data: any) {
+//     try {
+//         await axios.post(URL + "teacher/Grade", {
+//             data
+//         });
+//     } catch(error) {
+//         console.error(error);
+//     }
+// }
+
+// export async function postDepart(data: any) {
+//     try {
+//         await axios.post(URL + "teacher/Depart", {
+//             data
+//         });
+//     } catch(error) {
+//         console.error(error);
+//     }
+// }
+
+// export async function postCourse(data: any) {
+//     try {
+//         await axios.post(URL + "teacher/Course", {
+//             data
+//         });
+//     } catch(error) {
+//         console.error(error);
+//     }
+// }
+
+// export async function postStudent(data: any) {
+//     try {
+//         await axios.post(URL + "teacher/Student", {
+//             data
+//         });
+//     } catch(error) {
+//         console.error(error);
+//     }
+// }
+
+// export async function postSubject(data: any) {
+//     try {
+//         await axios.post(URL + "teacher/Subject", {
+//             data
+//         });
+//     } catch(error) {
+//         console.error(error);
+//     }
+// }
