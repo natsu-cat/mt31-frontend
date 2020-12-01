@@ -28,8 +28,7 @@ export default class Login extends React.Component<Props, any> {
     e.preventDefault();
     let user = (document.getElementById('username') as HTMLInputElement).value;
     let pwd = (document.getElementById('password') as HTMLInputElement).value;
-    postUser(user, pwd );
-    location.href = "/";
+    postUser(user, pwd );  
   }
 
   handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -42,7 +41,6 @@ export default class Login extends React.Component<Props, any> {
         <Row className="center">
           <Col>
             <Form onSubmit={this.handleSubmit}>
-              {/*<h3>成績紹介システム</h3>*/}
               <p>
                 <b>ログイン</b>
               </p>

@@ -19,7 +19,6 @@ export function postUser( user: string, pwd: string ) {
         getUser();
     }).catch(function(error){
         console.error(error);
-        localStorage.setItem("isLoggedIn", "false");
     });
 }
 
@@ -33,6 +32,7 @@ export function getUser() {
             'Authorization': `JWT ${localStorage.getItem("access")}` }
     }).then(function(response){
         localStorage.setItem("flag",response.data[0].admin_flag);
+        location.href = "/";                                        //認証通ったのでページ遷移する
     }).catch(function(error){
         console.error(error);
         localStorage.setItem("flag", "-1");

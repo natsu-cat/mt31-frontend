@@ -4,6 +4,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 class Head extends React.Component {
+    constructor(props: any) {
+        super(props);
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick(e: React.MouseEvent<HTMLElement,MouseEvent>) {
+        e.preventDefault();
+        localStorage.clear();
+        location.href = "/";
+    }
 
     render() {
 
@@ -33,7 +43,7 @@ class Head extends React.Component {
                                 </Dropdown.Menu>
                             </Dropdown>
                         </div>
-                        <Button href="/login" variant="outline-danger" size="sm" id="header-b">ログアウト</Button>{''}
+                        <Button variant="outline-danger" size="sm" id="header-b" onClick={this.handleClick}>ログアウト</Button>{''}
                     </Col>
                 </Row>
             </Container>
