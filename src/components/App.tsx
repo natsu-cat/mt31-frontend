@@ -7,7 +7,8 @@ import Login from './Login';
 import Main from './Main';
 class App extends React.Component<any,any> {
     render() {
-        let isLoggedIn = true;                 //リダイレクト処理
+        let isLoggedIn = localStorage.getItem("isLoggedIn");              //リダイレクト処理
+
         return (
             <BrowserRouter>
             <Switch>
