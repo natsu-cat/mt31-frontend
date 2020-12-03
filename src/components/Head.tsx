@@ -11,12 +11,11 @@ class Head extends React.Component {
 
     handleClick(e: React.MouseEvent<HTMLElement,MouseEvent>) {
         e.preventDefault();
-        localStorage.clear();
+        sessionStorage.clear();
         location.href = "/";
     }
 
     render() {
-
         return(
             <Container className="header">
                 <Row className="align-items-center">
@@ -30,7 +29,7 @@ class Head extends React.Component {
                     </Col>
                     <Col xs="12" sm="auto" md="auto" lg="auto" xl="auto" className="user_info ml-auto">
                         <FontAwesomeIcon icon={ faUser } />
-                        <a>B8219</a>
+                        <a>{sessionStorage.getItem("username")}</a>
                         <div className="user_info-d">
                             <Dropdown>
                                 <Dropdown.Toggle variant="info" id="dropdown-basic-button">

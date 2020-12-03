@@ -1,13 +1,12 @@
 import React from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { postUser } from './Auth';
-
 import '../stylesheets/login.css';
 
 interface Props {
-  username: string;
-  password: string;
-  errMessage: string;
+  username: "";
+  password: "";
+  errMessage: "";
 }
 
 export default class Login extends React.Component<Props, any> {
@@ -26,9 +25,10 @@ export default class Login extends React.Component<Props, any> {
 
   handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    let user = (document.getElementById('username') as HTMLInputElement).value;
-    let pwd = (document.getElementById('password') as HTMLInputElement).value;
-    postUser(user, pwd );  
+    let user = this.state.username;
+    let pwd = this.state.password;
+    sessionStorage.setItem("username", user);
+    postUser(user, pwd);
   }
 
   handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -48,7 +48,7 @@ export default class Login extends React.Component<Props, any> {
                 <Form.Label>ユーザーネーム</Form.Label>
                 <Form.Control
                   type="username"
-                  placeholder="メールアドレスを入力してください"
+                  placeholder="ユーザーネームを入力してください"
                   onChange={this.handleChange}
                   value={this.state.username}
                 />

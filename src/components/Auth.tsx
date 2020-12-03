@@ -13,9 +13,9 @@ export function postUser( user: string, pwd: string ) {
         "password":pwd
     }).then(function(response) {
         const TOKENS = response.data;
-        localStorage.setItem("access", TOKENS["access"]);
-        localStorage.setItem("refresh", TOKENS["refresh"]);
-        localStorage.setItem("isLoggedIn", "true");
+        sessionStorage.setItem("access", TOKENS["access"]);
+        sessionStorage.setItem("refresh", TOKENS["refresh"]);
+        sessionStorage.setItem("isLoggedIn", "true");
         getUser();
     }).catch(function(error){
         console.error(error);
@@ -29,13 +29,13 @@ export function getUser() {
     axios.get(URL + "login/", {
         headers: { 
             'Content-Type': 'application/json',
-            'Authorization': `JWT ${localStorage.getItem("access")}` }
+            'Authorization': `JWT ${sessionStorage.getItem("access")}` }
     }).then(function(response){
-        localStorage.setItem("flag",response.data[0].admin_flag);
+        sessionStorage.setItem("flag",response.data[0].admin_flag);
         location.href = "/";                                        //認証通ったのでページ遷移する
     }).catch(function(error){
         console.error(error);
-        localStorage.setItem("flag", "-1");
+        sessionStorage.setItem("flag", "-1");
     });
 }
 

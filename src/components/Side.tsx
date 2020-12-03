@@ -26,7 +26,7 @@ export default Side;
  * ログインしたユーザーが管理者かを判別し、結果によってそれぞれのElementoを返す関数
  */
 function ShowElement() {
-    const flag = localStorage.getItem("flag");
+    const flag = sessionStorage.getItem("flag");
     /**
      * 管理者か生徒かを判別し、管理者なら管理者用のElementを含めて返し、違ったなら生徒用のElementのみを返す
      */
