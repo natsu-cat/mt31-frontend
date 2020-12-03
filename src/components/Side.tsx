@@ -23,7 +23,7 @@ class Side extends React.Component {
 export default Side;
 
 /**
- * 管理者か生徒かを判別し、それぞれにElementoを返す関数
+ * ログインしたユーザーが管理者かを判別し、結果によってそれぞれのElementoを返す関数
  */
 function ShowElement() {
     const flag = localStorage.getItem("flag");
