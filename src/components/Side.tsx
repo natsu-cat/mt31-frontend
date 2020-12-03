@@ -26,9 +26,9 @@ export default Side;
  * 管理者か生徒かを判別し、それぞれにElementoを返す関数
  */
 function ShowElement() {
-    let flag = localStorage.getItem("flag");
+    const flag = localStorage.getItem("flag");
     /**
-     * 管理者か生徒かを判別し、管理者なら管理者用のElementを含めて返し、生徒ならば生徒用のElementのみを返す
+     * 管理者か生徒かを判別し、管理者なら管理者用のElementを含めて返し、違ったなら生徒用のElementのみを返す
      */
     if(flag == "1") {
         return (
