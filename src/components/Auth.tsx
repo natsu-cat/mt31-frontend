@@ -43,18 +43,11 @@ export function getUser() {
  * 生徒個人の成績を取得する関数
  */
 export function getIndivGrade() {
-    return new Promise((resolve, reject) => {
-        axios.get(URL + "student/indivgrade", {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `JWT ${localStorage.getItem("access")}` }                
-        }).then(function(response) {
-            resolve(response.data);      
-        })
-        .catch(function(error){
-            reject(error);
-        });
-    })
+    return axios.get(URL + "student/indivgrade", {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `JWT ${sessionStorage.getItem("access")}` }
+    });
 }
 
 
@@ -62,24 +55,16 @@ export function getIndivGrade() {
  * 生徒全体の成績を取得する関数(管理者のみ)
  */
 export function getAllGrade(){
-    let result;
-    axios.get(URL + "teacher/allgrade", {
+    return axios.get(URL + "teacher/allgrade/", {
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `JWT ${localStorage.getItem("access")}` }  
-    }).then(function(response) {
-        result = response.data;
-        console.log(result);
-    }).catch(function(error) {
-        console.error(error);
-        return -1;
+            'Authorization': `JWT ${sessionStorage.getItem("access")}` },
     });
-    return result;
 }
 
 /**
  * ここから先未実装(バックエンドが完成したら実装予定)のためコメントアウト
- * @param data csvファイル予定?
+ * @param data - csvファイル予定?
  */
 // export async function postGrade(data: any) {
 //     try {
