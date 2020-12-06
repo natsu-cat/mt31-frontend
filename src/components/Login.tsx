@@ -3,15 +3,9 @@ import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { postUser } from './Auth';
 import '../stylesheets/login.css';
 
-interface Props {
-  username: "";
-  password: "";
-  errMessage: "";
-}
+export default class Login extends React.Component<any, any> {
 
-export default class Login extends React.Component<Props, any> {
-
-  constructor(props: Props) {
+  constructor(props: any) {
     super(props);
     this.state = {
       username: '',
