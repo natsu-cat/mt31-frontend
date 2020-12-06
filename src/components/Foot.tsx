@@ -8,7 +8,7 @@ class Foot extends React.Component {
             <Container className="footer">
                 <Row className="aligin-items-center">
                     <Col>
-                        <a>2020 MT-31</a>
+                        <a>Copyright © 2020-2020 MT-31 All Rights Reserved.</a>
                     </Col>
                 </Row>
             </Container>

@@ -15,7 +15,6 @@ export function postUser( user: string, pwd: string ) {
         const TOKENS = response.data;
         sessionStorage.setItem("access", TOKENS["access"]);
         sessionStorage.setItem("refresh", TOKENS["refresh"]);
-        sessionStorage.setItem("isLoggedIn", "true");
         getUser();
     }).catch(function(error){
         console.error(error);
@@ -23,7 +22,7 @@ export function postUser( user: string, pwd: string ) {
 }
 
 /**
- * ログインするユーザーが生徒か管理者か判別するフラグを返す関数
+ * ログインするユーザーが生徒か管理者か判別する関数
  */
 export function getUser() {
     axios.get(URL + "login/", {
@@ -32,6 +31,7 @@ export function getUser() {
             'Authorization': `JWT ${sessionStorage.getItem("access")}` }
     }).then(function(response){
         sessionStorage.setItem("flag",response.data[0].admin_flag);
+        sessionStorage.setItem("isLoggedIn", "true");
         location.href = "/";                                        //認証通ったのでページ遷移する
     }).catch(function(error){
         console.error(error);
