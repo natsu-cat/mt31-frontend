@@ -19,8 +19,9 @@ export default class Login extends React.Component<any, any> {
 
   handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    let user = this.state.username;
-    let pwd = this.state.password;
+    let user: string = this.state.username;
+    user = user.charAt(0).toUpperCase() + user.slice(1);
+    let pwd: string = this.state.password;
     sessionStorage.setItem("username", user);
     postUser(user, pwd);
   }

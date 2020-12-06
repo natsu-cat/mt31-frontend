@@ -63,6 +63,17 @@ export function getAllGrade(){
 }
 
 /**
+ * ソート済みの生徒全体の成績を取得する関数(管理者のみ)
+ */
+export function getSourtGrade(){
+    return axios.get(URL + "teacher/sourtgrade/", {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `JWT ${sessionStorage.getItem("access")}` },
+    });
+}
+
+/**
  * ここから先未実装(バックエンドが完成したら実装予定)のためコメントアウト
  * @param data - csvファイル予定?
  */

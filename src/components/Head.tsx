@@ -3,20 +3,24 @@ import { Button, Form, Dropdown, Container, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
-class Head extends React.Component {
-    constructor(props: any) {
+interface Props {
+    username: String;
+}
+
+class Head extends React.Component<Props, any> {
+    constructor(props: Props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
     }
 
-    handleClick(e: React.MouseEvent<HTMLElement,MouseEvent>) {
+    handleClick(e: React.MouseEvent<HTMLElement, MouseEvent>) {
         e.preventDefault();
         sessionStorage.clear();
         location.href = "/";
     }
 
     render() {
-        return(
+        return (
             <Container className="header">
                 <Row className="align-items-center">
                     <Col xs="auto" sm="auto" md="auto" lg="auto" xl="auto"><h3>成績照会システム</h3></Col>
@@ -28,8 +32,8 @@ class Head extends React.Component {
                         </Form>
                     </Col>
                     <Col xs="12" sm="auto" md="auto" lg="auto" xl="auto" className="user_info ml-auto">
-                        <FontAwesomeIcon icon={ faUser } />
-                        <a>{sessionStorage.getItem("username")}</a>
+                        <FontAwesomeIcon icon={faUser} />
+                        <a>{this.props.username}</a>
                         <div className="user_info-d">
                             <Dropdown>
                                 <Dropdown.Toggle variant="info" id="dropdown-basic-button">

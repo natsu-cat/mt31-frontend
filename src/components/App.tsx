@@ -11,10 +11,16 @@ class App extends React.Component<any, any> {
         return (
             <BrowserRouter>
                 <Switch>
-                    <Route exact path="/login" component={Login} />
+                    <Route exact path="/login" render={() => (
+                        isLoggedIn ? (
+                            <Redirect to="/" />
+                        ) : (
+                                <Login />
+                            )
+                    )} />
                     <Route path="/" render={() => (            //リダイレクト処理
                         isLoggedIn ? (
-                            < Main />
+                            <Main />
                         ) : (
                                 <Redirect to="/login" />
                             )

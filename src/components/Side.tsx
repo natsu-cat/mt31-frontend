@@ -1,10 +1,13 @@
 import * as React from 'react';
 import { Nav, Container, Row, Col } from 'react-bootstrap';
 
-class Side extends React.Component {
-    constructor(props: any) {
-        super(props);
-        
+interface Props {
+    flag: number;
+}
+
+class Side extends React.Component <Props, any> {
+    constructor(props: Props) {
+        super(props);       
     }
 
     render() {
@@ -12,7 +15,7 @@ class Side extends React.Component {
             <Container>
                 <Row className="justify-content-center">
                     <Nav defaultActiveKey="/home">
-                        <ShowElement />
+                        {showElement(this.props.flag)}
                     </Nav>
                 </Row>
             </Container>
@@ -25,12 +28,11 @@ export default Side;
 /**
  * ログインしたユーザーが管理者かを判別し、結果によってそれぞれのElementoを返す関数
  */
-function ShowElement() {
-    const flag = sessionStorage.getItem("flag");
+function showElement(flag: number) {
     /**
      * 管理者か生徒かを判別し、管理者なら管理者用のElementを含めて返し、違ったなら生徒用のElementのみを返す
      */
-    if(flag == "1") {
+    if(flag == 1) {
         return (
             <React.Fragment>
                 <Col xs="4" sm="4" md="auto" lg= "auto" xl="12"><Nav.Link href="/"> home </Nav.Link></Col>

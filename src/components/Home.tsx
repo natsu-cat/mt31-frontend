@@ -1,154 +1,36 @@
 import * as React from 'react';
-import Table from 'react-bootstrap/Table';
-import Nav from 'react-bootstrap/Nav';
-import Tab from 'react-bootstrap/Tab';
+// import Table from 'react-bootstrap/Table';
+// import Nav from 'react-bootstrap/Nav';
+// import Tab from 'react-bootstrap/Tab';
+// import { Container } from 'react-bootstrap';
+import IndivGrade from './IndivGrade';
+import AllGrade from './AllGrade';
 
-class Foot extends React.Component {
+interface Props {
+    isLoading: Boolean;
+    userDatas: [];
+    flag: number;
+}
 
+class Home extends React.Component<Props, any> {
     render() {
-        return(
-            <div>
-                <Tab.Container defaultActiveKey="link-0">
-                    <Nav variant="pills">
-                        <Nav.Item>
-                            <Nav.Link eventKey="link-0">総合</Nav.Link>
-                        </Nav.Item>
-                        <Nav.Item>
-                            <Nav.Link eventKey="link-1">1年生</Nav.Link>
-                        </Nav.Item>
-                        <Nav.Item>
-                            <Nav.Link eventKey="link-2">2年生</Nav.Link>
-                        </Nav.Item>
-                        <Nav.Item>
-                            <Nav.Link eventKey="link-3">3年生</Nav.Link>
-                        </Nav.Item>
-                        <Nav.Item>
-                            <Nav.Link eventKey="link-4">4年生</Nav.Link>
-                        </Nav.Item>
-                    </Nav>
-                   <Tab.Content>
-                       <Tab.Pane eventKey="link-0">
-                            <Table striped bordered hover>
-                                <thead>
-                                    <tr>
-                                        <th>科目名</th>
-                                        <th>単位</th>
-                                        <th>評価</th>
-                                        <th>年度</th>
-                                        <th>教員名</th>
-                                        <th>学期</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>コミュニケーション技法</td>
-                                        <td>2</td>
-                                        <td>不可</td>
-                                        <td>2020</td>
-                                        <td>Oic 三郎</td>
-                                        <td>後期</td>
-                                    </tr>
-                                    <tr>
-                                        <td>システム開発演習</td>
-                                        <td>7</td>
-                                        <td>優</td>
-                                        <td>2020</td>
-                                        <td>Oic 二郎</td>
-                                        <td>後期</td>
-                                    </tr>
-                                    <tr>
-                                        <td>ゼミナール</td>
-                                        <td>2</td>
-                                        <td>優</td>
-                                        <td>2020</td>
-                                        <td>Oic 太郎</td>
-                                        <td>後期</td>
-                                    </tr>
-                                </tbody>
-                            </Table>
-                        </Tab.Pane>
-
-                        <Tab.Pane eventKey="link-1">
-                            <Table striped bordered hover>
-                                <thead>
-                                    <tr>
-                                        <th>科目名</th>
-                                        <th>単位</th>
-                                        <th>評価</th>
-                                        <th>年度</th>
-                                        <th>教員名</th>
-                                        <th>学期</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>コミュニケーション技法</td>
-                                        <td>2</td>
-                                        <td>不可</td>
-                                        <td>2020</td>
-                                        <td>Oic 三郎</td>
-                                        <td>後期</td>
-                                    </tr>
-                                </tbody>
-                            </Table>
-                        </Tab.Pane>
-
-                        <Tab.Pane eventKey="link-2">
-                            <Table striped bordered hover>
-                                <thead>
-                                    <tr>
-                                        <th>科目名</th>
-                                        <th>単位</th>
-                                        <th>評価</th>
-                                        <th>年度</th>
-                                        <th>教員名</th>
-                                        <th>学期</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>ゼミナール</td>
-                                        <td>2</td>
-                                        <td>優</td>
-                                        <td>2020</td>
-                                        <td>Oic 太郎</td>
-                                        <td>後期</td>
-                                    </tr>
-                                </tbody>
-                            </Table>
-                        </Tab.Pane>
-
-                        <Tab.Pane eventKey="link-3">
-                            <Table striped bordered hover>
-                                <thead>
-                                    <tr>
-                                        <th>科目名</th>
-                                        <th>単位</th>
-                                        <th>評価</th>
-                                        <th>年度</th>
-                                        <th>教員名</th>
-                                        <th>学期</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>システム開発演習</td>
-                                        <td>7</td>
-                                        <td>優</td>
-                                        <td>2020</td>
-                                        <td>Oic 二郎</td>
-                                        <td>後期</td>
-                                    </tr>
-                                </tbody>
-                            </Table>
-                        </Tab.Pane>
-                        <Tab.Pane eventKey="link-4">
-                        </Tab.Pane>
-                   </Tab.Content>
-                </Tab.Container>
-            </div>
-        );
+        const style: React.CSSProperties = { top: 0, left: 0, width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" };
+        if (this.props.isLoading) {                         //Ajax認証が終わっていない間の処理
+            return (
+                <div style={style}>
+                    <a>Loading...</a>
+                </div>
+            );
+        } else if (this.props.flag == 0) {                  //生徒の場合
+            return <IndivGrade userDatas={this.props.userDatas} />
+        } else if (this.props.flag == 1) {              //管理者の場合
+            return <AllGrade userDatas={this.props.userDatas} />
+        } else{                                         //例外処理
+            return (
+                <a>不正なログイン</a>
+            );
+        }
     }
 }
 
-export default Foot;
+export default Home;
