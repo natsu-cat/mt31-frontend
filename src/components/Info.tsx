@@ -41,22 +41,22 @@ function showCredit(userDatas: any) {
     let therdCredit: number = 0;
     let fourthCredit: number = 0;
     for (let i in userDatas) {
-        const SUBJECT_YEARS = parseInt(userDatas[i].Units.slice(3, 4), 10);
+        const SUBJECT_YEARS = parseInt(userDatas[i].Dividend_period.slice(3, 4), 10);
         switch (SUBJECT_YEARS - ADMIS_YEARS) {
             case 0:
-                firstCredit += parseInt(userDatas[i].Dividend_period, 10);
+                firstCredit += parseInt(userDatas[i].Units, 10);
                 break;
             case 1:
             case -9:
-                secondCredit += parseInt(userDatas[i].Dividend_period, 10);
+                secondCredit += parseInt(userDatas[i].Units, 10);
                 break;
             case 2:
             case -8:
-                therdCredit += parseInt(userDatas[i].Dividend_period, 10);
+                therdCredit += parseInt(userDatas[i].Units, 10);
                 break;
             case 3:
             case -7:
-                fourthCredit += parseInt(userDatas[i].Dividend_period, 10);
+                fourthCredit += parseInt(userDatas[i].Units, 10);
         }
     }
     secondCredit += firstCredit;

@@ -7,7 +7,7 @@ import Side from './Side';
 import Home from './Home';
 import Foot from './Foot';
 import Upload from './Upload';
-import { getIndivGrade } from './Auth';
+import { getSourtGrade, getIndivGrade } from './Auth';
 
 class Main extends React.Component<any, any> {
     constructor(props: any) {
@@ -23,13 +23,20 @@ class Main extends React.Component<any, any> {
         if (this.state.flag == 0) {                                 //生徒の場合の処理
             getIndivGrade()
                 .then(res => {
+                    console.log(res.data);
                     this.setState({ userDatas: res.data });
                 }).catch(error => {
                     console.error(error);
                 }).finally(() => this.setState({ isLoading: false }));
         }
         else if(this.state.flag == 1) {                              //管理者の場合の処理
-            this.setState({ isLoading: false });
+            getSourtGrade()
+                .then(res => {
+                    console.log(res.data);
+                    this.setState({ userDatas: res.data });
+                }).catch(error => {
+                    console.error(error);
+                }).finally(() => this.setState({ isLoading: false }));
         }
         else {                                                       //例外処理
             this.setState({ isLoading: false });
