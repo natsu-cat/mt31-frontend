@@ -7,16 +7,16 @@ const URL = "http://localhost:8000/api/"
  * @param {String} user - ユーザー名
  * @param {String} pwd - パスワード
  */
-export function postUser( user: string, pwd: string ) {
-    axios.post(URL + "authenticate/jwt/create",{
-        "username":user,
-        "password":pwd
-    }).then(function(response) {
-        const TOKENS = response.data;
+export function postUser(user: string, pwd: string) {
+    axios.post(URL + "authenticate/jwt/create", {
+        "username": user,
+        "password": pwd
+    }).then(res => {
+        const TOKENS = res.data;
         sessionStorage.setItem("access", TOKENS["access"]);
         sessionStorage.setItem("refresh", TOKENS["refresh"]);
         getUser();
-    }).catch(function(error){
+    }).catch(error => {
         console.error(error);
     });
 }
@@ -26,14 +26,15 @@ export function postUser( user: string, pwd: string ) {
  */
 export function getUser() {
     axios.get(URL + "login/", {
-        headers: { 
+        headers: {
             'Content-Type': 'application/json',
-            'Authorization': `JWT ${sessionStorage.getItem("access")}` }
-    }).then(function(response){
-        sessionStorage.setItem("flag",response.data[0].admin_flag);
+            'Authorization': `JWT ${sessionStorage.getItem("access")}`
+        }
+    }).then(res => {
+        sessionStorage.setItem("flag", res.data[0].admin_flag);
         sessionStorage.setItem("isLoggedIn", "true");
         location.href = "/";                                        //認証通ったのでページ遷移する
-    }).catch(function(error){
+    }).catch(error => {
         console.error(error);
         sessionStorage.setItem("flag", "-1");
     });
@@ -46,7 +47,8 @@ export function getIndivGrade() {
     return axios.get(URL + "student/indivgrade", {
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `JWT ${sessionStorage.getItem("access")}` }
+            'Authorization': `JWT ${sessionStorage.getItem("access")}`
+        }
     });
 }
 
@@ -54,22 +56,36 @@ export function getIndivGrade() {
 /**
  * 生徒全体の成績を取得する関数(管理者のみ)
  */
-export function getAllGrade(){
+export function getAllGrade() {
     return axios.get(URL + "teacher/allgrade/", {
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `JWT ${sessionStorage.getItem("access")}` },
+            'Authorization': `JWT ${sessionStorage.getItem("access")}`
+        },
     });
 }
 
 /**
  * ソート済みの生徒全体の成績を取得する関数(管理者のみ)
  */
-export function getSourtGrade(){
+export function getSourtGrade() {
     return axios.get(URL + "teacher/sourtgrade/", {
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `JWT ${sessionStorage.getItem("access")}` },
+            'Authorization': `JWT ${sessionStorage.getItem("access")}`
+        },
+    });
+}
+
+/**
+ * 新しい管理者を登録する関数
+ * @param {string} user - ユーザー名
+ * @param {string} pwd - パスワード
+ */
+export function postAdmin(user: string, pwd: string) {
+    return axios.post(URL + "create/", {
+        "username": user,
+        "password": pwd
     });
 }
 
