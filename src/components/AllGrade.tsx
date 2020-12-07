@@ -1,4 +1,136 @@
 import * as React from 'react';
+import {Table,Nav,Tab,Button,Container, Row, Col, Form} from 'react-bootstrap';
+
+interface Props {
+    userDatas: any;
+}
+
+class Home extends React.Component<Props,any> {
+    
+    constructor(props: Props){
+        super(props);
+        this.state= {
+            /*学生番号一覧 */
+            student_number: ["A0~9","B0~9","C0~9","D0~9","E0~9","F0~9","G0~9","H0~9","I0~9","J0~9","K0~9","L0~9","M0~9","N0~9","O0~9","P0~9","Q0~9","R0~9","S0~9","T0~9","U0~9","V0~9","W0~9","X0~9","Y0~9","Z0~9"],
+            select_group: 'A0~9',/*どの学生番号のグループが選ばれたか */
+            select_number: null, /*どの学籍番号の人が選ばれたか */
+        };
+        this.handleChengeGroup = this.handleChengeGroup.bind(this);
+        this.handleChengeNumber = this.handleChengeNumber.bind(this);
+    }
+
+    handleChengeGroup(num: any){
+        this.setState({select_group: num});
+        this.setState({select_number: null})
+        let select_index = (document.getElementById("group")!) as HTMLSelectElement
+        select_index.selectedIndex = -1;
+    }
+
+    handleChengeNumber(event: React.ChangeEvent<HTMLSelectElement>){
+        let split_box = event.target.value.split("x").map(Number);
+        this.setState({select_number: split_box});
+    }
+
+    render() {
+        let button_items;
+        let select_items;
+        let grade_item;
+        button_items = <Col xs="auto" sm="auto" md="auto" lg="auto" xl="auto">
+                    {this.state.student_number.map((num: any ,index: any) =>{
+                        return <Button key={index} type="sumbit" onClick={()=>this.handleChengeGroup(num)}>{num}</Button> 
+                    })}
+                        </Col> 
+        select_items = <Col xs="auto" sm="auto" md="auto" lg="auto" xl="auto">
+                    {(() => {
+                        let index =this.state.student_number.indexOf(this.state.select_group);
+                        let item=[];
+                        if(this.props.userDatas.length >index){
+                            for(let i=0; i<this.props.userDatas[index].length; i++){
+                                for(let y=0; y<this.props.userDatas[index][i].length; y++){
+                                    let suffix= index+'x'+i+'x'+ y
+                                    item.push(<option key={(i*10)+y} value={suffix}>{this.props.userDatas[index][i][y].student_number}</option>)
+                                }
+                            }
+                        }
+                        else{
+                            item.push(<option key={0} >データがありません</option>)
+                            return <Form.Control as="select" id="group" multiple>{item}</Form.Control>;
+                        }
+                        return <Form.Control as="select" id="group" multiple onChange={this.handleChengeNumber}>{item}</Form.Control>;
+                    })()}
+                        </Col>  
+        if (this.state.select_number != null){
+            grade_item = <Col xs="auto" sm="auto" md="auto" lg="auto" xl="10">
+                    <Tab.Container defaultActiveKey="link-0">
+                        <Nav variant="pills">
+                            <Nav.Item>
+                                <Nav.Link eventKey="link-0">総合</Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item>
+                                <Nav.Link eventKey="link-1">1年生</Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item>
+                                <Nav.Link eventKey="link-2">2年生</Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item>
+                                <Nav.Link eventKey="link-3">3年生</Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item>
+                                <Nav.Link eventKey="link-4">4年生</Nav.Link>
+                            </Nav.Item>
+                        </Nav>
+                        <Tab.Content>
+                            <Tab.Pane eventKey="link-0">
+                                <Table striped bordered hover>
+                                    <thead>
+                                        <tr>
+                                            <th>科目名</th>
+                                            <th>単位</th>
+                                            <th>評価</th>
+                                            <th>年度</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{this.props.userDatas[this.state.select_number[0]][this.state.select_number[1]][this.state.select_number[2]].subject_name}</td>
+                                            <td>{this.props.userDatas[this.state.select_number[0]][this.state.select_number[1]][this.state.select_number[2]].Units}</td>
+                                            <td>{this.props.userDatas[this.state.select_number[0]][this.state.select_number[1]][this.state.select_number[2]].evaluation}</td>
+                                            <td>{this.props.userDatas[this.state.select_number[0]][this.state.select_number[1]][this.state.select_number[2]].Dividend_period}</td>
+                                        </tr>
+                                    </tbody>
+                                </Table>
+                            </Tab.Pane>
+
+                            <Tab.Pane eventKey="link-1">
+                            </Tab.Pane>
+                            <Tab.Pane eventKey="link-2">
+                            </Tab.Pane>
+                            <Tab.Pane eventKey="link-3">
+                            </Tab.Pane>
+                            <Tab.Pane eventKey="link-4">
+                            </Tab.Pane>
+                        </Tab.Content>
+                    </Tab.Container>
+                        </Col>   
+        }
+  
+        return(
+            <Container>
+                <Row className="justify-content-center">
+                    {button_items}
+                </Row>
+                <Row >
+                    {select_items}
+                    {grade_item}
+                </Row>  
+            </Container>
+        );
+    }
+}
+
+export default Home;
+
+/*import * as React from 'react';
 import Table from 'react-bootstrap/Table';
 import Nav from 'react-bootstrap/Nav';
 import Tab from 'react-bootstrap/Tab';
@@ -169,4 +301,4 @@ function showAllGrade(userDatas: any) {
             </Tab.Pane>
         </React.Fragment>
     )
-}
+}*/
