@@ -7,6 +7,7 @@ import Side from './Side';
 import Home from './Home';
 import Foot from './Foot';
 import Upload from './Upload';
+import Registration from './Registration';
 import { getSourtGrade, getIndivGrade } from './Auth';
 
 class Main extends React.Component<any, any> {
@@ -23,7 +24,6 @@ class Main extends React.Component<any, any> {
         if (this.state.flag == 0) {                                 //生徒の場合の処理
             getIndivGrade()
                 .then(res => {
-                    console.log(res.data);
                     this.setState({ userDatas: res.data });
                 }).catch(error => {
                     console.error(error);
@@ -32,7 +32,6 @@ class Main extends React.Component<any, any> {
         else if(this.state.flag == 1) {                              //管理者の場合の処理
             getSourtGrade()
                 .then(res => {
-                    console.log(res.data);
                     this.setState({ userDatas: res.data });
                 }).catch(error => {
                     console.error(error);
@@ -56,7 +55,8 @@ class Main extends React.Component<any, any> {
                         </Col>
                         <Col lg="7">
                             <Route exact path="/" render={() => <Home userDatas={this.state.userDatas} isLoading={this.state.isLoading} flag={this.state.flag} />} />
-                            <Route exact path="/upload" component={Upload} />
+                            <Route exact path="/upload" render={() => <Upload flag={this.state.flag} />} />
+                            <Route exact path="/registration" render={() => <Registration flag={this.state.flag} />} />
                         </Col>
                         <Col lg="2">
                             <Info userDatas={this.state.userDatas} isLoading={this.state.isLoading} flag={this.state.flag} />

@@ -2,10 +2,11 @@ import * as React from 'react'
 import {Form, Button ,Container, Row, Col} from 'react-bootstrap';
 
 interface Props {
-    upload_url: string;
-    select_f: string;
-    select_label: string;
-    urls: string[];
+    // upload_url: string;
+    // select_f: string;
+    // select_label: string;
+    // urls: string[];
+    flag: number;
 }
 
 class Upload extends React.Component<Props, any> {
@@ -31,8 +32,10 @@ class Upload extends React.Component<Props, any> {
         this.setState({upload_url: this.state.urls[event]})
     }
 
-
     render() {
+        if(this.props.flag != 1) {                      //管理者以外がアクセスした場合の処理
+            return <a>不正なアクセス</a>
+        }
         return(
             <Container>
                 <Row className="justify-content-center">
