@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {Table,Nav,Tab,Button,Container, Row, Col, Form} from 'react-bootstrap';
+import {Table,Nav,Tab,Button,Container, Row, Col} from 'react-bootstrap';
+import Select from 'react-select'
 
 interface Props {
     userDatas: any;
@@ -22,12 +23,10 @@ class Home extends React.Component<Props,any> {
     handleChengeGroup(num: any){
         this.setState({select_group: num});
         this.setState({select_number: null})
-        let select_index = (document.getElementById("group")!) as HTMLSelectElement
-        select_index.selectedIndex = -1;
     }
 
-    handleChengeNumber(event: React.ChangeEvent<HTMLSelectElement>){
-        let split_box = event.target.value.split("x").map(Number);
+    handleChengeNumber(event: any){
+        let split_box = event.value.split("x").map(Number);
         this.setState({select_number: split_box});
     }
 
@@ -40,7 +39,7 @@ class Home extends React.Component<Props,any> {
                         return <Button key={index} type="sumbit" onClick={()=>this.handleChengeGroup(num)}>{num}</Button> 
                     })}
                         </Col> 
-        select_items = <Col xs="auto" sm="auto" md="auto" lg="auto" xl="auto">
+        select_items = <Col xs="12" sm="12" md="9" lg="9" xl="9">
                     {(() => {
                         let index =this.state.student_number.indexOf(this.state.select_group);
                         var item=[];
@@ -48,15 +47,14 @@ class Home extends React.Component<Props,any> {
                             for(let i=0; i<this.props.userDatas[index].length; i++){
                                 for(let y=0; y<this.props.userDatas[index][i].length; y++){
                                     let suffix= index+'x'+i+'x'+ y
-                                    item.push(<option key={(i*10)+y} value={suffix}>{this.props.userDatas[index][i][y][0].student_number}</option>)
+                                    item.push({ key:(i*10)+y,value:suffix, label:this.props.userDatas[index][i][y][0].student_number })
                                 }
                             }
                         }
                         else{
-                            item.push(<option key={0} >データがありません</option>)
-                            return <Form.Control as="select" id="group" multiple>{item}</Form.Control>;
+                            return <Select multiple isSearchable/>;
                         }
-                        return <Form.Control as="select" id="group" multiple onChange={this.handleChengeNumber}>{item}</Form.Control>;
+                        return <Select multiple isSearchable onChange={ (event) =>this.handleChengeNumber(event)} options={item}/>
                     })()}
                         </Col>  
         if (this.state.select_number != null){
@@ -126,9 +124,11 @@ class Home extends React.Component<Props,any> {
             <Container>
                 <Row className="justify-content-center">
                     {button_items}
-                </Row>
-                <Row >
+                </Row >
+                <Row className="justify-content-center">
                     {select_items}
+                </Row>
+                <Row className="justify-content-center">
                     {grade_item}
                 </Row>  
             </Container>
