@@ -43,12 +43,12 @@ class Home extends React.Component<Props,any> {
         select_items = <Col xs="auto" sm="auto" md="auto" lg="auto" xl="auto">
                     {(() => {
                         let index =this.state.student_number.indexOf(this.state.select_group);
-                        let item=[];
+                        var item=[];
                         if(this.props.userDatas.length >index){
                             for(let i=0; i<this.props.userDatas[index].length; i++){
                                 for(let y=0; y<this.props.userDatas[index][i].length; y++){
                                     let suffix= index+'x'+i+'x'+ y
-                                    item.push(<option key={(i*10)+y} value={suffix}>{this.props.userDatas[index][i][y].student_number}</option>)
+                                    item.push(<option key={(i*10)+y} value={suffix}>{this.props.userDatas[index][i][y][0].student_number}</option>)
                                 }
                             }
                         }
@@ -91,12 +91,20 @@ class Home extends React.Component<Props,any> {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>{this.props.userDatas[this.state.select_number[0]][this.state.select_number[1]][this.state.select_number[2]].subject_name}</td>
-                                            <td>{this.props.userDatas[this.state.select_number[0]][this.state.select_number[1]][this.state.select_number[2]].Units}</td>
-                                            <td>{this.props.userDatas[this.state.select_number[0]][this.state.select_number[1]][this.state.select_number[2]].evaluation}</td>
-                                            <td>{this.props.userDatas[this.state.select_number[0]][this.state.select_number[1]][this.state.select_number[2]].Dividend_period}</td>
-                                        </tr>
+                                        {(() =>{
+                                            var item=[];
+                                            for(let i=0; i<this.props.userDatas[this.state.select_number[0]][this.state.select_number[1]][this.state.select_number[2]][1].length; i++){
+                                                item.push(
+                                                    <tr key={i}>
+                                                    <td>{this.props.userDatas[this.state.select_number[0]][this.state.select_number[1]][this.state.select_number[2]][1][i].subject_name}</td>
+                                                    <td>{this.props.userDatas[this.state.select_number[0]][this.state.select_number[1]][this.state.select_number[2]][1][i].Units}</td>
+                                                    <td>{this.props.userDatas[this.state.select_number[0]][this.state.select_number[1]][this.state.select_number[2]][1][i].evaluation}</td>
+                                                    <td>{this.props.userDatas[this.state.select_number[0]][this.state.select_number[1]][this.state.select_number[2]][1][i].Dividend_period}</td>
+                                                </tr>  
+                                                ) 
+                                            }
+                                            return item;
+                                        })()}
                                     </tbody>
                                 </Table>
                             </Tab.Pane>
