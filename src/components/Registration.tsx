@@ -39,7 +39,7 @@ export default class Registration extends React.Component<Props, any> {
 
     render() {
         if (this.props.flag != 1) {                         //管理者以外がアクセスした場合の処理
-            return <a>不正なログイン</a>
+            return null;
         }
         return (
             <Container>

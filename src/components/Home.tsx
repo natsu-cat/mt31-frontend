@@ -26,9 +26,7 @@ class Home extends React.Component<Props, any> {
         } else if (this.props.flag == 1) {              //管理者の場合
             return <AllGrade userDatas={this.props.userDatas} />
         } else{                                         //例外処理
-            return (
-                <a>不正なログイン</a>
-            );
+            return null;
         }
     }
 }
