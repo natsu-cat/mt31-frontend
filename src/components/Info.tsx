@@ -5,6 +5,7 @@ interface Props {
     userDatas: [];
     isLoading: Boolean;
     flag: number;
+    username: string;
 }
 
 class Info extends React.Component<Props, any> {
@@ -21,7 +22,7 @@ class Info extends React.Component<Props, any> {
                             </tr>
                         </thead>
                         <tbody>
-                            {showCredit(this.props.userDatas)}
+                            {showCredit(this.props.userDatas, this.props.username)}
                         </tbody>
                     </Table>
                 </div>
@@ -34,8 +35,8 @@ class Info extends React.Component<Props, any> {
 
 export default Info;
 
-function showCredit(userDatas: any) {
-    const ADMIS_YEARS = parseInt(userDatas[0].student_number.slice(1, 2), 10);
+function showCredit(userDatas: any, username: string) {
+    const ADMIS_YEARS = parseInt(username.slice(1, 2), 10);
     let firstCredit: number = 0;
     let secondCredit: number = 0;
     let therdCredit: number = 0;

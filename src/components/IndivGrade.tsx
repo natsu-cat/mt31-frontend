@@ -6,6 +6,7 @@ import { Container } from 'react-bootstrap';
 
 interface Props {
     userDatas: [];
+    username: string;
 }
 
 export default class IndivGrade extends React.Component<Props, any> {
@@ -31,7 +32,7 @@ export default class IndivGrade extends React.Component<Props, any> {
                         </Nav.Item>
                     </Nav>
                     <Tab.Content>
-                        {showIndivGrade(this.props.userDatas)}
+                        {showIndivGrade(this.props.userDatas, this.props.username)}
                     </Tab.Content>
                 </Tab.Container>
             </Container>
@@ -39,7 +40,7 @@ export default class IndivGrade extends React.Component<Props, any> {
     }
 }
 
-function showIndivGrade(userDatas: any) {
+function showIndivGrade(userDatas: any, username: string) {
     const gradeElements: JSX.Element = (
         <thead>
             <tr>
@@ -51,7 +52,7 @@ function showIndivGrade(userDatas: any) {
         </thead>
     );
 
-    const ADMIS_YEARS = parseInt(userDatas[0].student_number.slice(1, 2), 10);
+    const ADMIS_YEARS = parseInt(username.slice(1, 2), 10);
     let listAllTables: JSX.Element[] = new Array();
     let listFirstTables: JSX.Element[] = new Array();
     let listSecondTables: JSX.Element[] = new Array();

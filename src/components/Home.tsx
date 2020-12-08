@@ -10,6 +10,7 @@ interface Props {
     isLoading: Boolean;
     userDatas: [];
     flag: number;
+    username: string;
 }
 
 class Home extends React.Component<Props, any> {
@@ -22,10 +23,10 @@ class Home extends React.Component<Props, any> {
                 </div>
             );
         } else if (this.props.flag == 0) {                  //生徒の場合
-            return <IndivGrade userDatas={this.props.userDatas} />
+            return <IndivGrade userDatas={this.props.userDatas} username={this.props.username} />
         } else if (this.props.flag == 1) {              //管理者の場合
             return <AllGrade userDatas={this.props.userDatas} />
-        } else{                                         //例外処理
+        } else {                                         //例外処理
             return null;
         }
     }
