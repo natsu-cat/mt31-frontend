@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Table,Nav,Tab,Button,Container, Row, Col} from 'react-bootstrap';
+import {Table,Nav,Tab,Container, Row, Col} from 'react-bootstrap';
 import Select from 'react-select'
 
 interface Props {
@@ -20,8 +20,8 @@ class Home extends React.Component<Props,any> {
         this.handleChengeNumber = this.handleChengeNumber.bind(this);
     }
 
-    handleChengeGroup(num: any){
-        this.setState({select_group: num});
+    handleChengeGroup(event: any){
+        this.setState({select_group: event.label});
         this.setState({select_number: null})
     }
 
@@ -31,15 +31,19 @@ class Home extends React.Component<Props,any> {
     }
 
     render() {
-        let button_items;
-        let select_items;
+        let group_items;
+        let number_items;
         let grade_item;
-        button_items = <Col xs="auto" sm="auto" md="auto" lg="auto" xl="auto">
-                    {this.state.student_number.map((num: any ,index: any) =>{
-                        return <Button key={index} type="sumbit" onClick={()=>this.handleChengeGroup(num)}>{num}</Button> 
-                    })}
+        group_items = <Col xs="12" sm="12" md="9" lg="9" xl="9">
+                    {(() => {
+                        var item=[];
+                        for(let i=0; i<this.state.student_number.length; i++){
+                            item.push({ key:i,value:i,label:this.state.student_number[i] })
+                        }
+                        return <Select placeholder="グループ" multiple isSearchable onChange={ (event) =>this.handleChengeGroup(event)} options={item}/>
+                    })()}
                         </Col> 
-        select_items = <Col xs="12" sm="12" md="9" lg="9" xl="9">
+        number_items = <Col xs="12" sm="12" md="9" lg="9" xl="9">
                     {(() => {
                         let index =this.state.student_number.indexOf(this.state.select_group);
                         var item=[];
@@ -54,7 +58,7 @@ class Home extends React.Component<Props,any> {
                         else{
                             return <Select multiple isSearchable/>;
                         }
-                        return <Select multiple isSearchable onChange={ (event) =>this.handleChengeNumber(event)} options={item}/>
+                        return <Select  placeholder="学籍番号…" multiple isSearchable onChange={ (event) =>this.handleChengeNumber(event)} options={item}/>
                     })()}
                         </Col>  
         if (this.state.select_number != null){
@@ -122,11 +126,11 @@ class Home extends React.Component<Props,any> {
   
         return(
             <Container>
-                <Row className="justify-content-center">
-                    {button_items}
+                <Row className="justify-content-center test">
+                    {group_items}
                 </Row >
                 <Row className="justify-content-center">
-                    {select_items}
+                    {number_items}
                 </Row>
                 <Row className="justify-content-center">
                     {grade_item}
