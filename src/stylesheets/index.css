@@ -85,3 +85,13 @@ code {
     flex-direction: column;
     min-height: 100vh;
 }
+
+/*error*/
+
+p.error {
+    color: red;
+}
+
+p.success {
+    color: green;
+}
