@@ -11,6 +11,7 @@ interface Props {
     userDatas: [];
     flag: number;
     username: string;
+    result: JSX.Element;
 }
 
 class Home extends React.Component<Props, any> {
@@ -22,11 +23,13 @@ class Home extends React.Component<Props, any> {
                     <a>Loading...</a>
                 </div>
             );
+        } else if (!this.props.result) {                    //エラーだった場合の処理
+            return this.props.result;
         } else if (this.props.flag == 0) {                  //生徒の場合
             return <IndivGrade userDatas={this.props.userDatas} username={this.props.username} />
-        } else if (this.props.flag == 1) {              //管理者の場合
+        } else if (this.props.flag == 1) {                  //管理者の場合
             return <AllGrade userDatas={this.props.userDatas} />
-        } else {                                         //例外処理
+        } else {                                            //例外処理
             return null;
         }
     }

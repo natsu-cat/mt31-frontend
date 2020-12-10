@@ -25,25 +25,28 @@ export default class Registration extends React.Component<Props, any> {
 
     handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        this.setState({ isLoading: true });
         let user: string = this.state.username;
         user = user.charAt(0).toUpperCase() + user.slice(1);
         let pwd: string = this.state.password;
-        postAdmin(user, pwd)
-            .then(() => {
-                this.setState({ result: <p className="success"><b>ユーザー登録に成功しました</b></p> });
-                this.setState({ isRegistered: true });
-            }).catch(error => {
-                switch (error.response.status) {
-                    case 400:
-                        this.setState({ result: <p className="error"><b>エラー: {error.response.data.username}</b></p> });
-                        break;
-                    case 500:
-                        this.setState({ result: <p className="error"><b>エラー: ユーザー名、もしくはパスワードの文字数が正しくありません。</b></p> })
-                }
-            }).finally(() => {
-                this.setState({ isLoading: false });
-            });
+        if (user.length < 6) {
+            this.setState({ result: <p className="error"><b>エラー： ユーザー名は6文字以上入力してください</b></p> })
+        }
+        else if (!pwd.length) {
+            this.setState({ result: <p className="error"><b>エラー： パスワードを入力してください</b></p> });
+        }
+        else {
+            this.setState({ isLoading: true });
+            postAdmin(user, pwd)
+                .then(() => {
+                    this.setState({ result: <p className="success"><b>ユーザー登録に成功しました</b></p> });
+                    this.setState({ isRegistered: true });
+                }).catch(error => {
+                    console.error(error.response);
+                    this.setState({ result: <p className="error"><b>エラー: ユーザー名、もしくはパスワードが正しく入力されていないか、このユーザー名は既に存在しています。</b></p> });
+                }).finally(() => {
+                    this.setState({ isLoading: false });
+                });
+        }
     }
 
     handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -63,10 +66,10 @@ export default class Registration extends React.Component<Props, any> {
                     <Row>
                         <Col>
                             <Form onSubmit={this.handleSubmit}>
-                                {this.state.result}
                                 <p>
                                     <b>ユーザー登録</b>
                                 </p>
+                                {this.state.result}
                                 <Form.Group controlId="username">
                                     <Form.Label>ユーザーネーム</Form.Label>
                                     <Form.Control

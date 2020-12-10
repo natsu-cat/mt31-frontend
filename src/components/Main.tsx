@@ -17,26 +17,27 @@ class Main extends React.Component<any, any> {
             username: sessionStorage.getItem("username"),
             isLoading: true,
             userDatas: [],
-            flag: sessionStorage.getItem("flag")
+            flag: sessionStorage.getItem("flag"),
+            result: null
         }
     }
     componentDidMount() {
-        if (this.state.flag == 0) {                                 //生徒の場合の処理
+        if (this.state.flag == 0) {                                  //生徒の場合の処理
             getIndivGrade()
                 .then(res => {
-                    console.log(res.data);
                     this.setState({ userDatas: res.data });
                 }).catch(error => {
-                    console.error(error);
+                    console.error(error.response);
+                    this.setState({ result: <p className="error"><b>成績情報を取得できませんでした。</b></p> });
                 }).finally(() => this.setState({ isLoading: false }));
         }
-        else if (this.state.flag == 1) {                              //管理者の場合の処理
+        else if (this.state.flag == 1) {                             //管理者の場合の処理
             getSourtGrade()
                 .then(res => {
-                    console.log(res.data);
                     this.setState({ userDatas: res.data });
                 }).catch(error => {
-                    console.error(error);
+                    console.error(error.response);
+                    this.setState({ result: <p className="error"><b>成績情報を取得できませんでした。</b></p> });
                 }).finally(() => this.setState({ isLoading: false }));
         }
         else {                                                       //例外処理
@@ -57,7 +58,7 @@ class Main extends React.Component<any, any> {
                         </Col>
                         <Col lg="7">
                             <Route exact path="/" render={() => (
-                                <Home userDatas={this.state.userDatas} isLoading={this.state.isLoading} flag={this.state.flag} username={this.state.username} />)} />
+                                <Home userDatas={this.state.userDatas} isLoading={this.state.isLoading} flag={this.state.flag} username={this.state.username} result={this.state.result} />)} />
                             <Route exact path="/upload" render={() => <Upload flag={this.state.flag} />} />
                             <Route exact path="/registration" render={() => <Registration flag={this.state.flag} />} />
                         </Col>
