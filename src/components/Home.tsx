@@ -23,7 +23,7 @@ class Home extends React.Component<Props, any> {
                     <a>Loading...</a>
                 </div>
             );
-        } else if (!this.props.result) {                    //エラーだった場合の処理
+        } else if (this.props.result) {                    //エラーだった場合の処理
             return this.props.result;
         } else if (this.props.flag == 0) {                  //生徒の場合
             return <IndivGrade userDatas={this.props.userDatas} username={this.props.username} />
