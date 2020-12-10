@@ -8,16 +8,9 @@ const URL = "http://localhost:8000/api/"
  * @param {String} pwd - パスワード
  */
 export function postUser(user: string, pwd: string) {
-    axios.post(URL + "authenticate/jwt/create", {
+    return axios.post(URL + "authenticate/jwt/create", {
         "username": user,
         "password": pwd
-    }).then(res => {
-        const TOKENS = res.data;
-        sessionStorage.setItem("access", TOKENS["access"]);
-        sessionStorage.setItem("refresh", TOKENS["refresh"]);
-        getUser();
-    }).catch(error => {
-        console.error(error);
     });
 }
 
@@ -25,18 +18,11 @@ export function postUser(user: string, pwd: string) {
  * ログインするユーザーが生徒か管理者か判別する関数
  */
 export function getUser() {
-    axios.get(URL + "login/", {
+    return axios.get(URL + "login/", {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `JWT ${sessionStorage.getItem("access")}`
         }
-    }).then(res => {
-        sessionStorage.setItem("flag", res.data[0].admin_flag);
-        sessionStorage.setItem("isLoggedIn", "true");
-        location.href = "/";                                        //認証通ったのでページ遷移する
-    }).catch(error => {
-        console.error(error);
-        sessionStorage.setItem("flag", "-1");
     });
 }
 
