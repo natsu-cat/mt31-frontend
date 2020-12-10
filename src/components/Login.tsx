@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
-import { postUser } from './Auth';
+import { postUser, getUser } from './Auth';
 import '../stylesheets/login.css';
 
 export default class Login extends React.Component<any, any> {
@@ -11,6 +11,7 @@ export default class Login extends React.Component<any, any> {
       username: '',
       password: '',
       errMessage: '',
+      result: null
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -23,7 +24,24 @@ export default class Login extends React.Component<any, any> {
     user = user.charAt(0).toUpperCase() + user.slice(1);
     let pwd: string = this.state.password;
     sessionStorage.setItem("username", user);
-    postUser(user, pwd);
+    postUser(user, pwd)
+      .then(res => {
+        sessionStorage.setItem("access", res.data.access);
+        sessionStorage.setItem("refresh", res.data.refresh);
+        getUser()
+          .then(res => {
+            sessionStorage.setItem("flag", res.data[0].admin_flag);
+            sessionStorage.setItem("isLoggedIn", "true");
+            location.href = "/";                                        //認証通ったのでページ遷移する
+          }).catch(error => {
+            console.error(error.response);
+            sessionStorage.setItem("flag", "-1");
+            this.setState({ result:<p className="error"><b>認証に失敗しました。</b></p> })
+          });
+      }).catch(error => {
+        console.error(error.response);
+        this.setState({ result: <p className="error"><b>ユーザーネーム、もしくはパスワードが間違っているか、このユーザー名は存在しません。</b></p> });
+      });
   }
 
   handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -40,6 +58,7 @@ export default class Login extends React.Component<any, any> {
                 <b>ログイン</b>
               </p>
               <Form.Group controlId="username">
+                {this.state.result}
                 <Form.Label>ユーザーネーム</Form.Label>
                 <Form.Control
                   type="username"
