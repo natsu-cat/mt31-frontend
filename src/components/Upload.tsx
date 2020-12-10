@@ -1,11 +1,10 @@
 import * as React from 'react'
 import {Form, Button ,Container, Row, Col} from 'react-bootstrap';
+import Select from 'react-select'
+import {postGrade,postDepart,postCourse,postStudent,postSubject} from './Auth';
+import ReactFileReader from 'react-file-reader';
 
 interface Props {
-    // upload_url: string;
-    // select_f: string;
-    // select_label: string;
-    // urls: string[];
     flag: number;
 }
 
@@ -14,22 +13,60 @@ class Upload extends React.Component<Props, any> {
     constructor(props: Props){
         super(props);
         this.state= {
-            upload_url: '',
+            upload_url: null,
             select_label: 'インポート先が選択されていません',
-            urls: {'Course':'url1','Depart':'url2','Grade':'url3','Student':'url4'}
+            options:[
+                {value:"Course",label:"Course"},
+                {value:"Depart",label:"Depart"},
+                {value:"Grade",label:"Grade"},
+                {value:"Student",label:"Studnet"},
+                {value: "Subject",label:"Subject"}
+            ],
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeUrl = this.handleChangeUrl.bind(this);
+        this.post_csv = this.post_csv.bind(this);
     }
 
-    handleChange(event: React.ChangeEvent<HTMLSelectElement>){
-        this.setState({select_label: event.target.value})
-        this.handleChangeUrl(event.target.value)
+    handleChange(event: any){
+        this.setState({select_label: event.value});
+        this.handleChangeUrl(event.value);
 
     }
 
     handleChangeUrl(event: any){
-        this.setState({upload_url: this.state.urls[event]})
+        this.setState({upload_url: event})
+    }
+
+    post_csv(files: any){
+
+        if(this.state.upload_url != null){
+
+            switch(this.state.upload_url){
+
+                case "Course":
+                    postCourse(files[0]);
+                    break;
+                case "Depart":
+                    postDepart(files[0]);
+                    break;
+    
+                case "Grade":
+                    postGrade(files[0]);
+                    break;
+    
+                case "Student":
+                    postStudent(files[0]);
+                    break;
+                case "Subject":
+                    postSubject(files[0]);
+                    
+            }
+            alert("import完了")
+        }
+        else{
+            alert("importするファイルの種類を選んでください");
+        }
     }
 
     render() {
@@ -41,19 +78,16 @@ class Upload extends React.Component<Props, any> {
                 <Row className="justify-content-center">
                     <Col xs="auto" sm="auto" md="auto" lg="auto" xl="3" >
                         <Form.Label>improtするファイル選択</Form.Label>
-                        <Form.Control as="select" multiple onChange={this.handleChange}>
-                            <option value="Course"> Course</option>
-                            <option value="Depart"> Depart</option>
-                            <option value="Grade"> Grade</option>
-                            <option value="Student"> Student</option>
-                        </Form.Control>
+                        <Select isSearchable onChange={ (event) =>this.handleChange(event)} options={this.state.options}/>
                     </Col>
                     <Col xs="auto" sm="auto" md="auto" lg="auto" xl="7" >
-                        <Form method="post" data-enctype="multipart/form-data" action={this.state.upload_url}>
-                            <Form.Group >
-                                <Form.File label={this.state.select_label}/>
+                        <Form  onSubmit={this.post_csv}>
+                            <Form.Group>
+                                <Form.Label>{this.state.select_label}</Form.Label>
+                                <ReactFileReader handleFiles={this.post_csv} fileTypes={'.csv'}>
+                                    <Button variant="primary" type="submit">uplaod</Button>
+                                </ReactFileReader>
                             </Form.Group>
-                            <Button variant="primary" type="submit">uplaod</Button>
                         </Form>
                     </Col>
                 </Row>
