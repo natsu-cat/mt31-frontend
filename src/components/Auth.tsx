@@ -76,75 +76,50 @@ export function postAdmin(user: string, pwd: string) {
 }
 
 /**
- * ここから先未実装(バックエンドが完成したら実装予定)のためコメントアウト
- * @param data - csvファイル予定?
+ * 各CSVファイルをアップロードする関数
+ * @param {FormData} data - csvファイル
  */
-export async function postGrade(file: any) {
-    try {
-        const data = new FormData();
-        data.append("csv",file);
-        const headers = {
+export function postGrade(data: FormData) {
+    return axios.post(URL + "teacher/Grade/",data,{
+        headers: {
             'Content-Type': 'application/json',
             'Authorization': `JWT ${sessionStorage.getItem("access")}`
         }
-        await axios.post(URL + "teacher/Grade/",data,{headers});
-    } catch(error) {
-        console.error(error);
-    }
+    });
 }
 
-export async function postDepart(file: any) {
-    try {
-        const data = new FormData();
-        data.append("csv",file);
-        const headers = {
+export function postDepart(data: FormData) {
+    return axios.post(URL + "teacher/Depart/",data,{
+        headers: {
             'Content-Type': 'application/json',
             'Authorization': `JWT ${sessionStorage.getItem("access")}`
         }
-        await axios.post(URL + "teacher/Depart/",data,{headers});
-    } catch(error) {
-        console.error(error);
-    }
+    });
 }
 
-export async function postCourse(file: any) {
-    try {
-        const data = new FormData();
-        data.append("csv",file);
-        const headers = {
+export function postCourse(data: FormData) {
+    return axios.post(URL + "teacher/Course/",data,{
+        headers: {
             'Content-Type': 'application/json',
             'Authorization': `JWT ${sessionStorage.getItem("access")}`
         }
-        await axios.post(URL + "teacher/Course/",data,{headers});
-    } catch(error) {
-        console.error(error);
-    }
+    });
 }
 
-export async function postStudent(file: any) {
-    try {
-        const data = new FormData();
-        data.append("csv",file);
-        const headers = {
+export function postStudent(data: FormData) {
+    return axios.post(URL + "teacher/Student/",data,{
+        headers: {
             'Content-Type': 'application/json',
             'Authorization': `JWT ${sessionStorage.getItem("access")}`
         }
-        await axios.post(URL + "teacher/Student/",data,{headers});
-    } catch(error) {
-        console.error(error);
-    }
+    });
 }
 
-export async function postSubject(file: any) {
-    try {
-        const data = new FormData();
-        data.append("csv",file);
-        const headers = {
+export function postSubject(data: FormData) {
+    return axios.post(URL + "teacher/Subject/",data,{
+        headers: {
             'Content-Type': 'application/json',
             'Authorization': `JWT ${sessionStorage.getItem("access")}`
         }
-        await axios.post(URL + "teacher/Subject/",data,{headers});
-    } catch(error) {
-        console.error(error);
-    }
+    });
 }
