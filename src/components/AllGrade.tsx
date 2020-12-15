@@ -4,7 +4,7 @@ import Select from 'react-select'
 
 interface Props {
     userDatas: any;
-    outputHandler: FunctionStringCallback;
+    outputHandler: Function;
 }
 
 class Home extends React.Component<Props, any> {
@@ -29,7 +29,7 @@ class Home extends React.Component<Props, any> {
     handleChengeNumber(event: any) {
         let split_box = event.value.split("x").map(Number);
         this.setState({ select_number: split_box });
-        this.props.outputHandler(this.props.userDatas[split_box[0]][split_box[1]][split_box[2]][0].student_number);
+        this.props.outputHandler(split_box);
     }
 
     render() {
