@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Container, Row } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import { GetAdmis } from './GetAdmis';
 
@@ -17,37 +18,43 @@ class Info extends React.Component<Props, any> {
         }
         else if (this.props.flag == 0) {                                        //読み込み終了かつ生徒の場合のみ獲得単位表示
             return (
-                <div className="info">
-                    <Table striped bordered hover variant="dark">
-                        <thead>
-                            <tr>
-                                <th>学年</th>
-                                <th>進級単位</th>
-                                <th>獲得単位</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {showStudentCredit(this.props.userDatas, this.props.username)}
-                        </tbody>
-                    </Table>
-                </div>
+                <Container className="info">
+                    <Row>
+                        <Table striped bordered hover variant="dark">
+                            <thead>
+                                <tr>
+                                    <th>学年</th>
+                                    <th>進級単位</th>
+                                    <th>獲得単位</th>
+                                    <th>評定平均</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {showStudentCredit(this.props.userDatas, this.props.username)}
+                            </tbody>
+                        </Table>
+                    </Row>
+                </Container>
             );
         } else if (this.props.flag == 1 && this.props.studentNum != null) {
             return (
-                <div className="info">
-                    <Table striped bordered hover variant="dark">
-                        <thead>
-                            <tr>
-                                <th>学年</th>
-                                <th>進級単位</th>
-                                <th>獲得単位</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {showAdminCredit(this.props.userDatas, this.props.studentNum)}
-                        </tbody>
-                    </Table>
-                </div>
+                <Container className="info">
+                    <Row>
+                        <Table striped bordered hover variant="dark">
+                            <thead>
+                                <tr>
+                                    <th>学年</th>
+                                    <th>進級単位</th>
+                                    <th>獲得単位</th>
+                                    <th>評定平均</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {showAdminCredit(this.props.userDatas, this.props.studentNum)}
+                            </tbody>
+                        </Table>
+                    </Row>
+                </Container>
             )
         } else {
             return renderElseCredit();
@@ -59,24 +66,26 @@ export default Info;
 
 function showStudentCredit(userDatas: any, username: string) {
     const ADMIS_YEARS = GetAdmis(username);
+    let allCredit: number = 0;
     let firstCredit: number = 0;
     let secondCredit: number = 0;
     let therdCredit: number = 0;
     let fourthCredit: number = 0;
-    for (let i in userDatas) {
-        const SUBJECT_YEARS = parseInt(userDatas[i].Dividend_period.slice(2, 4), 10);
+    for (let i in userDatas[0]) {
+        const SUBJECT_YEARS = parseInt(userDatas[0][i].Dividend_period.slice(2, 4), 10);
+        allCredit += parseInt(userDatas[0][i].Units, 10);
         switch (SUBJECT_YEARS - ADMIS_YEARS) {
             case 0:
-                firstCredit += parseInt(userDatas[i].Units, 10);
+                firstCredit += parseInt(userDatas[0][i].Units, 10);
                 break;
             case 1:
-                secondCredit += parseInt(userDatas[i].Units, 10);
+                secondCredit += parseInt(userDatas[0][i].Units, 10);
                 break;
             case 2:
-                therdCredit += parseInt(userDatas[i].Units, 10);
+                therdCredit += parseInt(userDatas[0][i].Units, 10);
                 break;
             case 3:
-                fourthCredit += parseInt(userDatas[i].Units, 10);
+                fourthCredit += parseInt(userDatas[0][i].Units, 10);
         }
     }
     secondCredit += firstCredit;
@@ -88,21 +97,31 @@ function showStudentCredit(userDatas: any, username: string) {
                 <td>1</td>
                 <td>35</td>
                 <td>{firstCredit}</td>
+                <td>-</td>
             </tr>
             <tr>
                 <td>2</td>
                 <td>70</td>
                 <td>{secondCredit}</td>
+                <td>-</td>
             </tr>
             <tr>
                 <td>3</td>
                 <td>100</td>
                 <td>{therdCredit}</td>
+                <td>-</td>
             </tr>
             <tr>
                 <td>4</td>
                 <td>120</td>
                 <td>{fourthCredit}</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>合計</td>
+                <td>-</td>
+                <td>{allCredit}</td>
+                <td>{userDatas[1]}</td>
             </tr>
         </React.Fragment>
     );
@@ -110,12 +129,14 @@ function showStudentCredit(userDatas: any, username: string) {
 
 function showAdminCredit(userDatas: any, studentNum: any) {
     const ADMIS_YEARS = GetAdmis(userDatas[studentNum[0]][studentNum[1]][studentNum[2]][0].student_number);
+    let allCredit: number = 0;
     let firstCredit: number = 0;
     let secondCredit: number = 0;
     let therdCredit: number = 0;
     let fourthCredit: number = 0;
     for (let i in userDatas[studentNum[0]][studentNum[1]][studentNum[2]][1]) {
         const SUBJECT_YEARS = parseInt(userDatas[studentNum[0]][studentNum[1]][studentNum[2]][1][i].Dividend_period.slice(2, 4), 10);
+        allCredit += parseInt(userDatas[studentNum[0]][studentNum[1]][studentNum[2]][1][i].Units, 10);
         switch (SUBJECT_YEARS - ADMIS_YEARS) {
             case 0:
                 firstCredit += parseInt(userDatas[studentNum[0]][studentNum[1]][studentNum[2]][1][i].Units, 10);
@@ -136,21 +157,31 @@ function showAdminCredit(userDatas: any, studentNum: any) {
                 <td>1</td>
                 <td>35</td>
                 <td>{firstCredit}</td>
+                <td>-</td>
             </tr>
             <tr>
                 <td>2</td>
                 <td>70</td>
                 <td>{secondCredit}</td>
+                <td>-</td>
             </tr>
             <tr>
                 <td>3</td>
                 <td>100</td>
                 <td>{therdCredit}</td>
+                <td>-</td>
             </tr>
             <tr>
                 <td>4</td>
                 <td>120</td>
                 <td>{fourthCredit}</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>合計</td>
+                <td>-</td>
+                <td>{allCredit}</td>
+                <td>-</td>
             </tr>
         </React.Fragment>
     );
@@ -158,38 +189,51 @@ function showAdminCredit(userDatas: any, studentNum: any) {
 
 function renderElseCredit() {
     return (
-        <div className="info">
-            <Table striped bordered hover variant="dark">
-                <thead>
-                    <tr>
-                        <th>学年</th>
-                        <th>進級単位</th>
-                        <th>獲得単位</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>35</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>70</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>100</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>120</td>
-                        <td>-</td>
-                    </tr>
-                </tbody>
-            </Table>
-        </div>
+        <Container className="info">
+            <Row>
+                <Table striped bordered hover variant="dark">
+                    <thead>
+                        <tr>
+                            <th>学年</th>
+                            <th>進級単位</th>
+                            <th>獲得単位</th>
+                            <th>評定平均</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>35</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>70</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>100</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>120</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>合計</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
+                </Table>
+            </Row>
+        </Container>
     );
 }
