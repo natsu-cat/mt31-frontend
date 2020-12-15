@@ -6,10 +6,12 @@ interface Props {
     isLoading: Boolean;
     flag: number;
     username: string;
+    studentNum: string;
 }
 
 class Info extends React.Component<Props, any> {
     render() {
+        console.log(this.props.studentNum);                                     //studentNumの確認に使ってください
         if (this.props.isLoading == false && this.props.flag == 0) {            //読み込み終了かつ生徒の場合のみ獲得単位表示
             return (
                 <div className="info">

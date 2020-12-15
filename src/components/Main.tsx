@@ -18,8 +18,13 @@ class Main extends React.Component<any, any> {
             isLoading: true,
             userDatas: [],
             flag: sessionStorage.getItem("flag"),
+            studentNum: null,
             result: null
         }
+        this.outputEvent = this.outputEvent.bind(this);
+    }
+    outputEvent(student: string) {
+        this.setState({ studentNum: student });
     }
     componentDidMount() {
         if (this.state.flag == 0) {                                  //生徒の場合の処理
@@ -46,7 +51,6 @@ class Main extends React.Component<any, any> {
     }
 
     render() {
-
         return (
             <Router>
                 <Container fluid="md" id="wrap">
@@ -58,12 +62,21 @@ class Main extends React.Component<any, any> {
                         </Col>
                         <Col lg="7">
                             <Route exact path="/" render={() => (
-                                <Home userDatas={this.state.userDatas} isLoading={this.state.isLoading} flag={this.state.flag} username={this.state.username} result={this.state.result} />)} />
+                                <Home userDatas={this.state.userDatas}
+                                    isLoading={this.state.isLoading}
+                                    flag={this.state.flag}
+                                    username={this.state.username}
+                                    result={this.state.result}
+                                    outputHandler={this.outputEvent} />)} />
                             <Route exact path="/upload" render={() => <Upload flag={this.state.flag} />} />
                             <Route exact path="/registration" render={() => <Registration flag={this.state.flag} />} />
                         </Col>
                         <Col lg="2">
-                            <Info userDatas={this.state.userDatas} isLoading={this.state.isLoading} flag={this.state.flag} username={this.state.username} />
+                            <Info userDatas={this.state.userDatas}
+                                isLoading={this.state.isLoading}
+                                flag={this.state.flag}
+                                username={this.state.username}
+                                studentNum={this.state.studentNum} />
                         </Col>
                     </Row>
                     <Foot />

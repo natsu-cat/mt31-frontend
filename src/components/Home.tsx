@@ -9,6 +9,7 @@ interface Props {
     flag: number;
     username: string;
     result: JSX.Element;
+    outputHandler: FunctionStringCallback;
 }
 
 class Home extends React.Component<Props, any> {
@@ -25,7 +26,7 @@ class Home extends React.Component<Props, any> {
         } else if (this.props.flag == 0) {                  //生徒の場合
             return <IndivGrade userDatas={this.props.userDatas} username={this.props.username} />
         } else if (this.props.flag == 1) {                  //管理者の場合
-            return <AllGrade userDatas={this.props.userDatas} />
+            return <AllGrade userDatas={this.props.userDatas} outputHandler={this.props.outputHandler} />
         } else {                                            //例外処理
             return null;
         }
