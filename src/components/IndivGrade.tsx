@@ -3,6 +3,7 @@ import Table from 'react-bootstrap/Table';
 import Nav from 'react-bootstrap/Nav';
 import Tab from 'react-bootstrap/Tab';
 import { Container } from 'react-bootstrap';
+import { GetAdmis } from './GetAdmis';
 
 interface Props {
     userDatas: [];
@@ -51,32 +52,31 @@ function showIndivGrade(userDatas: any, username: string) {
             </tr>
         </thead>
     );
-
-    const ADMIS_YEARS = parseInt(username.slice(1, 2), 10);
+    const ADMIS_YEARS = GetAdmis(username);
     let listAllTables: JSX.Element[] = new Array();
     let listFirstTables: JSX.Element[] = new Array();
     let listSecondTables: JSX.Element[] = new Array();
     let listThirdTables: JSX.Element[] = new Array();
     let listFourthTables: JSX.Element[] = new Array();
 
-    for (let i in userDatas) {
-        const SUBJECT_YEARS = parseInt(userDatas[i].Dividend_period.slice(3, 4), 10);
+    for (let i in userDatas[0]) {
+        const SUBJECT_YEARS = parseInt(userDatas[0][i].Dividend_period.slice(2, 4), 10);
         listAllTables[parseInt(i, 10)] = (
             <tr key={i}>
-                <td>{userDatas[i].subject_name}</td>
-                <td>{userDatas[i].Dividend_period}</td>
-                <th>{userDatas[i].evaluation}</th>
-                <th>{userDatas[i].Units}</th>
+                <td>{userDatas[0][i].subject_name}</td>
+                <td>{userDatas[0][i].Dividend_period}</td>
+                <th>{userDatas[0][i].evaluation}</th>
+                <th>{userDatas[0][i].Units}</th>
             </tr>
         );
         switch (SUBJECT_YEARS - ADMIS_YEARS) {
             case 0:
                 listFirstTables[parseInt(i, 10)] = (
                     <tr key={i}>
-                        <td>{userDatas[i].subject_name}</td>
-                        <td>{userDatas[i].Dividend_period}</td>
-                        <th>{userDatas[i].evaluation}</th>
-                        <th>{userDatas[i].Units}</th>
+                        <td>{userDatas[0][i].subject_name}</td>
+                        <td>{userDatas[0][i].Dividend_period}</td>
+                        <th>{userDatas[0][i].evaluation}</th>
+                        <th>{userDatas[0][i].Units}</th>
                     </tr>
                 );
                 break;
@@ -84,10 +84,10 @@ function showIndivGrade(userDatas: any, username: string) {
             case -9:
                 listSecondTables[parseInt(i, 10)] = (
                     <tr key={i}>
-                        <td>{userDatas[i].subject_name}</td>
-                        <td>{userDatas[i].Dividend_period}</td>
-                        <th>{userDatas[i].evaluation}</th>
-                        <th>{userDatas[i].Units}</th>
+                        <td>{userDatas[0][i].subject_name}</td>
+                        <td>{userDatas[0][i].Dividend_period}</td>
+                        <th>{userDatas[0][i].evaluation}</th>
+                        <th>{userDatas[0][i].Units}</th>
                     </tr>
                 );
                 break;
@@ -95,10 +95,10 @@ function showIndivGrade(userDatas: any, username: string) {
             case -8:
                 listThirdTables[parseInt(i, 10)] = (
                     <tr key={i}>
-                        <td>{userDatas[i].subject_name}</td>
-                        <td>{userDatas[i].Dividend_period}</td>
-                        <th>{userDatas[i].evaluation}</th>
-                        <th>{userDatas[i].Units}</th>
+                        <td>{userDatas[0][i].subject_name}</td>
+                        <td>{userDatas[0][i].Dividend_period}</td>
+                        <th>{userDatas[0][i].evaluation}</th>
+                        <th>{userDatas[0][i].Units}</th>
                     </tr>
                 );
                 break;
@@ -106,10 +106,10 @@ function showIndivGrade(userDatas: any, username: string) {
             case -7:
                 listFourthTables[parseInt(i, 10)] = (
                     <tr key={i}>
-                        <td>{userDatas[i].subject_name}</td>
-                        <td>{userDatas[i].Dividend_period}</td>
-                        <th>{userDatas[i].evaluation}</th>
-                        <th>{userDatas[i].Units}</th>
+                        <td>{userDatas[0][i].subject_name}</td>
+                        <td>{userDatas[0][i].Dividend_period}</td>
+                        <th>{userDatas[0][i].evaluation}</th>
+                        <th>{userDatas[0][i].Units}</th>
                     </tr>
                 );
                 break;
