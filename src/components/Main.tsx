@@ -71,7 +71,7 @@ class Main extends React.Component<any, any> {
                             <Route exact path="/upload" render={() => <Upload flag={this.state.flag} />} />
                             <Route exact path="/registration" render={() => <Registration flag={this.state.flag} />} />
                         </Col>
-                        <Col lg="2">
+                        <Col lg="3">
                             <Info userDatas={this.state.userDatas}
                                 isLoading={this.state.isLoading}
                                 flag={this.state.flag}
