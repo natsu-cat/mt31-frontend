@@ -1,8 +1,5 @@
 import * as React from 'react';
-// import Table from 'react-bootstrap/Table';
-// import Nav from 'react-bootstrap/Nav';
-// import Tab from 'react-bootstrap/Tab';
-// import { Container } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap';
 import IndivGrade from './IndivGrade';
 import AllGrade from './AllGrade';
 
@@ -20,7 +17,7 @@ class Home extends React.Component<Props, any> {
         if (this.props.isLoading) {                         //Ajax認証が終わっていない間の処理
             return (
                 <div style={style}>
-                    <a>Loading...</a>
+                    <Spinner animation="grow" variant="primary" />
                 </div>
             );
         } else if (this.props.result) {                    //エラーだった場合の処理
