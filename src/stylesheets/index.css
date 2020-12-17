@@ -95,3 +95,22 @@ p.error {
 p.success {
     color: green;
 }
+
+/*BBS*/
+
+
+.Contributor{
+    margin-bottom: 10px;
+}
+
+.Context{
+    margin-bottom: 15px;
+}
+
+#test{
+    color: green;
+}
+
+.bbs_form{
+    margin: initial;
+}
