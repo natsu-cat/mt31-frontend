@@ -1,6 +1,7 @@
 import * as React from 'react';
 import axios from 'axios';
 import { Container, Row, Col, Nav, Form, Button } from 'react-bootstrap';
+import AnchorLink from 'react-anchor-link-smooth-scroll';
 
 interface Props {
     flag: number;
@@ -82,26 +83,26 @@ class BBS extends React.Component<Props, any> {
     }
 
     render() {
-        let post_item;
-        let in_page_link;
+        let post_item;/*表示する投稿 */
+        let in_page_link;/*上下にあるページ内リンクなどのナビゲーター */
         if(this.state.loadingf){
             post_item = <div>
                     {(() => {
                         var item = [];
-                        var test=0;
+                        var initial=0; /*何番目の投稿から表示するか */
                         var delete_button;
                         if( this.state.posts.length == 0){
-                            return;
+                            return <a>まだ書き込みされていません</a>;
                         }
                         if( this.state.limit <this.state.posts.length ){
-                            test= this.state.posts.length - this.state.limit;
+                            initial= this.state.posts.length - this.state.limit;
                         }
-                        for (let i = test; i < this.state.posts.length; i++) {
-                            if(this.props.flag == 1){
-                                delete_button=  <a href="" onClick={()=>this.deleteContext(this.state.posts[i].poster_id)}>削除</a>
+                        for (let i = initial; i < this.state.posts.length; i++) {
+                            if(this.props.flag == 1){/*教員ならすべての投稿の削除ボタン表示 */
+                                delete_button=  <Button variant="outline-danger" size="sm"  type="submit" onClick={()=>this.deleteContext(this.state.posts[i].poster_id)}>削除</Button>
                             }
-                            else if(this.state.posts[i].poster_name == this.props.username){
-                                delete_button=  <a href="" onClick={()=>this.deleteContext(this.state.posts[i].poster_id)}>削除</a>
+                            else if(this.state.posts[i].poster_name == this.props.username){/*自分の投稿の場合、削除ボタン表示 */
+                                delete_button= <Button variant="outline-danger" size="sm"  type="submit" onClick={()=>this.deleteContext(this.state.posts[i].poster_id)}>削除</Button>
                             }
                             
                             item.push(
@@ -109,7 +110,7 @@ class BBS extends React.Component<Props, any> {
                                     <Row className="Contributor">
                                         <Col  xs="auto" sm="auto" md="auto" lg="auto" xl="auto">
                                             <a>{i+1} </a>
-                                            <a id={i.toString()}>oicちゃんねるからVIPがお送りします </a>
+                                            <a className="vip_title" id={i.toString()}><a id="vip_title">oicちゃんねるからVIPがお送りします</a></a>
                                             <a>{this.state.posts[i].post_data} </a>
                                             <a>ID:{this.state.posts[i].poster_name} </a>
                                             {delete_button}
@@ -131,7 +132,7 @@ class BBS extends React.Component<Props, any> {
             in_page_link = <div>
                         <Row className="justify-content-center">
                             <Nav>
-                                <Col  xs="4" sm="4" md="auto" lg="auto" xl="auto"><Nav.Link>{this.state.posts.length}勢い</Nav.Link></Col>
+                                <Col  xs="4" sm="4" md="auto" lg="auto" xl="auto"><Nav.Link><AnchorLink href={this.state.posts.length-1}>{this.state.posts.length}勢い</AnchorLink></Nav.Link></Col>
                                 <Col  xs="4" sm="4" md="auto" lg="auto" xl="auto"><Nav.Link onClick={() => this.handleChangeLimit(999)}>すべて</Nav.Link></Col>
                                 <Col  xs="4" sm="4" md="auto" lg="auto" xl="auto"><Nav.Link onClick={() => this.handleChangeLimit(10)}>最新10</Nav.Link></Col>
                             </Nav>
