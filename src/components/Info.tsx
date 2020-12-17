@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Container, Row } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import { GetAdmis } from './GetAdmis';
 
@@ -18,43 +17,31 @@ class Info extends React.Component<Props, any> {
         }
         else if (this.props.flag == 0) {                                        //読み込み終了かつ生徒の場合のみ獲得単位表示
             return (
-                <Container className="info">
-                    <Row>
-                        <Table striped bordered hover variant="dark">
-                            <thead>
-                                <tr>
-                                    <th>学年</th>
-                                    <th>進級単位</th>
-                                    <th>獲得単位</th>
-                                    <th>評定平均</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {showStudentCredit(this.props.userDatas, this.props.username)}
-                            </tbody>
-                        </Table>
-                    </Row>
-                </Container>
+                <Table striped bordered hover variant="dark">
+                    <thead>
+                        <tr>
+                            <th>学年</th>
+                            <th>進級単位</th>
+                            <th>獲得単位</th>
+                            <th>評定平均</th>
+                        </tr>
+                    </thead>
+                    {showStudentCredit(this.props.userDatas, this.props.username)}
+                </Table>
             );
         } else if (this.props.flag == 1 && this.props.studentNum != null) {
             return (
-                <Container className="info">
-                    <Row>
-                        <Table striped bordered hover variant="dark">
-                            <thead>
-                                <tr>
-                                    <th>学年</th>
-                                    <th>進級単位</th>
-                                    <th>獲得単位</th>
-                                    <th>評定平均</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {showAdminCredit(this.props.userDatas, this.props.studentNum)}
-                            </tbody>
-                        </Table>
-                    </Row>
-                </Container>
+                <Table striped bordered hover variant="dark">
+                    <thead>
+                        <tr>
+                            <th>学年</th>
+                            <th>進級単位</th>
+                            <th>獲得単位</th>
+                            <th>評定平均</th>
+                        </tr>
+                    </thead>
+                    {showAdminCredit(this.props.userDatas, this.props.studentNum)}
+                </Table>
             )
         } else {
             return renderElseCredit();
@@ -92,7 +79,7 @@ function showStudentCredit(userDatas: any, username: string) {
     therdCredit += secondCredit;
     fourthCredit += therdCredit;
     return (
-        <React.Fragment>
+        <tbody>
             <tr>
                 <td>1</td>
                 <td>35</td>
@@ -123,7 +110,7 @@ function showStudentCredit(userDatas: any, username: string) {
                 <td>{allCredit}</td>
                 <td>{userDatas[1]}</td>
             </tr>
-        </React.Fragment>
+        </tbody>
     );
 }
 
@@ -153,7 +140,7 @@ function showAdminCredit(userDatas: any, studentNum: any) {
         }
     }
     return (
-        <React.Fragment>
+        <tbody>
             <tr>
                 <td>1</td>
                 <td>35</td>
@@ -184,57 +171,53 @@ function showAdminCredit(userDatas: any, studentNum: any) {
                 <td>{allCredit}</td>
                 <td>{ratingAvg}</td>
             </tr>
-        </React.Fragment>
+        </tbody>
     );
 }
 
 function renderElseCredit() {
     return (
-        <Container className="info">
-            <Row>
-                <Table striped bordered hover variant="dark">
-                    <thead>
-                        <tr>
-                            <th>学年</th>
-                            <th>進級単位</th>
-                            <th>獲得単位</th>
-                            <th>評定平均</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>35</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>70</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>100</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>120</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>合計</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                    </tbody>
-                </Table>
-            </Row>
-        </Container>
+        <Table striped bordered hover variant="dark">
+            <thead>
+                <tr>
+                    <th>学年</th>
+                    <th>進級単位</th>
+                    <th>獲得単位</th>
+                    <th>評定平均</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>35</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>70</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>100</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>120</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>合計</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </Table>
     );
 }
