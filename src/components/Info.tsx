@@ -59,6 +59,12 @@ function showStudentCredit(userDatas: any, username: string) {
     let therdCredit: number = 0;
     let fourthCredit: number = 0;
     for (let i in userDatas[0]) {
+        /**
+         * 評価が不可の科目の場合は単位を加算しない
+         */
+        if (userDatas[0][i].evaluation == "不可") {
+            continue;
+        }
         const SUBJECT_YEARS = parseInt(userDatas[0][i].Dividend_period.slice(2, 4), 10);
         allCredit += parseInt(userDatas[0][i].Units, 10);
         switch (SUBJECT_YEARS - ADMIS_YEARS) {
@@ -123,6 +129,12 @@ function showAdminCredit(userDatas: any, studentNum: any) {
     let fourthCredit: number = 0;
     let ratingAvg: number = userDatas[studentNum[0]][studentNum[1]][studentNum[2]][2];
     for (let i in userDatas[studentNum[0]][studentNum[1]][studentNum[2]][1]) {
+        /**
+         * 評価が不可の科目の場合は単位を加算しない
+         */
+        if (userDatas[studentNum[0]][studentNum[1]][studentNum[2]][1][i].evaluation == "不可") {
+            continue;
+        }
         const SUBJECT_YEARS = parseInt(userDatas[studentNum[0]][studentNum[1]][studentNum[2]][1][i].Dividend_period.slice(2, 4), 10);
         allCredit += parseInt(userDatas[studentNum[0]][studentNum[1]][studentNum[2]][1][i].Units, 10);
         switch (SUBJECT_YEARS - ADMIS_YEARS) {
