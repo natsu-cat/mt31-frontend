@@ -46,6 +46,7 @@ function showIndivGrade(userDatas: any, username: string) {
         <thead>
             <tr>
                 <th>科目名</th>
+                <th>講師</th>
                 <th>単位</th>
                 <th>評価</th>
                 <th>学期</th>
@@ -64,6 +65,7 @@ function showIndivGrade(userDatas: any, username: string) {
         listAllTables[parseInt(i, 10)] = (
             <tr key={i}>
                 <td>{userDatas[0][i].subject_name}</td>
+                <td>{userDatas[0][i].lecture_name}</td>
                 <td>{userDatas[0][i].Dividend_period}</td>
                 <th>{userDatas[0][i].evaluation}</th>
                 <th>{userDatas[0][i].Units}</th>
@@ -74,6 +76,7 @@ function showIndivGrade(userDatas: any, username: string) {
                 listFirstTables[parseInt(i, 10)] = (
                     <tr key={i}>
                         <td>{userDatas[0][i].subject_name}</td>
+                        <td>{userDatas[0][i].lecture_name}</td>
                         <td>{userDatas[0][i].Dividend_period}</td>
                         <th>{userDatas[0][i].evaluation}</th>
                         <th>{userDatas[0][i].Units}</th>
@@ -81,10 +84,10 @@ function showIndivGrade(userDatas: any, username: string) {
                 );
                 break;
             case 1:
-            case -9:
                 listSecondTables[parseInt(i, 10)] = (
                     <tr key={i}>
                         <td>{userDatas[0][i].subject_name}</td>
+                        <td>{userDatas[0][i].lecture_name}</td>
                         <td>{userDatas[0][i].Dividend_period}</td>
                         <th>{userDatas[0][i].evaluation}</th>
                         <th>{userDatas[0][i].Units}</th>
@@ -92,10 +95,10 @@ function showIndivGrade(userDatas: any, username: string) {
                 );
                 break;
             case 2:
-            case -8:
                 listThirdTables[parseInt(i, 10)] = (
                     <tr key={i}>
                         <td>{userDatas[0][i].subject_name}</td>
+                        <td>{userDatas[0][i].lecture_name}</td>
                         <td>{userDatas[0][i].Dividend_period}</td>
                         <th>{userDatas[0][i].evaluation}</th>
                         <th>{userDatas[0][i].Units}</th>
@@ -103,17 +106,15 @@ function showIndivGrade(userDatas: any, username: string) {
                 );
                 break;
             case 3:
-            case -7:
                 listFourthTables[parseInt(i, 10)] = (
                     <tr key={i}>
                         <td>{userDatas[0][i].subject_name}</td>
+                        <td>{userDatas[0][i].lecture_name}</td>
                         <td>{userDatas[0][i].Dividend_period}</td>
                         <th>{userDatas[0][i].evaluation}</th>
                         <th>{userDatas[0][i].Units}</th>
                     </tr>
                 );
-                break;
-            default:
                 break;
         }
     }
