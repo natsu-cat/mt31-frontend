@@ -134,6 +134,7 @@ function showAdminCredit(userDatas: any, studentNum: any) {
     let secondCredit: number = 0;
     let therdCredit: number = 0;
     let fourthCredit: number = 0;
+    let ratingAvg: number = userDatas[studentNum[0]][studentNum[1]][studentNum[2]][2];
     for (let i in userDatas[studentNum[0]][studentNum[1]][studentNum[2]][1]) {
         const SUBJECT_YEARS = parseInt(userDatas[studentNum[0]][studentNum[1]][studentNum[2]][1][i].Dividend_period.slice(2, 4), 10);
         allCredit += parseInt(userDatas[studentNum[0]][studentNum[1]][studentNum[2]][1][i].Units, 10);
@@ -181,7 +182,7 @@ function showAdminCredit(userDatas: any, studentNum: any) {
                 <td>合計</td>
                 <td>-</td>
                 <td>{allCredit}</td>
-                <td>-</td>
+                <td>{ratingAvg}</td>
             </tr>
         </React.Fragment>
     );
