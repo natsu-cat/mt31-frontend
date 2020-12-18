@@ -32,7 +32,7 @@ export default class Login extends React.Component<any, any> {
           .then(res => {
             sessionStorage.setItem("flag", res.data[0].admin_flag);
             sessionStorage.setItem("isLoggedIn", "true");
-            location.href = "/";                                        //認証通ったのでページ遷移する
+            location.href = "/home";                                        //認証通ったのでページ遷移する
           }).catch(error => {
             console.error(error.response);
             sessionStorage.setItem("flag", "-1");
