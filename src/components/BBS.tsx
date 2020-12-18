@@ -1,6 +1,6 @@
 import * as React from 'react';
 import axios from 'axios';
-import { Container, Row, Col, Nav, Form, Button } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import AnchorLink from 'react-anchor-link-smooth-scroll';
 
 interface Props {
@@ -110,7 +110,7 @@ class BBS extends React.Component<Props, any> {
                                     <Row className="Contributor">
                                         <Col  xs="auto" sm="auto" md="auto" lg="auto" xl="auto">
                                             <a>{i+1} </a>
-                                            <a className="vip_title" id={i.toString()}><a id="vip_title">oicちゃんねるからVIPがお送りします</a></a>
+                                            <a id="vip_title">oicちゃんねるからVIPがお送りします</a>
                                             <a>{this.state.posts[i].post_data} </a>
                                             <a>ID:{this.state.posts[i].poster_name} </a>
                                             {delete_button}
@@ -118,7 +118,7 @@ class BBS extends React.Component<Props, any> {
                                     </Row>
                                     <Row className="Context">
                                         <Col　xs="auto" sm="auto" md="auto" lg="auto" xl="auto">
-                                            {this.state.posts[i].poster_content}
+                                            <a id={(i-1).toString()}>{this.state.posts[i].poster_content}</a>
                                         </Col>
                                     </Row>
                                 </div>
@@ -130,12 +130,10 @@ class BBS extends React.Component<Props, any> {
                         </div>
 
             in_page_link = <div>
-                        <Row className="justify-content-center">
-                            <Nav>
-                                <Col  xs="4" sm="4" md="auto" lg="auto" xl="auto"><Nav.Link><AnchorLink href={this.state.posts.length-1}>{this.state.posts.length}勢い</AnchorLink></Nav.Link></Col>
-                                <Col  xs="4" sm="4" md="auto" lg="auto" xl="auto"><Nav.Link onClick={() => this.handleChangeLimit(999)}>すべて</Nav.Link></Col>
-                                <Col  xs="4" sm="4" md="auto" lg="auto" xl="auto"><Nav.Link onClick={() => this.handleChangeLimit(10)}>最新10</Nav.Link></Col>
-                            </Nav>
+                        <Row className="justify-content-center">      
+                                <Col  xs="4" sm="4" md="auto" lg="auto" xl="auto"><AnchorLink href={this.state.posts.length-1}>{this.state.posts.length}勢い</AnchorLink></Col>
+                                <Col  xs="4" sm="4" md="auto" lg="auto" xl="auto"><a id="bbs_link" onClick={() => this.handleChangeLimit(999)}>すべて</a></Col>
+                                <Col  xs="4" sm="4" md="auto" lg="auto" xl="auto"><a id="bbs_link" onClick={() => this.handleChangeLimit(10)}>最新10</a></Col> 
                         </Row>
                             </div>
         }
@@ -150,7 +148,7 @@ class BBS extends React.Component<Props, any> {
                 {post_item}
                 {in_page_link}
                 <Row className="justify-content-center">
-                    <Col xs="6" sm="6" md="6" lg="6" xl="6">
+                    <Col xs="12" sm="12" md="12" lg="12" xl="6">
                         <Form >
                             <Form.Group controlId="context">
                                 <Form.Control placeholder="内容" onChange={this.handleChange}/>
