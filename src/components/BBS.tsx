@@ -65,7 +65,10 @@ class BBS extends React.Component<Props, any> {
                 'Content-Type': 'application/json',
                 'Authorization': `JWT ${sessionStorage.getItem("access")}`
             }
+        }).then(()=>{
+            this.getContext();
         })
+
         
 
     }
