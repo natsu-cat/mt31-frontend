@@ -62,7 +62,7 @@ class Main extends React.Component<any, any> {
                             <Side flag={this.state.flag} />
                         </Col>
                         <Col lg="7">
-                            <Route exact path="/" render={() => (
+                            <Route exact path="/home" render={() => (
                                 <Home userDatas={this.state.userDatas}
                                     isLoading={this.state.isLoading}
                                     flag={this.state.flag}
