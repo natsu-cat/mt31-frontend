@@ -115,3 +115,12 @@ p.success {
 .bbs_form{
     margin: initial;
 }
+
+#bbs_link{
+    color: rgb(39, 112, 223);
+}
+
+#bbs_link:hover{
+    text-decoration: underline;
+    cursor : pointer;
+}
