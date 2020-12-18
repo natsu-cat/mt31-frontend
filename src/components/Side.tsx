@@ -35,7 +35,7 @@ function showElement(flag: number) {
     if (flag == 1) {
         return (
             <React.Fragment>
-                <Col xs="4" sm="4" md="auto" lg="auto" xl="12"><Nav.Link href="/"> home </Nav.Link></Col>
+                <Col xs="4" sm="4" md="auto" lg="auto" xl="12"><Nav.Link href="/home"> home </Nav.Link></Col>
                 <Col xs="4" sm="4" md="auto" lg="auto" xl="12"><Nav.Link href="/ranking"> ranking </Nav.Link></Col>
                 <Col xs="4" sm="4" md="auto" lg="auto" xl="12"><Nav.Link href="/course"> course </Nav.Link></Col>
                 <Col xs="4" sm="4" md="auto" lg="auto" xl="12"><Nav.Link href="/about"> about </Nav.Link></Col>
@@ -47,7 +47,7 @@ function showElement(flag: number) {
     } else {
         return (
             <React.Fragment>
-                <Col xs="3" sm="auto" md="auto" lg="auto" xl="12"><Nav.Link href="/"> home </Nav.Link></Col>
+                <Col xs="3" sm="auto" md="auto" lg="auto" xl="12"><Nav.Link href="/home"> home </Nav.Link></Col>
                 <Col xs="3" sm="auto" md="auto" lg="auto" xl="12"><Nav.Link href="/ranking"> ranking </Nav.Link></Col>
                 <Col xs="3" sm="auto" md="auto" lg="auto" xl="12"><Nav.Link href="/course"> course </Nav.Link></Col>
                 <Col xs="3" sm="auto" md="auto" lg="auto" xl="12"><Nav.Link href="/about"> about </Nav.Link></Col>
