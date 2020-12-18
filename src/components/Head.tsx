@@ -16,7 +16,7 @@ class Head extends React.Component<Props, any> {
     handleClick(e: React.MouseEvent<HTMLElement, MouseEvent>) {
         e.preventDefault();
         sessionStorage.clear();
-        location.href = "/";
+        location.href = "/login";
     }
 
     render() {
