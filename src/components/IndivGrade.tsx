@@ -66,9 +66,9 @@ function showIndivGrade(userDatas: any, username: string) {
             <tr key={i}>
                 <td>{userDatas[0][i].subject_name}</td>
                 <td>{userDatas[0][i].lecture_name}</td>
-                <td>{userDatas[0][i].Dividend_period}</td>
+                <td>{userDatas[0][i].Units}</td>
                 <th>{userDatas[0][i].evaluation}</th>
-                <th>{userDatas[0][i].Units}</th>
+                <th>{userDatas[0][i].Dividend_period}</th>
             </tr>
         );
         switch (SUBJECT_YEARS - ADMIS_YEARS) {
@@ -77,9 +77,9 @@ function showIndivGrade(userDatas: any, username: string) {
                     <tr key={i}>
                         <td>{userDatas[0][i].subject_name}</td>
                         <td>{userDatas[0][i].lecture_name}</td>
-                        <td>{userDatas[0][i].Dividend_period}</td>
+                        <td>{userDatas[0][i].Units}</td>
                         <th>{userDatas[0][i].evaluation}</th>
-                        <th>{userDatas[0][i].Units}</th>
+                        <th>{userDatas[0][i].Dividend_period}</th>
                     </tr>
                 );
                 break;
@@ -88,9 +88,9 @@ function showIndivGrade(userDatas: any, username: string) {
                     <tr key={i}>
                         <td>{userDatas[0][i].subject_name}</td>
                         <td>{userDatas[0][i].lecture_name}</td>
-                        <td>{userDatas[0][i].Dividend_period}</td>
+                        <td>{userDatas[0][i].Units}</td>
                         <th>{userDatas[0][i].evaluation}</th>
-                        <th>{userDatas[0][i].Units}</th>
+                        <th>{userDatas[0][i].Dividend_period}</th>
                     </tr>
                 );
                 break;
@@ -99,9 +99,9 @@ function showIndivGrade(userDatas: any, username: string) {
                     <tr key={i}>
                         <td>{userDatas[0][i].subject_name}</td>
                         <td>{userDatas[0][i].lecture_name}</td>
-                        <td>{userDatas[0][i].Dividend_period}</td>
+                        <td>{userDatas[0][i].Units}</td>
                         <th>{userDatas[0][i].evaluation}</th>
-                        <th>{userDatas[0][i].Units}</th>
+                        <th>{userDatas[0][i].Dividend_period}</th>
                     </tr>
                 );
                 break;
@@ -110,9 +110,9 @@ function showIndivGrade(userDatas: any, username: string) {
                     <tr key={i}>
                         <td>{userDatas[0][i].subject_name}</td>
                         <td>{userDatas[0][i].lecture_name}</td>
-                        <td>{userDatas[0][i].Dividend_period}</td>
+                        <td>{userDatas[0][i].Units}</td>
                         <th>{userDatas[0][i].evaluation}</th>
-                        <th>{userDatas[0][i].Units}</th>
+                        <th>{userDatas[0][i].Dividend_period}</th>
                     </tr>
                 );
                 break;
