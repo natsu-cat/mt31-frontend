@@ -48,7 +48,9 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.12",
+    "@types/react-bootstrap-table-next": "^4.0.10",
     "@types/react-responsive": "^8.0.2",
+    "react-bootstrap-table-next": "^4.0.3",
     "react-responsive": "^8.1.1"
   }
 }
