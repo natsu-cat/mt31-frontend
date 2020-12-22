@@ -6,6 +6,7 @@ import { Container } from 'react-bootstrap';
 import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import { GetAdmis } from './GetAdmis';
+import { sortEvaluation, sortSemester } from './Sort';
 
 interface Props {
     userDatas: [];
@@ -86,11 +87,47 @@ function showIndivGrade(userDatas: any, username: string) {
             text: "評価",
             sort: true,
             sortFunc: (a: any, b: any, order: any) => {
-                //秀を0,優を1,良を2,可を3、不可を4に変換する関数を作る
+                const main = sortEvaluation(a.toString());
+                const sub = sortEvaluation(b.toString());
+                if (order === 'asc') {
+                    if (main < sub) {
+                        return -1;
+                    } else if (main > sub) {
+                        return 1;
+                    }
+                }
+                if (main < sub) {
+                    return 1;
+                } else if (main > sub) {
+                    return -1;
+                }
+                return 0;
             },
-            editable: false 
-        },         
-        { dataField: "Dividend_period", text: "年度", sort: true, editable: false },
+            editable: false
+        },
+        {
+            dataField: "Dividend_period",
+            text: "年度",
+            sort: true,
+            sortFunc: (a: any, b: any, order: any) => {
+                const main = sortSemester(a.toString());
+                const sub = sortSemester(b.toString());
+                if (order === 'asc') {
+                    if (main < sub) {
+                        return -1;
+                    } else if (main > sub) {
+                        return 1;
+                    }
+                }
+                if (main < sub) {
+                    return 1;
+                } else if (main > sub) {
+                    return -1;
+                }
+                return 0;
+            },
+            editable: false
+        },
     ];
     const defaultSorted: any = [{
         dataField: "Dividend_period",
