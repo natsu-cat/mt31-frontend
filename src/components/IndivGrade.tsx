@@ -1,8 +1,10 @@
 import * as React from 'react';
-import Table from 'react-bootstrap/Table';
+// import Table from 'react-bootstrap/Table';
 import Nav from 'react-bootstrap/Nav';
 import Tab from 'react-bootstrap/Tab';
 import { Container } from 'react-bootstrap';
+import BootstrapTable from 'react-bootstrap-table-next';
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import { GetAdmis } from './GetAdmis';
 
 interface Props {
@@ -32,9 +34,7 @@ export default class IndivGrade extends React.Component<Props, any> {
                             <Nav.Link eventKey="link-4">4年生</Nav.Link>
                         </Nav.Item>
                     </Nav>
-                    <Tab.Content>
-                        {showIndivGrade(this.props.userDatas, this.props.username)}
-                    </Tab.Content>
+                    {showIndivGrade(this.props.userDatas, this.props.username)}
                 </Tab.Container>
             </Container>
         );
@@ -42,124 +42,245 @@ export default class IndivGrade extends React.Component<Props, any> {
 }
 
 function showIndivGrade(userDatas: any, username: string) {
-    const gradeElements: JSX.Element = (
-        <thead>
-            <tr>
-                <th>科目名</th>
-                <th>講師</th>
-                <th>単位</th>
-                <th>評価</th>
-                <th>学期</th>
-            </tr>
-        </thead>
-    );
     const ADMIS_YEARS = GetAdmis(username);
-    let listAllTables: JSX.Element[] = new Array();
-    let listFirstTables: JSX.Element[] = new Array();
-    let listSecondTables: JSX.Element[] = new Array();
-    let listThirdTables: JSX.Element[] = new Array();
-    let listFourthTables: JSX.Element[] = new Array();
-
+    const allData = [];
+    const firstData = [];
+    const secondData = [];
+    const therdData = [];
+    const fourthData = [];
     for (let i in userDatas[0]) {
         const SUBJECT_YEARS = parseInt(userDatas[0][i].Dividend_period.slice(2, 4), 10);
-        listAllTables[parseInt(i, 10)] = (
-            <tr key={i}>
-                <td>{userDatas[0][i].subject_name}</td>
-                <td>{userDatas[0][i].lecture_name}</td>
-                <td>{userDatas[0][i].Units}</td>
-                <th>{userDatas[0][i].evaluation}</th>
-                <th>{userDatas[0][i].Dividend_period}</th>
-            </tr>
-        );
+        allData.push(userDatas[0][i]);
         switch (SUBJECT_YEARS - ADMIS_YEARS) {
             case 0:
-                listFirstTables[parseInt(i, 10)] = (
-                    <tr key={i}>
-                        <td>{userDatas[0][i].subject_name}</td>
-                        <td>{userDatas[0][i].lecture_name}</td>
-                        <td>{userDatas[0][i].Units}</td>
-                        <th>{userDatas[0][i].evaluation}</th>
-                        <th>{userDatas[0][i].Dividend_period}</th>
-                    </tr>
-                );
+                firstData.push(userDatas[0][i]);
                 break;
             case 1:
-                listSecondTables[parseInt(i, 10)] = (
-                    <tr key={i}>
-                        <td>{userDatas[0][i].subject_name}</td>
-                        <td>{userDatas[0][i].lecture_name}</td>
-                        <td>{userDatas[0][i].Units}</td>
-                        <th>{userDatas[0][i].evaluation}</th>
-                        <th>{userDatas[0][i].Dividend_period}</th>
-                    </tr>
-                );
+                secondData.push(userDatas[0][i]);
                 break;
             case 2:
-                listThirdTables[parseInt(i, 10)] = (
-                    <tr key={i}>
-                        <td>{userDatas[0][i].subject_name}</td>
-                        <td>{userDatas[0][i].lecture_name}</td>
-                        <td>{userDatas[0][i].Units}</td>
-                        <th>{userDatas[0][i].evaluation}</th>
-                        <th>{userDatas[0][i].Dividend_period}</th>
-                    </tr>
-                );
+                therdData.push(userDatas[0][i]);
                 break;
             case 3:
-                listFourthTables[parseInt(i, 10)] = (
-                    <tr key={i}>
-                        <td>{userDatas[0][i].subject_name}</td>
-                        <td>{userDatas[0][i].lecture_name}</td>
-                        <td>{userDatas[0][i].Units}</td>
-                        <th>{userDatas[0][i].evaluation}</th>
-                        <th>{userDatas[0][i].Dividend_period}</th>
-                    </tr>
-                );
+                fourthData.push(userDatas[0][i]);
                 break;
         }
     }
+    const columns = [
+        { dataField: "subject_name", text: "科目名", sort: true, editable: false },
+        { dataField: "lecture_name", text: "講師", sort: true, editable: false },
+        {
+            dataField: "Units",
+            text: "単位",
+            sort: true,
+            sortFunc: (a: any, b: any, order: any) => {
+                if (order === 'asc') {
+                    return b - a;
+                }
+                return a - b; // desc
+            },
+            editable: false
+        },
+        {
+            dataField: "evaluation",
+            text: "評価",
+            sort: true,
+            sortFunc: (a: any, b: any, order: any) => {
+                //秀を0,優を1,良を2,可を3、不可を4に変換する関数を作る
+            },
+            editable: false 
+        },         
+        { dataField: "Dividend_period", text: "年度", sort: true, editable: false },
+    ];
+    const defaultSorted: any = [{
+        dataField: "Dividend_period",
+        order: "asc"
+    }];
     return (
-        <React.Fragment>
+        <Tab.Content>
             <Tab.Pane eventKey="link-0">
-                <Table striped bordered hover>
-                    {gradeElements}
-                    <tbody>
-                        {listAllTables}
-                    </tbody>
-                </Table>
+                <BootstrapTable
+                    data={allData}
+                    columns={columns}
+                    keyField={"subject_name lecture_name"}
+                    striped
+                    hover
+                    bootstrap4
+                    bordered
+                    defaultSorted={defaultSorted}
+                />
             </Tab.Pane>
             <Tab.Pane eventKey="link-1">
-                <Table striped bordered hover>
-                    {gradeElements}
-                    <tbody>
-                        {listFirstTables}
-                    </tbody>
-                </Table>
+                <BootstrapTable
+                    data={firstData}
+                    columns={columns}
+                    keyField={"subject_name lecture_name"}
+                    striped
+                    hover
+                    bootstrap4
+                    bordered
+                    defaultSorted={defaultSorted}
+                />
             </Tab.Pane>
             <Tab.Pane eventKey="link-2">
-                <Table striped bordered hover>
-                    {gradeElements}
-                    <tbody>
-                        {listSecondTables}
-                    </tbody>
-                </Table>
+                <BootstrapTable
+                    data={secondData}
+                    columns={columns}
+                    keyField={"subject_name lecture_name"}
+                    striped
+                    hover
+                    bootstrap4
+                    bordered
+                    defaultSorted={defaultSorted}
+                />
             </Tab.Pane>
             <Tab.Pane eventKey="link-3">
-                <Table striped bordered hover>
-                    {gradeElements}
-                    <tbody>
-                        {listThirdTables}
-                    </tbody>
-                </Table>
+                <BootstrapTable
+                    data={therdData}
+                    columns={columns}
+                    keyField={"subject_name lecture_name"}
+                    striped
+                    hover
+                    bootstrap4
+                    bordered
+                    defaultSorted={defaultSorted}
+                />
             </Tab.Pane>
             <Tab.Pane eventKey="link-4">
-                <Table striped bordered hover>
-                    {gradeElements}
-                    <tbody>
-                        {listFourthTables}
-                    </tbody>
-                </Table>
+                <BootstrapTable
+                    data={fourthData}
+                    columns={columns}
+                    keyField={"subject_name lecture_name"}
+                    striped
+                    hover
+                    bootstrap4
+                    bordered
+                    defaultSorted={defaultSorted}
+                />
             </Tab.Pane>
-        </React.Fragment>
+        </Tab.Content>
     )
 }
+
+// function showIndivGrade(userDatas: any, username: string) {
+//     const gradeElements: JSX.Element = (
+//         <thead>
+//             <tr>
+//                 <th>科目名</th>
+//                 <th>講師</th>
+//                 <th>単位</th>
+//                 <th>評価</th>
+//                 <th>学期</th>
+//             </tr>
+//         </thead>
+//     );
+//     const ADMIS_YEARS = GetAdmis(username);
+//     let listAllTables: JSX.Element[] = new Array();
+//     let listFirstTables: JSX.Element[] = new Array();
+//     let listSecondTables: JSX.Element[] = new Array();
+//     let listThirdTables: JSX.Element[] = new Array();
+//     let listFourthTables: JSX.Element[] = new Array();
+
+//     for (let i in userDatas[0]) {
+//         const SUBJECT_YEARS = parseInt(userDatas[0][i].Dividend_period.slice(2, 4), 10);
+//         listAllTables[parseInt(i, 10)] = (
+//             <tr key={i}>
+//                 <td>{userDatas[0][i].subject_name}</td>
+//                 <td>{userDatas[0][i].lecture_name}</td>
+//                 <td>{userDatas[0][i].Units}</td>
+//                 <th>{userDatas[0][i].evaluation}</th>
+//                 <th>{userDatas[0][i].Dividend_period}</th>
+//             </tr>
+//         );
+//         switch (SUBJECT_YEARS - ADMIS_YEARS) {
+//             case 0:
+//                 listFirstTables[parseInt(i, 10)] = (
+//                     <tr key={i}>
+//                         <td>{userDatas[0][i].subject_name}</td>
+//                         <td>{userDatas[0][i].lecture_name}</td>
+//                         <td>{userDatas[0][i].Units}</td>
+//                         <th>{userDatas[0][i].evaluation}</th>
+//                         <th>{userDatas[0][i].Dividend_period}</th>
+//                     </tr>
+//                 );
+//                 break;
+//             case 1:
+//                 listSecondTables[parseInt(i, 10)] = (
+//                     <tr key={i}>
+//                         <td>{userDatas[0][i].subject_name}</td>
+//                         <td>{userDatas[0][i].lecture_name}</td>
+//                         <td>{userDatas[0][i].Units}</td>
+//                         <th>{userDatas[0][i].evaluation}</th>
+//                         <th>{userDatas[0][i].Dividend_period}</th>
+//                     </tr>
+//                 );
+//                 break;
+//             case 2:
+//                 listThirdTables[parseInt(i, 10)] = (
+//                     <tr key={i}>
+//                         <td>{userDatas[0][i].subject_name}</td>
+//                         <td>{userDatas[0][i].lecture_name}</td>
+//                         <td>{userDatas[0][i].Units}</td>
+//                         <th>{userDatas[0][i].evaluation}</th>
+//                         <th>{userDatas[0][i].Dividend_period}</th>
+//                     </tr>
+//                 );
+//                 break;
+//             case 3:
+//                 listFourthTables[parseInt(i, 10)] = (
+//                     <tr key={i}>
+//                         <td>{userDatas[0][i].subject_name}</td>
+//                         <td>{userDatas[0][i].lecture_name}</td>
+//                         <td>{userDatas[0][i].Units}</td>
+//                         <th>{userDatas[0][i].evaluation}</th>
+//                         <th>{userDatas[0][i].Dividend_period}</th>
+//                     </tr>
+//                 );
+//                 break;
+//         }
+//     }
+//     return (
+//         <React.Fragment>
+//             <Tab.Pane eventKey="link-0">
+//                 <Table striped bordered hover>
+//                     {gradeElements}
+//                     <tbody>
+//                         {listAllTables}
+//                     </tbody>
+//                 </Table>
+//             </Tab.Pane>
+//             <Tab.Pane eventKey="link-1">
+//                 <Table striped bordered hover>
+//                     {gradeElements}
+//                     <tbody>
+//                         {listFirstTables}
+//                     </tbody>
+//                 </Table>
+//             </Tab.Pane>
+//             <Tab.Pane eventKey="link-2">
+//                 <Table striped bordered hover>
+//                     {gradeElements}
+//                     <tbody>
+//                         {listSecondTables}
+//                     </tbody>
+//                 </Table>
+//             </Tab.Pane>
+//             <Tab.Pane eventKey="link-3">
+//                 <Table striped bordered hover>
+//                     {gradeElements}
+//                     <tbody>
+//                         {listThirdTables}
+//                     </tbody>
+//                 </Table>
+//             </Tab.Pane>
+//             <Tab.Pane eventKey="link-4">
+//                 <Table striped bordered hover>
+//                     {gradeElements}
+//                     <tbody>
+//                         {listFourthTables}
+//                     </tbody>
+//                 </Table>
+//             </Tab.Pane>
+//         </React.Fragment>
+//     )
+// }

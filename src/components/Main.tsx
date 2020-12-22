@@ -33,6 +33,7 @@ class Main extends React.Component<any, any> {
             getIndivGrade()
                 .then(res => {
                     this.setState({ userDatas: res.data });
+                    console.log(res.data);
                 }).catch(error => {
                     console.error(error.response);
                     this.setState({ result: <p className="error"><b>成績情報を取得できませんでした。</b></p> });
@@ -72,7 +73,9 @@ class Main extends React.Component<any, any> {
                                     flag={this.state.flag}
                                     username={this.state.username}
                                     result={this.state.result}
-                                    outputHandler={this.outputEvent} />)} />
+                                    outputHandler={this.outputEvent}
+                                />
+                            )} />
                             <Route exact path="/upload" render={() => <Upload flag={this.state.flag} />} />
                             <Route exact path="/registration" render={() => <Registration flag={this.state.flag} />} />
                             <Route exact path="/bbs" render={() => <BBS flag={this.state.flag} username={this.state.username} />} />
@@ -83,7 +86,8 @@ class Main extends React.Component<any, any> {
                                 isLoading={this.state.isLoading}
                                 flag={this.state.flag}
                                 username={this.state.username}
-                                studentNum={this.state.studentNum} />
+                                studentNum={this.state.studentNum}
+                            />
                         </Col>
                     </Row>
                     <Foot />
