@@ -10,6 +10,7 @@ import Upload from './Upload';
 import Registration from './Registration';
 import { getSourtGrade, getIndivGrade } from './Auth';
 import BBS from './BBS'
+import Reregistration from "./Reregistration";
 
 class Main extends React.Component<any, any> {
     constructor(props: any) {
@@ -75,6 +76,7 @@ class Main extends React.Component<any, any> {
                             <Route exact path="/upload" render={() => <Upload flag={this.state.flag} />} />
                             <Route exact path="/registration" render={() => <Registration flag={this.state.flag} />} />
                             <Route exact path="/bbs" render={() => <BBS flag={this.state.flag} username={this.state.username} />} />
+                            <Route exact path="/reregistration" render={() => <Reregistration/>} />
                         </Col>
                         <Col xs="auto" sm="auto" md="auto" lg="auto" xl="auto">
                             <Info userDatas={this.state.userDatas}
