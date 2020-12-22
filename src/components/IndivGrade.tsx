@@ -3,6 +3,7 @@ import Table from 'react-bootstrap/Table';
 import Nav from 'react-bootstrap/Nav';
 import Tab from 'react-bootstrap/Tab';
 import { Container } from 'react-bootstrap';
+import BootstrapTable from 'react-bootstrap-table-next';
 import { GetAdmis } from './GetAdmis';
 
 interface Props {
@@ -12,6 +13,7 @@ interface Props {
 
 export default class IndivGrade extends React.Component<Props, any> {
     render() {
+        hoge(this.props.userDatas, this.props.username);
         return (
             <Container>
                 <Tab.Container defaultActiveKey="link-0">
@@ -33,12 +35,38 @@ export default class IndivGrade extends React.Component<Props, any> {
                         </Nav.Item>
                     </Nav>
                     <Tab.Content>
-                        {showIndivGrade(this.props.userDatas, this.props.username)}
+                        {/* {showIndivGrade(this.props.userDatas, this.props.username)} */}
+                        {hoge(this.props.userDatas, this.props.username)}
                     </Tab.Content>
                 </Tab.Container>
             </Container>
         );
     }
+}
+
+function hoge(userDatas: any, username: string) {
+    const ADMIS_YEARS = GetAdmis(username);
+    const data = []
+    for (let i in userDatas[0]) {
+        data.push(userDatas[0][i]);
+    }
+    const columns = [
+        { dataField: "subject_name", text: "科目名", sort: true, editable: false },
+        { dataField: "lecture_name", text: "講師", sort: true, editable: false },
+        { dataField: "Units", text: "単位", sort: true, editable: false },
+        { dataField: "evaluation", text: "評価", sort: true, editable: false },
+        { dataField: "Dividend_period", text: "年度", sort: true, editable: false },
+    ]
+    console.log(data);
+    return (
+        <BootstrapTable
+            data={data}
+            columns={columns}
+            keyField="subject_name lecture_name"
+            bootstrap4={true}
+            bordered={true}
+        />
+    )
 }
 
 function showIndivGrade(userDatas: any, username: string) {
