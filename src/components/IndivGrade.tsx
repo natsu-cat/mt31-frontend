@@ -14,7 +14,6 @@ interface Props {
 
 export default class IndivGrade extends React.Component<Props, any> {
     render() {
-        hoge(this.props.userDatas, this.props.username);
         return (
             <Container>
                 <Tab.Container defaultActiveKey="link-0">
@@ -35,46 +34,131 @@ export default class IndivGrade extends React.Component<Props, any> {
                             <Nav.Link eventKey="link-4">4年生</Nav.Link>
                         </Nav.Item>
                     </Nav>
-                    <Tab.Content>
-                        {/* {showIndivGrade(this.props.userDatas, this.props.username)} */}
-                    </Tab.Content>
+                    {showIndivGrade(this.props.userDatas, this.props.username)}
                 </Tab.Container>
-                {hoge(this.props.userDatas, this.props.username)}
             </Container>
         );
     }
 }
 
-function hoge(userDatas: any, username: string) {
+function showIndivGrade(userDatas: any, username: string) {
     const ADMIS_YEARS = GetAdmis(username);
-    const data = [];
+    const allData = [];
+    const firstData = [];
+    const secondData = [];
+    const therdData = [];
+    const fourthData = [];
     for (let i in userDatas[0]) {
-        data.push(userDatas[0][i]);
+        const SUBJECT_YEARS = parseInt(userDatas[0][i].Dividend_period.slice(2, 4), 10);
+        allData.push(userDatas[0][i]);
+        switch (SUBJECT_YEARS - ADMIS_YEARS) {
+            case 0:
+                firstData.push(userDatas[0][i]);
+                break;
+            case 1:
+                secondData.push(userDatas[0][i]);
+                break;
+            case 2:
+                therdData.push(userDatas[0][i]);
+                break;
+            case 3:
+                fourthData.push(userDatas[0][i]);
+                break;
+        }
     }
     const columns = [
         { dataField: "subject_name", text: "科目名", sort: true, editable: false },
         { dataField: "lecture_name", text: "講師", sort: true, editable: false },
-        { dataField: "Units", text: "単位", sort: true, editable: false },
-        { dataField: "evaluation", text: "評価", sort: true, editable: false },
+        {
+            dataField: "Units",
+            text: "単位",
+            sort: true,
+            sortFunc: (a: any, b: any, order: any) => {
+                if (order === 'asc') {
+                    return b - a;
+                }
+                return a - b; // desc
+            },
+            editable: false
+        },
+        {
+            dataField: "evaluation",
+            text: "評価",
+            sort: true,
+            sortFunc: (a: any, b: any, order: any) => {
+                //秀を0,優を1,良を2,可を3、不可を4に変換する関数を作る
+            },
+            editable: false 
+        },         
         { dataField: "Dividend_period", text: "年度", sort: true, editable: false },
     ];
     const defaultSorted: any = [{
         dataField: "Dividend_period",
         order: "asc"
     }];
-    console.log(data);
-    console.log(ADMIS_YEARS);
     return (
-        <BootstrapTable
-            data={data}
-            columns={columns}
-            keyField={"subject_name lecture_name"}
-            striped
-            hover
-            bootstrap4
-            bordered
-            defaultSorted={defaultSorted}
-        />
+        <Tab.Content>
+            <Tab.Pane eventKey="link-0">
+                <BootstrapTable
+                    data={allData}
+                    columns={columns}
+                    keyField={"subject_name lecture_name"}
+                    striped
+                    hover
+                    bootstrap4
+                    bordered
+                    defaultSorted={defaultSorted}
+                />
+            </Tab.Pane>
+            <Tab.Pane eventKey="link-1">
+                <BootstrapTable
+                    data={firstData}
+                    columns={columns}
+                    keyField={"subject_name lecture_name"}
+                    striped
+                    hover
+                    bootstrap4
+                    bordered
+                    defaultSorted={defaultSorted}
+                />
+            </Tab.Pane>
+            <Tab.Pane eventKey="link-2">
+                <BootstrapTable
+                    data={secondData}
+                    columns={columns}
+                    keyField={"subject_name lecture_name"}
+                    striped
+                    hover
+                    bootstrap4
+                    bordered
+                    defaultSorted={defaultSorted}
+                />
+            </Tab.Pane>
+            <Tab.Pane eventKey="link-3">
+                <BootstrapTable
+                    data={therdData}
+                    columns={columns}
+                    keyField={"subject_name lecture_name"}
+                    striped
+                    hover
+                    bootstrap4
+                    bordered
+                    defaultSorted={defaultSorted}
+                />
+            </Tab.Pane>
+            <Tab.Pane eventKey="link-4">
+                <BootstrapTable
+                    data={fourthData}
+                    columns={columns}
+                    keyField={"subject_name lecture_name"}
+                    striped
+                    hover
+                    bootstrap4
+                    bordered
+                    defaultSorted={defaultSorted}
+                />
+            </Tab.Pane>
+        </Tab.Content>
     )
 }
 
