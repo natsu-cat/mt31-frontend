@@ -1,10 +1,8 @@
 import * as React from 'react';
-// import Table from 'react-bootstrap/Table';
 import Nav from 'react-bootstrap/Nav';
 import Tab from 'react-bootstrap/Tab';
 import { Container } from 'react-bootstrap';
 import BootstrapTable from 'react-bootstrap-table-next';
-import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import { GetAdmis } from './GetAdmis';
 import { sortEvaluation, sortSemester } from './Sort';
 
@@ -133,6 +131,7 @@ function showIndivGrade(userDatas: any, username: string) {
         dataField: "Dividend_period",
         order: "asc"
     }];
+    const indication: string = "この学年の成績はありません";
     return (
         <Tab.Content>
             <Tab.Pane eventKey="link-0">
@@ -157,6 +156,7 @@ function showIndivGrade(userDatas: any, username: string) {
                     bootstrap4
                     bordered
                     defaultSorted={defaultSorted}
+                    noDataIndication={indication}
                 />
             </Tab.Pane>
             <Tab.Pane eventKey="link-2">
@@ -169,6 +169,7 @@ function showIndivGrade(userDatas: any, username: string) {
                     bootstrap4
                     bordered
                     defaultSorted={defaultSorted}
+                    noDataIndication={indication}
                 />
             </Tab.Pane>
             <Tab.Pane eventKey="link-3">
@@ -181,6 +182,7 @@ function showIndivGrade(userDatas: any, username: string) {
                     bootstrap4
                     bordered
                     defaultSorted={defaultSorted}
+                    noDataIndication={indication}
                 />
             </Tab.Pane>
             <Tab.Pane eventKey="link-4">
@@ -193,6 +195,7 @@ function showIndivGrade(userDatas: any, username: string) {
                     bootstrap4
                     bordered
                     defaultSorted={defaultSorted}
+                    noDataIndication={indication}
                 />
             </Tab.Pane>
         </Tab.Content>
