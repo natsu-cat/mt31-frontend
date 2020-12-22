@@ -124,3 +124,8 @@ p.success {
     text-decoration: underline;
     cursor : pointer;
 }
+
+
+.bbs_search_form > form {
+    padding: 0px;
+}
