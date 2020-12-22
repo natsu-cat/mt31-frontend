@@ -27,11 +27,11 @@ export function sortSemester(semester: string) {
     let result = 3 * parseInt(semester.slice(2, 4), 10);
     const range = semester.slice(4, 5);
     switch (range) {
-        case "通":
-            return result;
         case "前":
-            return result + 1;
+            return result;
         case "後":
+            return result + 1;
+        case "通":
             return result + 2;
         default:
             return -1;
