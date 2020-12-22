@@ -1,9 +1,12 @@
 import * as React from 'react';
-import { Table, Nav, Tab, Container, Row, Col } from 'react-bootstrap';
+import { Nav, Tab, Container, Row, Col } from 'react-bootstrap';
+import BootstrapTable from 'react-bootstrap-table-next';
 import Select from 'react-select'
+import { GetAdmis } from './GetAdmis';
+import { sortEvaluation, sortSemester } from './Sort';
 
 interface Props {
-    userDatas: any;
+    userDatas: [];
     outputHandler: Function;
 }
 
@@ -33,114 +36,244 @@ class Home extends React.Component<Props, any> {
     }
 
     render() {
-        let group_items;
-        let number_items;
-        let grade_item;
-        group_items = <Col xs="12" sm="12" md="9" lg="9" xl="9">
-            {(() => {
-                var item = [];
-                for (let i = 0; i < this.state.student_number.length; i++) {
-                    item.push({ key: i, value: i, label: this.state.student_number[i] })
-                }
-                return <Select placeholder="グループ" multiple isSearchable onChange={(event) => this.handleChengeGroup(event)} options={item} />
-            })()}
-        </Col>
-        number_items = <Col xs="12" sm="12" md="9" lg="9" xl="9">
-            {(() => {
-                let index = this.state.student_number.indexOf(this.state.select_group);
-                var item = [];
-                if (this.props.userDatas.length > index) {
-                    for (let i = 0; i < this.props.userDatas[index].length; i++) {
-                        for (let y = 0; y < this.props.userDatas[index][i].length; y++) {
-                            let suffix = index + 'x' + i + 'x' + y
-                            item.push({ key: (i * 10) + y, value: suffix, label: this.props.userDatas[index][i][y][0].student_number })
-                        }
-                    }
-                }
-                else {
-                    return <Select multiple isSearchable />;
-                }
-                return <Select placeholder="学籍番号…" multiple isSearchable onChange={(event) => this.handleChengeNumber(event)} options={item} />
-            })()}
-        </Col>
-        if (this.state.select_number != null) {
-            grade_item = <Col xs="auto" sm="auto" md="auto" lg="auto" xl="10">
-                <Tab.Container defaultActiveKey="link-0">
-                    <Nav variant="pills">
-                        <Nav.Item>
-                            <Nav.Link eventKey="link-0">総合</Nav.Link>
-                        </Nav.Item>
-                        <Nav.Item>
-                            <Nav.Link eventKey="link-1">1年生</Nav.Link>
-                        </Nav.Item>
-                        <Nav.Item>
-                            <Nav.Link eventKey="link-2">2年生</Nav.Link>
-                        </Nav.Item>
-                        <Nav.Item>
-                            <Nav.Link eventKey="link-3">3年生</Nav.Link>
-                        </Nav.Item>
-                        <Nav.Item>
-                            <Nav.Link eventKey="link-4">4年生</Nav.Link>
-                        </Nav.Item>
-                    </Nav>
-                    <Tab.Content>
-                        <Tab.Pane eventKey="link-0">
-                            <Table striped bordered hover>
-                                <thead>
-                                    <tr>
-                                        <th>科目名</th>
-                                        <th>講師</th>
-                                        <th>単位</th>
-                                        <th>評価</th>
-                                        <th>年度</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {(() => {
-                                        var item = [];
-                                        for (let i = 0; i < this.props.userDatas[this.state.select_number[0]][this.state.select_number[1]][this.state.select_number[2]][1].length; i++) {
-                                            item.push(
-                                                <tr key={i}>
-                                                    <td>{this.props.userDatas[this.state.select_number[0]][this.state.select_number[1]][this.state.select_number[2]][1][i].subject_name}</td>
-                                                    <td>{this.props.userDatas[this.state.select_number[0]][this.state.select_number[1]][this.state.select_number[2]][1][i].lecture_name}</td>
-                                                    <td>{this.props.userDatas[this.state.select_number[0]][this.state.select_number[1]][this.state.select_number[2]][1][i].Units}</td>
-                                                    <td>{this.props.userDatas[this.state.select_number[0]][this.state.select_number[1]][this.state.select_number[2]][1][i].evaluation}</td>
-                                                    <td>{this.props.userDatas[this.state.select_number[0]][this.state.select_number[1]][this.state.select_number[2]][1][i].Dividend_period}</td>
-                                                </tr>
-                                            )
-                                        }
-                                        return item;
-                                    })()}
-                                </tbody>
-                            </Table>
-                        </Tab.Pane>
-
-                        <Tab.Pane eventKey="link-1">
-                        </Tab.Pane>
-                        <Tab.Pane eventKey="link-2">
-                        </Tab.Pane>
-                        <Tab.Pane eventKey="link-3">
-                        </Tab.Pane>
-                        <Tab.Pane eventKey="link-4">
-                        </Tab.Pane>
-                    </Tab.Content>
-                </Tab.Container>
-            </Col>
-        }
-
         return (
             <Container>
-                <Row className="justify-content-center test">
-                    {group_items}
-                </Row >
-                <Row className="justify-content-center">
-                    {number_items}
-                </Row>
-                <Row className="justify-content-center">
-                    {grade_item}
-                </Row>
+                {showGroupItems(this.state.student_number, this.handleChengeGroup)}
+                {showNumberItems(this.state.student_number, this.state.select_group, this.handleChengeNumber, this.props.userDatas)}
+                {showGradeItems(this.state.select_number, this.props.userDatas)}
             </Container>
         );
     }
 }
 export default Home;
+
+function showGroupItems(studentNum: [], changeHandler: Function) {
+    const group_items: JSX.Element = <Col xs="12" sm="12" md="9" lg="9" xl="9">
+        {(() => {
+            let item = [];
+            for (let i in studentNum) {
+                item.push({ key: i, value: i, label: studentNum[i] });
+            }
+            return <Select placeholder="グループ" multiple isSearchable onChange={(event) => changeHandler(event)} options={item} />
+        })()}
+    </Col>
+    return (
+        <Row className="justify-content-center">
+            {group_items}
+        </Row>
+    );
+}
+
+function showNumberItems(studentNum: string[], select_group: string, changeHandler: Function, userDatas: any) {
+    const number_items = <Col xs="12" sm="12" md="9" lg="9" xl="9">
+        {(() => {
+            let index = studentNum.indexOf(select_group);
+            var item = [];
+            if (userDatas.length > index) {
+                for (let i in userDatas[index]) {
+                    for (let y in userDatas[index][i]) {
+                        let suffix = index + 'x' + i + 'x' + y;
+                        item.push({ key: (parseInt(i, 10) * 10) + y, value: suffix, label: userDatas[index][i][y][0].student_number });
+                    }
+                }
+            } else {
+                return <Select multiple isSearchable />;
+            }
+            return <Select placeholder="学籍番号…" multiple isSearchable onChange={(event) => changeHandler(event)} options={item} />
+        })()}
+    </Col>
+    return (
+        <Row className="justify-content-center">
+            {number_items}
+        </Row>
+    );
+}
+
+function showGradeItems(selectNum: number[], userDatas: any) {
+    let grade_item: JSX.Element[] = new Array();
+    if (selectNum != null) {
+        grade_item.push(
+            <Nav variant="pills">
+                <Nav.Item>
+                    <Nav.Link eventKey="link-0">総合</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link eventKey="link-1">1年生</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link eventKey="link-2">2年生</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link eventKey="link-3">3年生</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link eventKey="link-4">4年生</Nav.Link>
+                </Nav.Item>
+            </Nav>
+        );
+        const ADMIS_YEARS = GetAdmis(userDatas[selectNum[0]][selectNum[1]][selectNum[2]][0].student_number);
+        const allData = [];
+        const firstData = [];
+        const secondData = [];
+        const therdData = [];
+        const fourthData = [];
+        for (let i in userDatas[selectNum[0]][selectNum[1]][selectNum[2]][1]) {
+            const SUBJECT_YEARS = parseInt(userDatas[selectNum[0]][selectNum[1]][selectNum[2]][1][i].Dividend_period.slice(2, 4), 10);
+            allData.push(userDatas[selectNum[0]][selectNum[1]][selectNum[2]][1][i]);
+            switch (SUBJECT_YEARS - ADMIS_YEARS) {
+                case 0:
+                    firstData.push(userDatas[selectNum[0]][selectNum[1]][selectNum[2]][1][i]);
+                    break;
+                case 1:
+                    secondData.push(userDatas[selectNum[0]][selectNum[1]][selectNum[2]][1][i]);
+                    break;
+                case 2:
+                    therdData.push(userDatas[selectNum[0]][selectNum[1]][selectNum[2]][1][i]);
+                    break;
+                case 3:
+                    fourthData.push(userDatas[selectNum[0]][selectNum[1]][selectNum[2]][1][i]);
+                    break;
+            }
+        }
+        const columns = [
+            { dataField: "subject_name", text: "科目名", sort: true, editable: false },
+            { dataField: "lecture_name", text: "講師", sort: true, editable: false },
+            {
+                dataField: "Units",
+                text: "単位",
+                sort: true,
+                sortFunc: (a: any, b: any, order: any) => {
+                    if (order === 'asc') {
+                        return b - a;
+                    }
+                    return a - b; // desc
+                },
+                editable: false
+            },
+            {
+                dataField: "evaluation",
+                text: "評価",
+                sort: true,
+                sortFunc: (a: any, b: any, order: any) => {
+                    const main = sortEvaluation(a.toString());
+                    const sub = sortEvaluation(b.toString());
+                    if (order === 'asc') {
+                        if (main < sub) {
+                            return -1;
+                        } else if (main > sub) {
+                            return 1;
+                        }
+                    }
+                    if (main < sub) {
+                        return 1;
+                    } else if (main > sub) {
+                        return -1;
+                    }
+                    return 0;
+                },
+                editable: false
+            },
+            {
+                dataField: "Dividend_period",
+                text: "年度",
+                sort: true,
+                sortFunc: (a: any, b: any, order: any) => {
+                    const main = sortSemester(a.toString());
+                    const sub = sortSemester(b.toString());
+                    if (order === 'asc') {
+                        if (main < sub) {
+                            return -1;
+                        } else if (main > sub) {
+                            return 1;
+                        }
+                    }
+                    if (main < sub) {
+                        return 1;
+                    } else if (main > sub) {
+                        return -1;
+                    }
+                    return 0;
+                },
+                editable: false
+            },
+        ];
+        const defaultSorted: any = [{
+            dataField: "Dividend_period",
+            order: "asc"
+        }];
+        const indication: string = "この学年の成績はありません";
+        grade_item.push(
+            <Tab.Content>
+                <Tab.Pane eventKey="link-0">
+                    <BootstrapTable
+                        data={allData}
+                        columns={columns}
+                        keyField={"subject_name lecture_name"}
+                        striped
+                        hover
+                        bootstrap4
+                        bordered
+                        defaultSorted={defaultSorted}
+                    />
+                </Tab.Pane>
+                <Tab.Pane eventKey="link-1">
+                    <BootstrapTable
+                        data={firstData}
+                        columns={columns}
+                        keyField={"subject_name lecture_name"}
+                        striped
+                        hover
+                        bootstrap4
+                        bordered
+                        defaultSorted={defaultSorted}
+                        noDataIndication={indication}
+                    />
+                </Tab.Pane>
+                <Tab.Pane eventKey="link-2">
+                    <BootstrapTable
+                        data={secondData}
+                        columns={columns}
+                        keyField={"subject_name lecture_name"}
+                        striped
+                        hover
+                        bootstrap4
+                        bordered
+                        defaultSorted={defaultSorted}
+                        noDataIndication={indication}
+                    />
+                </Tab.Pane>
+                <Tab.Pane eventKey="link-3">
+                    <BootstrapTable
+                        data={therdData}
+                        columns={columns}
+                        keyField={"subject_name lecture_name"}
+                        striped
+                        hover
+                        bootstrap4
+                        bordered
+                        defaultSorted={defaultSorted}
+                        noDataIndication={indication}
+                    />
+                </Tab.Pane>
+                <Tab.Pane eventKey="link-4">
+                    <BootstrapTable
+                        data={fourthData}
+                        columns={columns}
+                        keyField={"subject_name lecture_name"}
+                        striped
+                        hover
+                        bootstrap4
+                        bordered
+                        defaultSorted={defaultSorted}
+                        noDataIndication={indication}
+                    />
+                </Tab.Pane>
+            </Tab.Content>
+        )
+    }
+    return (
+        <Tab.Container defaultActiveKey="link-0">
+            {grade_item}
+        </Tab.Container>
+    )
+}
