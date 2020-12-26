@@ -20,6 +20,7 @@
   "homepage": "https://github.com/natsu-cat/mt31-frontend#readme",
   "devDependencies": {
     "@types/react": "^16.9.55",
+    "@types/react-bootstrap-table2-paginator": "^2.1.1",
     "@types/react-dom": "^16.9.9",
     "@types/react-router-dom": "^5.1.6",
     "@types/react-select": "^3.0.27",
@@ -30,6 +31,7 @@
     "react": "^17.0.1",
     "react-anchor-link-smooth-scroll": "^1.0.12",
     "react-bootstrap": "^1.4.0",
+    "react-bootstrap-table2-paginator": "^2.1.2",
     "react-dom": "^17.0.1",
     "react-file-reader": "^1.1.4",
     "react-router": "^5.2.0",

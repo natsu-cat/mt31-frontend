@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Nav, Tab, Container, Row, Col } from 'react-bootstrap';
 import BootstrapTable from 'react-bootstrap-table-next';
+import paginationFactory from 'react-bootstrap-table2-paginator';
 import Select from 'react-select'
 import { GetAdmis } from './GetAdmis';
 import { sortEvaluation, sortSemester } from './Sort';
@@ -19,9 +20,11 @@ class Home extends React.Component<Props, any> {
             student_number: ["A0~9", "B0~9", "C0~9", "D0~9", "E0~9", "F0~9", "G0~9", "H0~9", "I0~9", "J0~9", "K0~9", "L0~9", "M0~9", "N0~9", "O0~9", "P0~9", "Q0~9", "R0~9", "S0~9", "T0~9", "U0~9", "V0~9", "W0~9", "X0~9", "Y0~9", "Z0~9"],
             select_group: 'A0~9',/*どの学生番号のグループが選ばれたか */
             select_number: null, /*どの学籍番号の人が選ばれたか */
+            isAll: false    /*全データ表示の画面かどうか */
         };
         this.handleChengeGroup = this.handleChengeGroup.bind(this);
         this.handleChengeNumber = this.handleChengeNumber.bind(this);
+        this.handleChangeAllGRade = this.handleChangeAllGRade.bind(this);
     }
 
     handleChengeGroup(event: any) {
@@ -35,17 +38,132 @@ class Home extends React.Component<Props, any> {
         this.props.outputHandler(split_box);
     }
 
+    handleChangeAllGRade() {
+        if (this.state.isAll) {
+            this.setState({ isAll: false });
+        } else {
+            this.setState({ isAll: true });
+        }
+    }
+
     render() {
-        return (
-            <Container>
-                {showGroupItems(this.state.student_number, this.handleChengeGroup)}
-                {showNumberItems(this.state.student_number, this.state.select_group, this.handleChengeNumber, this.props.userDatas)}
-                {showGradeItems(this.state.select_number, this.props.userDatas)}
-            </Container>
-        );
+        if (!this.state.isAll) {
+            return (
+                <Container>
+                    {showAllGradeItems(this.props.userDatas, this.handleChangeAllGRade)}
+                </Container>
+            );
+        } else {
+            return (
+                <Container>
+                    {showGroupItems(this.state.student_number, this.handleChengeGroup)}
+                    {showNumberItems(this.state.student_number, this.state.select_group, this.handleChengeNumber, this.props.userDatas)}
+                    {showGradeItems(this.state.select_number, this.props.userDatas)}
+                </Container>
+            );
+        }
     }
 }
 export default Home;
+
+function showAllGradeItems(userDatas: any, changeHandler: Function) {
+    const data = [];
+    for (let idx1 in userDatas) {
+        for (let idx2 in userDatas[idx1]) {
+            for (let idx3 in userDatas[idx1][idx2]) {
+                for (let idx4 in userDatas[idx1][idx2][idx3][1]) {
+                    data.push(Object.assign({}, userDatas[idx1][idx2][idx3][0], userDatas[idx1][idx2][idx3][1][idx4]));
+                }
+            }
+        }
+    }
+    const columns = [
+        { dataField: "student_number", text: "学籍番号", sort: true, editable: false },
+        { dataField: "subject_name", text: "科目名", sort: true, editable: false },
+        { dataField: "lecture_name", text: "講師", sort: true, editable: false },
+        {
+            dataField: "Units",
+            text: "単位",
+            sort: true,
+            sortFunc: (a: any, b: any, order: any) => {
+                if (order === 'asc') {
+                    return b - a;
+                }
+                return a - b; // desc
+            },
+            editable: false
+        },
+        {
+            dataField: "evaluation",
+            text: "評価",
+            sort: true,
+            sortFunc: (a: any, b: any, order: any) => {
+                const main = sortEvaluation(a.toString());
+                const sub = sortEvaluation(b.toString());
+                if (order === 'asc') {
+                    if (main < sub) {
+                        return -1;
+                    } else if (main > sub) {
+                        return 1;
+                    }
+                }
+                if (main < sub) {
+                    return 1;
+                } else if (main > sub) {
+                    return -1;
+                }
+                return 0;
+            },
+            editable: false
+        },
+        {
+            dataField: "Dividend_period",
+            text: "年度",
+            sort: true,
+            sortFunc: (a: any, b: any, order: any) => {
+                const main = sortSemester(a.toString());
+                const sub = sortSemester(b.toString());
+                if (order === 'asc') {
+                    if (main < sub) {
+                        return -1;
+                    } else if (main > sub) {
+                        return 1;
+                    }
+                }
+                if (main < sub) {
+                    return 1;
+                } else if (main > sub) {
+                    return -1;
+                }
+                return 0;
+            },
+            editable: false
+        },
+    ];
+    const defaultSorted: any = [{
+        dataField: "student_number",
+        order: "asc"
+    }];
+    const grade_items: JSX.Element[] = new Array();
+    grade_items.push(
+        <BootstrapTable
+            data={data}
+            columns={columns}
+            keyField={"student_number subject_name"}
+            striped
+            hover
+            bootstrap4
+            bordered
+            defaultSorted={defaultSorted}
+            pagination={paginationFactory()}
+        />
+    );
+    return (
+        <React.Fragment>
+            {grade_items}
+        </React.Fragment>
+    );
+}
 
 function showGroupItems(studentNum: [], changeHandler: Function) {
     const group_items: JSX.Element = <Col xs="12" sm="12" md="9" lg="9" xl="9">
@@ -90,7 +208,7 @@ function showNumberItems(studentNum: string[], select_group: string, changeHandl
 }
 
 function showGradeItems(selectNum: number[], userDatas: any) {
-    let grade_item: JSX.Element[] = new Array();
+    const grade_item: JSX.Element[] = new Array();
     if (selectNum != null) {
         grade_item.push(
             <Nav variant="pills">

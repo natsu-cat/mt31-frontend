@@ -43,6 +43,7 @@ class Main extends React.Component<any, any> {
             getSourtGrade()
                 .then(res => {
                     this.setState({ userDatas: res.data });
+                    console.log(res.data);
                 }).catch(error => {
                     console.error(error.response);
                     this.setState({ result: <p className="error"><b>成績情報を取得できませんでした。</b></p> });
@@ -58,8 +59,7 @@ class Main extends React.Component<any, any> {
             <Router>
                 <Container fluid="md" id="wrap">
                     <Head username={this.state.username} />
-                    <Row className="main_item"></Row>
-                    <Row>
+                    <Row className="main_item">
                         <Col lg="2">
                             <Side flag={this.state.flag} />
                         </Col>
@@ -79,7 +79,7 @@ class Main extends React.Component<any, any> {
                             <Route exact path="/upload" render={() => <Upload flag={this.state.flag} />} />
                             <Route exact path="/registration" render={() => <Registration flag={this.state.flag} />} />
                             <Route exact path="/bbs" render={() => <BBS flag={this.state.flag} username={this.state.username} />} />
-                            <Route exact path="/reregistration" render={() => <Reregistration/>} />
+                            <Route exact path="/reregistration" render={() => <Reregistration />} />
                         </Col>
                         <Col xs="auto" sm="auto" md="auto" lg="auto" xl="auto">
                             <Info userDatas={this.state.userDatas}
