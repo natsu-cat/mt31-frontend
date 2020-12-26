@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Nav, Tab, Container, Row, Col } from 'react-bootstrap';
+import { Nav, Tab, Container, Row, Col, ButtonGroup, Button } from 'react-bootstrap';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import Select from 'react-select'
@@ -47,7 +47,7 @@ class Home extends React.Component<Props, any> {
     }
 
     render() {
-        if (!this.state.isAll) {
+        if (this.state.isAll) {
             return (
                 <Container>
                     {showAllGradeItems(this.props.userDatas, this.handleChangeAllGRade)}
@@ -56,6 +56,10 @@ class Home extends React.Component<Props, any> {
         } else {
             return (
                 <Container>
+                    <ButtonGroup toggle>
+                        <Button variant="outline-primary" onClick={this.handleChangeAllGRade}>全成績</Button>
+                        <Button variant="outline-primary" active>生徒別</Button>
+                    </ButtonGroup>
                     {showGroupItems(this.state.student_number, this.handleChengeGroup)}
                     {showNumberItems(this.state.student_number, this.state.select_group, this.handleChengeNumber, this.props.userDatas)}
                     {showGradeItems(this.state.select_number, this.props.userDatas)}
@@ -66,7 +70,7 @@ class Home extends React.Component<Props, any> {
 }
 export default Home;
 
-function showAllGradeItems(userDatas: any, changeHandler: Function) {
+function showAllGradeItems(userDatas: any, changeHandler: () => void) {
     const data = [];
     for (let idx1 in userDatas) {
         for (let idx2 in userDatas[idx1]) {
@@ -145,7 +149,11 @@ function showAllGradeItems(userDatas: any, changeHandler: Function) {
         order: "asc"
     }];
     const grade_items: JSX.Element[] = new Array();
-    grade_items.push(
+    grade_items.push(<React.Fragment>
+        <ButtonGroup toggle>
+            <Button variant="outline-primary" active>全成績</Button>
+            <Button variant="outline-primary" onClick={changeHandler}>生徒別</Button>
+        </ButtonGroup>
         <BootstrapTable
             data={data}
             columns={columns}
@@ -157,7 +165,7 @@ function showAllGradeItems(userDatas: any, changeHandler: Function) {
             defaultSorted={defaultSorted}
             pagination={paginationFactory()}
         />
-    );
+    </React.Fragment>);
     return (
         <React.Fragment>
             {grade_items}
