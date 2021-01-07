@@ -146,3 +146,14 @@ p.success {
 .react-bootstrap-table th .caret-4-desc:before{margin-left:3.5px;content:"\2191";opacity:.4}
 .react-bootstrap-table th .caret-4-desc:after{content:"\2193"}
 .react-bootstrap-table td.react-bs-table-no-data{text-align:center}
+
+
+/*about*/
+
+.title_center{
+    margin-bottom: 20px;
+}
+
+.about_item > *{
+    margin-bottom: 30px;
+}
