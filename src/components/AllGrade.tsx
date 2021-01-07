@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Nav, Tab, Container, Row, Col, ButtonGroup, Button } from 'react-bootstrap';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
+import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 import Select from 'react-select'
 import { GetAdmis } from './GetAdmis';
 import { sortEvaluation, sortSemester } from './Sort';
@@ -18,7 +19,7 @@ class Home extends React.Component<Props, any> {
         this.state = {
             /*学生番号一覧 */
             student_number: ["A0~9", "B0~9", "C0~9", "D0~9", "E0~9", "F0~9", "G0~9", "H0~9", "I0~9", "J0~9", "K0~9", "L0~9", "M0~9", "N0~9", "O0~9", "P0~9", "Q0~9", "R0~9", "S0~9", "T0~9", "U0~9", "V0~9", "W0~9", "X0~9", "Y0~9", "Z0~9"],
-            select_group: 'A0~9',/*どの学生番号のグループが選ばれたか */
+            select_group: null,/*どの学生番号のグループが選ばれたか */
             select_number: null, /*どの学籍番号の人が選ばれたか */
             isAll: false    /*全データ表示の画面かどうか */
         };
@@ -60,8 +61,8 @@ class Home extends React.Component<Props, any> {
                         <Button variant="outline-primary" onClick={this.handleChangeAllGRade}>全成績</Button>
                         <Button variant="outline-primary" active>生徒別</Button>
                     </ButtonGroup>
-                    {showGroupItems(this.state.student_number, this.handleChengeGroup)}
-                    {showNumberItems(this.state.student_number, this.state.select_group, this.handleChengeNumber, this.props.userDatas)}
+                    {showGroupItems(this.state.student_number,this.state.select_group, this.handleChengeGroup)}
+                    {showNumberItems(this.state.student_number, this.state.select_group,this.state.select_number, this.handleChengeNumber, this.props.userDatas)}
                     {showGradeItems(this.state.select_number, this.props.userDatas)}
                 </Container>
             );
@@ -82,9 +83,9 @@ function showAllGradeItems(userDatas: any, changeHandler: () => void) {
         }
     }
     const columns = [
-        { dataField: "student_number", text: "学籍番号", sort: true, editable: false },
-        { dataField: "subject_name", text: "科目名", sort: true, editable: false },
-        { dataField: "lecture_name", text: "講師", sort: true, editable: false },
+        { dataField: "student_number", text: "学籍番号", sort: true, editable: false, filter: textFilter() },
+        { dataField: "subject_name", text: "科目名", sort: true, editable: false, filter: textFilter() },
+        { dataField: "lecture_name", text: "講師", sort: true, editable: false, filter: textFilter() },
         {
             dataField: "Units",
             text: "単位",
@@ -95,7 +96,8 @@ function showAllGradeItems(userDatas: any, changeHandler: () => void) {
                 }
                 return a - b; // desc
             },
-            editable: false
+            editable: false,
+            filter: textFilter()
         },
         {
             dataField: "evaluation",
@@ -118,7 +120,8 @@ function showAllGradeItems(userDatas: any, changeHandler: () => void) {
                 }
                 return 0;
             },
-            editable: false
+            editable: false,
+            filter: textFilter()
         },
         {
             dataField: "Dividend_period",
@@ -141,7 +144,8 @@ function showAllGradeItems(userDatas: any, changeHandler: () => void) {
                 }
                 return 0;
             },
-            editable: false
+            editable: false,
+            filter: textFilter()
         },
     ];
     const defaultSorted: any = [{
@@ -164,6 +168,7 @@ function showAllGradeItems(userDatas: any, changeHandler: () => void) {
             bordered
             defaultSorted={defaultSorted}
             pagination={paginationFactory()}
+            filter={filterFactory()}
         />
     </React.Fragment>);
     return (
@@ -173,14 +178,18 @@ function showAllGradeItems(userDatas: any, changeHandler: () => void) {
     );
 }
 
-function showGroupItems(studentNum: [], changeHandler: Function) {
+function showGroupItems(studentNum: string[], select_group: string ,changeHandler: Function) {
+    let placeholder: string = "グループ";
+    if(select_group) {
+        placeholder = select_group;
+    }
     const group_items: JSX.Element = <Col xs="12" sm="12" md="9" lg="9" xl="9">
         {(() => {
             let item = [];
             for (let i in studentNum) {
                 item.push({ key: i, value: i, label: studentNum[i] });
             }
-            return <Select placeholder="グループ" multiple isSearchable onChange={(event) => changeHandler(event)} options={item} />
+            return <Select placeholder={placeholder} multiple isSearchable onChange={(event) => changeHandler(event)} options={item} />
         })()}
     </Col>
     return (
@@ -190,7 +199,11 @@ function showGroupItems(studentNum: [], changeHandler: Function) {
     );
 }
 
-function showNumberItems(studentNum: string[], select_group: string, changeHandler: Function, userDatas: any) {
+function showNumberItems(studentNum: string[], select_group: string, select_number: number[], changeHandler: Function, userDatas: any) {
+    let placeholder: string = "学籍番号…";
+    if(select_number) {
+        placeholder = userDatas[select_number[0]][select_number[1]][select_number[2]][0].student_number;
+    }
     const number_items = <Col xs="12" sm="12" md="9" lg="9" xl="9">
         {(() => {
             let index = studentNum.indexOf(select_group);
@@ -205,7 +218,7 @@ function showNumberItems(studentNum: string[], select_group: string, changeHandl
             } else {
                 return <Select multiple isSearchable />;
             }
-            return <Select placeholder="学籍番号…" multiple isSearchable onChange={(event) => changeHandler(event)} options={item} />
+            return <Select placeholder={placeholder} multiple isSearchable onChange={(event) => changeHandler(event)} options={item} />
         })()}
     </Col>
     return (
