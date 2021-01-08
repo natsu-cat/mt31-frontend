@@ -61,8 +61,8 @@ class Home extends React.Component<Props, any> {
                         <Button variant="outline-primary" onClick={this.handleChangeAllGRade}>全成績</Button>
                         <Button variant="outline-primary" active>生徒別</Button>
                     </ButtonGroup>
-                    {showGroupItems(this.state.student_number,this.state.select_group, this.handleChengeGroup)}
-                    {showNumberItems(this.state.student_number, this.state.select_group,this.state.select_number, this.handleChengeNumber, this.props.userDatas)}
+                    {showGroupItems(this.state.student_number, this.state.select_group, this.handleChengeGroup)}
+                    {showNumberItems(this.state.student_number, this.state.select_group, this.state.select_number, this.handleChengeNumber, this.props.userDatas)}
                     {showGradeItems(this.state.select_number, this.props.userDatas)}
                 </Container>
             );
@@ -178,9 +178,9 @@ function showAllGradeItems(userDatas: any, changeHandler: () => void) {
     );
 }
 
-function showGroupItems(studentNum: string[], select_group: string ,changeHandler: Function) {
+function showGroupItems(studentNum: string[], select_group: string, changeHandler: Function) {
     let placeholder: string = "グループ";
-    if(select_group) {
+    if (select_group) {
         placeholder = select_group;
     }
     const group_items: JSX.Element = <Col xs="12" sm="12" md="9" lg="9" xl="9">
@@ -201,7 +201,7 @@ function showGroupItems(studentNum: string[], select_group: string ,changeHandle
 
 function showNumberItems(studentNum: string[], select_group: string, select_number: number[], changeHandler: Function, userDatas: any) {
     let placeholder: string = "学籍番号…";
-    if(select_number) {
+    if (select_number) {
         placeholder = userDatas[select_number[0]][select_number[1]][select_number[2]][0].student_number;
     }
     const number_items = <Col xs="12" sm="12" md="9" lg="9" xl="9">
