@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { Form,Button,Container, Row, Col } from 'react-bootstrap';
+import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 
-interface Props{
+interface Props {
 
 }
 
-class Reregistration extends React.Component<Props,any> {
+class Reregistration extends React.Component<Props, any> {
 
-    constructor(props: Props){
+    constructor(props: Props) {
         super(props)
         this.state = {
             password: '',
@@ -18,17 +18,17 @@ class Reregistration extends React.Component<Props,any> {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleChange(e: any){
-        this.setState({[e.target.id]: e.target.value});
+    handleChange(e: any) {
+        this.setState({ [e.target.id]: e.target.value });
     }
 
-    handleSubmit(e: any){
+    handleSubmit(e: any) {
         e.preventDefault();
-        if(this.state.password == '' || this.state.re_password == ''){
+        if (this.state.password == '' || this.state.re_password == '') {
             this.setState({ result: <p className="error"><b>エラー： パスワードを入力してください</b></p> });
-            
+
         }
-        else if(this.state.password == this.state.re_password){
+        else if (this.state.password == this.state.re_password) {
             alert("ok");
         }
 
@@ -40,7 +40,7 @@ class Reregistration extends React.Component<Props,any> {
                 <Row>
                     <Col>
                         <Form onSubmit={this.handleSubmit}>
-                            <p><b>パスワード再変更</b></p>
+                            <p><b>パスワード変更</b></p>
                             {this.state.result}
                             <Form.Group controlId="password">
                                 <Form.Label>新しいパスワード</Form.Label>

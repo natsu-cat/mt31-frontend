@@ -80,7 +80,7 @@ export function postAdmin(user: string, pwd: string) {
  * @param {FormData} data - csvファイル
  */
 export function postGrade(data: FormData) {
-    return axios.post(URL + "teacher/Grade/",data,{
+    return axios.post(URL + "teacher/Grade/", data, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `JWT ${sessionStorage.getItem("access")}`
@@ -89,7 +89,7 @@ export function postGrade(data: FormData) {
 }
 
 export function postDepart(data: FormData) {
-    return axios.post(URL + "teacher/Depart/",data,{
+    return axios.post(URL + "teacher/Depart/", data, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `JWT ${sessionStorage.getItem("access")}`
@@ -98,7 +98,7 @@ export function postDepart(data: FormData) {
 }
 
 export function postCourse(data: FormData) {
-    return axios.post(URL + "teacher/Course/",data,{
+    return axios.post(URL + "teacher/Course/", data, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `JWT ${sessionStorage.getItem("access")}`
@@ -107,7 +107,7 @@ export function postCourse(data: FormData) {
 }
 
 export function postStudent(data: FormData) {
-    return axios.post(URL + "teacher/Student/",data,{
+    return axios.post(URL + "teacher/Student/", data, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `JWT ${sessionStorage.getItem("access")}`
@@ -116,7 +116,7 @@ export function postStudent(data: FormData) {
 }
 
 export function postSubject(data: FormData) {
-    return axios.post(URL + "teacher/Subject/",data,{
+    return axios.post(URL + "teacher/Subject/", data, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `JWT ${sessionStorage.getItem("access")}`

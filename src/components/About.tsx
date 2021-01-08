@@ -5,7 +5,7 @@ class About extends React.Component {
 
     constructor(props: any) {
         super(props);
-        this.state ={
+        this.state = {
 
         }
     }
@@ -14,7 +14,8 @@ class About extends React.Component {
             <Container className="about_item">
                 <Row>
                     <Col xs="12" sm="12" md="12" lg="12" xl="12">
-                        <h3 className="title_center">成績紹介システムについて</h3></Col>
+                        <h3 className="title_center">成績紹介システムについて</h3>
+                    </Col>
                     <Col xs="auto" sm="auto" md="auto" lg="auto" xl="auto">
                         <a>
                             現在本校では成績の開示が半年に一度紙面でのみ行われており、またその開示機会以外では、自らの成績を知る術がなく不便な時が多々ある。
@@ -22,7 +23,6 @@ class About extends React.Component {
                         </a>
                     </Col>
                 </Row>
-                
                 <Row>
                     <Col xs="12" sm="12" md="12" lg="12" xl="12">
                         <h4 className="title_center">開発環境</h4>
@@ -31,7 +31,6 @@ class About extends React.Component {
                         <a>PyCharm  Python  VisualStudioCode  TypeScript</a>
                     </Col>
                 </Row>
-                
                 <Row>
                     <Col xs="12" sm="12" md="12" lg="12" xl="12">
                         <h4 className="title_center">開発メンバー</h4>

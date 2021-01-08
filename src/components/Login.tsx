@@ -36,7 +36,7 @@ export default class Login extends React.Component<any, any> {
           }).catch(error => {
             console.error(error.response);
             sessionStorage.setItem("flag", "-1");
-            this.setState({ result:<p className="error"><b>認証に失敗しました。</b></p> })
+            this.setState({ result: <p className="error"><b>認証に失敗しました。</b></p> })
           });
       }).catch(error => {
         console.error(error.response);

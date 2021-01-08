@@ -16,7 +16,7 @@ class BBS extends React.Component<Props, any> {
             posts: null,
             loadingf: false,
             limit: 999,
-            keyword:"",
+            keyword: "",
         }
         this.getContext = this.getContext.bind(this);
         this.postContext = this.postContext.bind(this);
@@ -109,8 +109,8 @@ class BBS extends React.Component<Props, any> {
                             delete_button = <Button variant="outline-danger" size="sm" type="submit" onClick={() => this.deleteContext(this.state.posts[i].poster_id)}>削除</Button>
                         }
 
-                        if(this.state.keyword != ""){ /*keywordが入力されたか */
-                            if(this.state.posts[i].poster_content.indexOf(this.state.keyword) != -1){/*keywordを含むものを表示 */
+                        if (this.state.keyword != "") { /*keywordが入力されたか */
+                            if (this.state.posts[i].poster_content.indexOf(this.state.keyword) != -1) {/*keywordを含むものを表示 */
                                 item.push(
                                     <div key={i}>
                                         <Row className="Contributor">
@@ -131,7 +131,7 @@ class BBS extends React.Component<Props, any> {
                                 )
                             }
                         }
-                        else{
+                        else {
                             item.push(
                                 <div key={i}>
                                     <Row className="Contributor">
@@ -173,13 +173,13 @@ class BBS extends React.Component<Props, any> {
                     </Col>
                 </Row>
                 <Row className="justify-content-center">
-                    <Col  xs="12" sm="12" md="12" lg="12" xl="6" className="bbs_search_form">
-                    <Form>
-                        <Form.Group controlId="keyword">
-                            <Form.Control type="text" placeholder="Seacrh.." onChange={this.handleChange}/>
-                        </Form.Group>
-                    </Form>
-                    </Col> 
+                    <Col xs="12" sm="12" md="12" lg="12" xl="6" className="bbs_search_form">
+                        <Form>
+                            <Form.Group controlId="keyword">
+                                <Form.Control type="text" placeholder="Seacrh.." onChange={this.handleChange} />
+                            </Form.Group>
+                        </Form>
+                    </Col>
                 </Row>
                 {in_page_link}
                 {post_item}

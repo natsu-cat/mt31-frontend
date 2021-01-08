@@ -1,7 +1,7 @@
 export function GetAdmis(studentNum: string) {
     let admis_years = 0;
     let alpha = studentNum.slice(0, 1);
-    admis_years += parseInt(studentNum.slice(1,2),10);
+    admis_years += parseInt(studentNum.slice(1, 2), 10);
     switch (alpha) {
         case "A":
             break;
