@@ -81,7 +81,7 @@ class Main extends React.Component<any, any> {
                             <Route exact path="/registration" render={() => <Registration flag={this.state.flag} />} />
                             <Route exact path="/bbs" render={() => <BBS flag={this.state.flag} username={this.state.username} />} />
                             <Route exact path="/reregistration" render={() => <Reregistration />} />
-                            <Route exact path="/about" render={() => <About /> } />
+                            <Route exact path="/about" render={() => <About />} />
                         </Col>
                         <Col xs="auto" sm="auto" md="auto" lg="auto" xl="auto">
                             <Info userDatas={this.state.userDatas}
