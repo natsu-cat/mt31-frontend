@@ -116,9 +116,8 @@ class BBS extends React.Component<Props, any> {
                                         <Row className="Contributor">
                                             <Col xs="auto" sm="auto" md="auto" lg="auto" xl="auto">
                                                 <a>{i + 1} </a>
-                                                <a id="vip_title">oicちゃんねるからVIPがお送りします</a>
-                                                <a>{this.state.posts[i].post_data} </a>
                                                 <a>ID:{this.state.posts[i].poster_name} </a>
+                                                <a>{this.state.posts[i].post_data} </a>
                                                 {delete_button}
                                             </Col>
                                         </Row>
@@ -137,9 +136,8 @@ class BBS extends React.Component<Props, any> {
                                     <Row className="Contributor">
                                         <Col xs="auto" sm="auto" md="auto" lg="auto" xl="auto">
                                             <a>{i + 1} </a>
-                                            <a id="vip_title">oicちゃんねるからVIPがお送りします</a>
-                                            <a>{this.state.posts[i].post_data} </a>
                                             <a>ID:{this.state.posts[i].poster_name} </a>
+                                            <a>{this.state.posts[i].post_data} </a>
                                             {delete_button}
                                         </Col>
                                     </Row>
@@ -159,7 +157,7 @@ class BBS extends React.Component<Props, any> {
 
             in_page_link = <div>
                 <Row className="justify-content-center">
-                    <Col xs="4" sm="4" md="auto" lg="auto" xl="auto"><AnchorLink href={this.state.posts.length - 1}>{this.state.posts.length}勢い</AnchorLink></Col>
+                    <Col xs="4" sm="4" md="auto" lg="auto" xl="auto"><AnchorLink href={this.state.posts.length - 1}>投稿数：{this.state.posts.length}</AnchorLink></Col>
                     <Col xs="4" sm="4" md="auto" lg="auto" xl="auto"><a id="bbs_link" onClick={() => this.handleChangeLimit(999)}>すべて</a></Col>
                     <Col xs="4" sm="4" md="auto" lg="auto" xl="auto"><a id="bbs_link" onClick={() => this.handleChangeLimit(10)}>最新10</a></Col>
                 </Row>
@@ -169,7 +167,7 @@ class BBS extends React.Component<Props, any> {
             <Container>
                 <Row className="justify-content-center">
                     <Col xs="auto" sm="auto" md="auto" lg="auto" xl="auto">
-                        <h4>oicちゃんねる</h4>
+                        <h4>掲示板</h4>
                     </Col>
                 </Row>
                 <Row className="justify-content-center">

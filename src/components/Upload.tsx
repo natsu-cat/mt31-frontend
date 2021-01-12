@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import { Nav,Tab,Form, Button, Container, Row, Col } from 'react-bootstrap';
 import Select from 'react-select'
 import { postGrade, postDepart, postCourse, postStudent, postSubject } from './Auth';
 import ReactFileReader from 'react-file-reader';
@@ -27,6 +27,7 @@ class Upload extends React.Component<Props, any> {
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeUrl = this.handleChangeUrl.bind(this);
         this.post_csv = this.post_csv.bind(this);
+        this.conversion_csv = this.conversion_csv.bind(this);
     }
 
     handleChange(event: any) {
@@ -94,28 +95,61 @@ class Upload extends React.Component<Props, any> {
         }
     }
 
+    conversion_csv(){
+
+    }
+
     render() {
         if (this.props.flag != 1) {                      //管理者以外がアクセスした場合の処理
             return null;
         }
         return (
             <Container>
-                <Row className="justify-content-center">
-                    <Col xs="auto" sm="auto" md="auto" lg="auto" xl="3" >
-                        <Form.Label>improtするファイル選択</Form.Label>
-                        <Select isSearchable onChange={(event) => this.handleChange(event)} options={this.state.options} />
-                    </Col>
-                    <Col xs="auto" sm="auto" md="auto" lg="auto" xl="7" >
-                        <Form onSubmit={this.post_csv}>
-                            <Form.Group>
-                                <Form.Label>{this.state.select_label}</Form.Label>
-                                <ReactFileReader handleFiles={this.post_csv} fileTypes={'.csv'}>
-                                    <Button variant="primary" type="submit">uplaod</Button>
-                                </ReactFileReader>
-                            </Form.Group>
-                        </Form>
-                    </Col>
-                </Row>
+                <Tab.Container defaultActiveKey="first">
+
+                    <Nav variant="pills">
+                        <Nav.Item>
+                            <Nav.Link eventKey="first">アップロード</Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                            <Nav.Link eventKey="second">csv変換</Nav.Link>
+                        </Nav.Item>
+                    </Nav>
+                    <Tab.Content>
+                        <Tab.Pane eventKey="first">
+                            <Row className="justify-content-center">
+                                <Col xs="auto" sm="auto" md="auto" lg="auto" xl="3" >
+                                    <Form.Label>improtするファイル選択</Form.Label>
+                                    <Select isSearchable onChange={(event) => this.handleChange(event)} options={this.state.options} />
+                                </Col>
+                                <Col xs="auto" sm="auto" md="auto" lg="auto" xl="7" >
+                                    <Form onSubmit={this.post_csv}>
+                                        <Form.Group>
+                                            <Form.Label>{this.state.select_label}</Form.Label>
+                                            <ReactFileReader handleFiles={this.post_csv} fileTypes={'.csv'}>
+                                                <Button variant="primary" type="submit">uplaod</Button>
+                                            </ReactFileReader>
+                                        </Form.Group>
+                                    </Form>
+                                </Col>
+                            </Row>
+                        </Tab.Pane>
+                        <Tab.Pane eventKey="second">
+                            <Row className="justify-content-center">
+                                <Col xs="auto" sm="auto" md="auto" lg="auto" xl="7" >
+                                    <Form onSubmit={this.post_csv}>
+                                        <Form.Group>
+                                            <Form.Label>ファイルを選択してください</Form.Label>
+                                            <ReactFileReader handleFiles={this.post_csv} fileTypes={'.csv'}>
+                                                <Button variant="primary" type="submit">conversion</Button>
+                                            </ReactFileReader>
+                                        </Form.Group>
+                                    </Form>
+                                </Col>
+                            </Row>
+                        </Tab.Pane>
+                    </Tab.Content>
+                </Tab.Container>
             </Container>
         );
     }
