@@ -36,24 +36,20 @@ function showElement(flag: number) {
         return (
             <React.Fragment>
                 <Col xs="4" sm="4" md="auto" lg="auto" xl="12"><Nav.Link href="/home"> home </Nav.Link></Col>
-                <Col xs="4" sm="4" md="auto" lg="auto" xl="12"><Nav.Link href="/ranking"> ranking </Nav.Link></Col>
-                <Col xs="4" sm="4" md="auto" lg="auto" xl="12"><Nav.Link href="/course"> course </Nav.Link></Col>
-                <Col xs="4" sm="4" md="auto" lg="auto" xl="12"><Nav.Link href="/about"> about </Nav.Link></Col>
                 <Col xs="4" sm="4" md="auto" lg="auto" xl="12"><Nav.Link href="/upload"> upload </Nav.Link></Col>
-                <Col xs="4" sm="4" md="auto" lg="auto" xl="12"><Nav.Link href="/registration"> registration</Nav.Link></Col>
-                <Col xs="3" sm="auto" md="auto" lg="auto" xl="12"><Nav.Link href="/reregistration"> re-registration</Nav.Link></Col>
                 <Col xs="4" sm="4" md="auto" lg="auto" xl="12"><Nav.Link href="/bbs"> bbs</Nav.Link></Col>
+                <Col xs="4" sm="4" md="auto" lg="auto" xl="12"><Nav.Link href="/about"> about </Nav.Link></Col>
+                <Col xs="4" sm="4" md="auto" lg="auto" xl="12"><Nav.Link href="/registration"> registration</Nav.Link></Col>
+                <Col xs="4" sm="auto" md="auto" lg="auto" xl="12"><Nav.Link href="/reregistration"> reregistration</Nav.Link></Col>
             </React.Fragment>
         );
     } else {
         return (
             <React.Fragment>
                 <Col xs="3" sm="auto" md="auto" lg="auto" xl="12"><Nav.Link href="/home"> home </Nav.Link></Col>
-                <Col xs="3" sm="auto" md="auto" lg="auto" xl="12"><Nav.Link href="/ranking"> ranking </Nav.Link></Col>
-                <Col xs="3" sm="auto" md="auto" lg="auto" xl="12"><Nav.Link href="/course"> course </Nav.Link></Col>
-                <Col xs="3" sm="auto" md="auto" lg="auto" xl="12"><Nav.Link href="/about"> about </Nav.Link></Col>
-                <Col xs="3" sm="auto" md="auto" lg="auto" xl="12"><Nav.Link href="/reregistration"> re-registration</Nav.Link></Col>
                 <Col xs="3" sm="auto" md="auto" lg="auto" xl="12"><Nav.Link href="/bbs"> bbs</Nav.Link></Col>
+                <Col xs="3" sm="auto" md="auto" lg="auto" xl="12"><Nav.Link href="/about"> about </Nav.Link></Col>
+                <Col xs="3" sm="auto" md="auto" lg="auto" xl="12"><Nav.Link href="/reregistration"> reregistration</Nav.Link></Col>
             </React.Fragment>
         );
     }
