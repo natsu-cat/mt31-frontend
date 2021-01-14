@@ -3,7 +3,7 @@ import { Nav,Tab,Form, Button, Container, Row, Col } from 'react-bootstrap';
 import Select from 'react-select'
 import { postGrade, postDepart, postCourse, postStudent, postSubject } from './Auth';
 import ReactFileReader from 'react-file-reader';
-
+import axios from "axios";
 interface Props {
     flag: number;
 }
@@ -95,8 +95,19 @@ class Upload extends React.Component<Props, any> {
         }
     }
 
-    conversion_csv(){
+    conversion_csv(files: any){
 
+        const data = new FormData();
+        data.append("xlsx", files[0]);
+
+        axios.post("http://localhost:8000/api/teacher/change/", data,{
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `JWT ${sessionStorage.getItem("access")}`
+                },
+            }).then((res) => {
+                console.log(res);
+            })
     }
 
     render() {
@@ -140,7 +151,7 @@ class Upload extends React.Component<Props, any> {
                                     <Form onSubmit={this.post_csv}>
                                         <Form.Group>
                                             <Form.Label>ファイルを選択してください</Form.Label>
-                                            <ReactFileReader handleFiles={this.post_csv} fileTypes={'.csv'}>
+                                            <ReactFileReader handleFiles={this.conversion_csv} fileTypes={'.xlsx'}>
                                                 <Button variant="primary" type="submit">conversion</Button>
                                             </ReactFileReader>
                                         </Form.Group>
