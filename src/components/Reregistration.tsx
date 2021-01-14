@@ -1,3 +1,4 @@
+import axios from 'axios';
 import * as React from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 
@@ -23,13 +24,23 @@ class Reregistration extends React.Component<Props, any> {
     }
 
     handleSubmit(e: any) {
+
         e.preventDefault();
         if (this.state.password == '' || this.state.re_password == '') {
             this.setState({ result: <p className="error"><b>エラー： パスワードを入力してください</b></p> });
 
         }
         else if (this.state.password == this.state.re_password) {
-            alert("ok");
+
+            axios.post("http://localhost:8000/api/keyinquey/", {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `JWT ${sessionStorage.getItem("access")}`,
+                    "key":98765,
+                },
+            }).then((res) => {
+                console.log(res);
+            })
         }
 
     }
