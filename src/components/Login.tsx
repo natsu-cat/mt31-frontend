@@ -30,7 +30,9 @@ export default class Login extends React.Component<any, any> {
         sessionStorage.setItem("refresh", res.data.refresh);
         getUser()
           .then(res => {
+            console.log(res.data);
             sessionStorage.setItem("flag", res.data.admin_flag);
+            //sessionStorage.setItem("secret_key", res.data.secret_key);    //バックが更新され次第コメントアウト
             sessionStorage.setItem("isLoggedIn", "true");
             location.href = "/home";                                        //認証通ったのでページ遷移する
           }).catch(error => {
