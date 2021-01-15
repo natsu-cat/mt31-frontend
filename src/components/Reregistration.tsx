@@ -32,7 +32,7 @@ class Reregistration extends React.Component<Props, any> {
         }
         else if (this.state.password == this.state.re_password) {
             //const secret_key = sessionStorage.getItem("secret_key");
-            const secret_key = 987;                  //Teacher用のsecret_key
+            const secret_key = 896797846721;                  //Teacher用のsecret_key
             postKey(secret_key)
                 .then(res => {
                     console.log(res.data);
