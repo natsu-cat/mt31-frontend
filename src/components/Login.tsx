@@ -30,11 +30,11 @@ export default class Login extends React.Component<any, any> {
         sessionStorage.setItem("refresh", res.data.refresh);
         getUser()
           .then(res => {
-            sessionStorage.setItem("flag", res.data[0].admin_flag);
+            sessionStorage.setItem("flag", res.data.admin_flag);
             sessionStorage.setItem("isLoggedIn", "true");
             location.href = "/home";                                        //認証通ったのでページ遷移する
           }).catch(error => {
-            console.error(error.response);
+            console.error(error);
             sessionStorage.setItem("flag", "-1");
             this.setState({ result: <p className="error"><b>認証に失敗しました。</b></p> })
           });
