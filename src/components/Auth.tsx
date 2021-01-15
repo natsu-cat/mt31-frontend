@@ -76,6 +76,29 @@ export function postAdmin(user: string, pwd: string) {
 }
 
 /**
+ * ユーザー情報からユーザーのIDを取得する関数
+ * @param {number} secret_key - secretkey
+ */
+export function postKey(secret_key: number) {
+    return axios.post(URL + "keyinquey/", {
+        headers: {
+            'key': secret_key
+        }
+    });
+}
+
+/**
+ * パスワードを更新する関数
+ * @param id ユーザーID
+ * @param pwd 新しいパスワード
+ */
+export function putPwd(id: number, pwd: string) {
+    return axios.put(URL + "changepw/" + id, {
+        "password": pwd
+    });
+}
+
+/**
  * 各CSVファイルをアップロードする関数
  * @param {FormData} data - csvファイル
  */
