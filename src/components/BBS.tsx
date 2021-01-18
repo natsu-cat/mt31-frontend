@@ -1,7 +1,8 @@
 import * as React from 'react';
-import axios from 'axios';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import AnchorLink from 'react-anchor-link-smooth-scroll';
+import {words} from './Data';
+import {getContext,postContext,deleteContext} from './Auth';
 
 interface Props {
     flag: number;
@@ -17,29 +18,33 @@ class BBS extends React.Component<Props, any> {
             loadingf: false,
             limit: 999,
             keyword: "",
+            warning: null,
         }
-        this.getContext = this.getContext.bind(this);
-        this.postContext = this.postContext.bind(this);
+        this.get = this.get.bind(this);
+        this.post = this.post.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.deleteContext = this.deleteContext.bind(this);
+        this.delete = this.delete.bind(this);
         this.handleChangeLimit = this.handleChangeLimit.bind(this);
     }
 
-    getContext() {
-        axios.get("http://localhost:8000/api/contents", {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `JWT ${sessionStorage.getItem("access")}`
-            },
-        }).then(res => {
+    get() {
+        getContext()
+        .then(res => {
             console.log(res.data);
             this.setState({ posts: res.data });
             this.setState({ loadingf: true });
         })
     }
 
-    postContext() {
-        if (this.state.context != null) {
+    post() {
+        if (this.state.context != null){
+
+            for(var i=0; i<words.length; i++){
+                if( this.state.context.indexOf(words[i]) != -1 ){
+                    alert("不適切な言葉が含まれています");
+                    return ;
+                }
+            }
             var now = new Date();
             var year = now.getFullYear();
             var month = now.getMonth();
@@ -51,23 +56,13 @@ class BBS extends React.Component<Props, any> {
 
             var post_time = year + "-" + month + "-" + day + "T" + hour + ":" + min + ":" + sec + "Z"
             var data = { "poster_name": "", "poster_content": this.state.context, "post_data": post_time }
-            axios.post("http://localhost:8000/api/contents/", data, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `JWT ${sessionStorage.getItem("access")}`
-                }
-            });
+            postContext(data);
         }
     }
 
-    deleteContext(id: any) {
-        axios.delete("http://localhost:8000/api/contents/" + id, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `JWT ${sessionStorage.getItem("access")}`
-            }
-        }).then(() => {
-            this.getContext();
+    delete(id: any) {
+        deleteContext(id).then(() => {
+            this.get();
         })
 
 
@@ -83,7 +78,7 @@ class BBS extends React.Component<Props, any> {
     }
 
     componentDidMount() {
-        this.getContext();
+        this.get();
     }
 
     render() {
@@ -103,10 +98,10 @@ class BBS extends React.Component<Props, any> {
                     }
                     for (let i = initial; i < this.state.posts.length; i++) {
                         if (this.props.flag == 1) {/*教員ならすべての投稿の削除ボタン表示 */
-                            delete_button = <Button variant="outline-danger" size="sm" type="submit" onClick={() => this.deleteContext(this.state.posts[i].poster_id)}>削除</Button>
+                            delete_button = <Button variant="outline-danger" size="sm" type="submit" onClick={() => this.delete(this.state.posts[i].poster_id)}>削除</Button>
                         }
                         else if (this.state.posts[i].poster_name == this.props.username) {/*自分の投稿の場合、削除ボタン表示 */
-                            delete_button = <Button variant="outline-danger" size="sm" type="submit" onClick={() => this.deleteContext(this.state.posts[i].poster_id)}>削除</Button>
+                            delete_button = <Button variant="outline-danger" size="sm" type="submit" onClick={() => this.delete(this.state.posts[i].poster_id)}>削除</Button>
                         }
 
                         if (this.state.keyword != "") { /*keywordが入力されたか */
@@ -117,7 +112,7 @@ class BBS extends React.Component<Props, any> {
                                             <Col xs="auto" sm="auto" md="auto" lg="auto" xl="auto">
                                                 <a>{i + 1} </a>
                                                 <a>ID:{this.state.posts[i].poster_name} </a>
-                                                <a>{this.state.posts[i].post_data} </a>
+                                                <a>{this.state.posts[i].post_data.replace( 'T', ' ').replace( 'Z', ' ')} </a>
                                                 {delete_button}
                                             </Col>
                                         </Row>
@@ -137,7 +132,7 @@ class BBS extends React.Component<Props, any> {
                                         <Col xs="auto" sm="auto" md="auto" lg="auto" xl="auto">
                                             <a>{i + 1} </a>
                                             <a>ID:{this.state.posts[i].poster_name} </a>
-                                            <a>{this.state.posts[i].post_data} </a>
+                                            <a>{this.state.posts[i].post_data.replace( 'T', ' ').replace( 'Z', ' ')} </a>
                                             {delete_button}
                                         </Col>
                                     </Row>
@@ -188,7 +183,7 @@ class BBS extends React.Component<Props, any> {
                             <Form.Group controlId="context">
                                 <Form.Control placeholder="内容" onChange={this.handleChange} />
                             </Form.Group>
-                            <Button onClick={this.postContext} variant="primary" type="submit">書き込む</Button>
+                            <Button onClick={this.post} variant="primary" type="submit">書き込む</Button>
                         </Form>
                     </Col>
                 </Row>
