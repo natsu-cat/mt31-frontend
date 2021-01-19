@@ -83,6 +83,7 @@ function showAllGradeItems(userDatas: any, changeHandler: () => void) {
         }
     }
     const columns = [
+        { dataField: "grade_id", text: "ID", hidden: true },
         { dataField: "student_number", text: "学籍番号", sort: true, editable: false, filter: textFilter() },
         { dataField: "subject_name", text: "科目名", sort: true, editable: false, filter: textFilter() },
         { dataField: "lecture_name", text: "講師", sort: true, editable: false, filter: textFilter() },
@@ -161,7 +162,7 @@ function showAllGradeItems(userDatas: any, changeHandler: () => void) {
         <BootstrapTable
             data={data}
             columns={columns}
-            keyField={"student_number subject_name"}
+            keyField={"grade_id"}
             striped
             hover
             bootstrap4
@@ -275,6 +276,7 @@ function showGradeItems(selectNum: number[], userDatas: any) {
             }
         }
         const columns = [
+            { dataField: "grade_id", text: "ID", hidden: true },
             { dataField: "subject_name", text: "科目名", sort: true, editable: false },
             { dataField: "lecture_name", text: "講師", sort: true, editable: false },
             {
@@ -347,7 +349,7 @@ function showGradeItems(selectNum: number[], userDatas: any) {
                     <BootstrapTable
                         data={allData}
                         columns={columns}
-                        keyField={"subject_name lecture_name"}
+                        keyField={"grade_id"}
                         striped
                         hover
                         bootstrap4
@@ -359,7 +361,7 @@ function showGradeItems(selectNum: number[], userDatas: any) {
                     <BootstrapTable
                         data={firstData}
                         columns={columns}
-                        keyField={"subject_name lecture_name"}
+                        keyField={"grade_id"}
                         striped
                         hover
                         bootstrap4
@@ -372,7 +374,7 @@ function showGradeItems(selectNum: number[], userDatas: any) {
                     <BootstrapTable
                         data={secondData}
                         columns={columns}
-                        keyField={"subject_name lecture_name"}
+                        keyField={"grade_id"}
                         striped
                         hover
                         bootstrap4
@@ -385,7 +387,7 @@ function showGradeItems(selectNum: number[], userDatas: any) {
                     <BootstrapTable
                         data={therdData}
                         columns={columns}
-                        keyField={"subject_name lecture_name"}
+                        keyField={"grade_id"}
                         striped
                         hover
                         bootstrap4
@@ -398,7 +400,7 @@ function showGradeItems(selectNum: number[], userDatas: any) {
                     <BootstrapTable
                         data={fourthData}
                         columns={columns}
-                        keyField={"subject_name lecture_name"}
+                        keyField={"grade_id"}
                         striped
                         hover
                         bootstrap4
