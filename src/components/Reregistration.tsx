@@ -31,8 +31,11 @@ class Reregistration extends React.Component<Props, any> {
 
         }
         else if (this.state.password == this.state.re_password) {
-            //const secret_key = sessionStorage.getItem("secret_key");
-            const secret_key = 896797846721;                  //Teacher用のsecret_key
+            let secret_key_str = sessionStorage.getItem("secret_key");
+            let secret_key: number = 0;
+            if (secret_key_str != null) {
+                secret_key = parseInt(secret_key_str, 10);
+            }
             postKey(secret_key)
                 .then(res => {
                     console.log(res.data);
@@ -47,7 +50,7 @@ class Reregistration extends React.Component<Props, any> {
                         });
                 }).catch(error => {
                     console.error(error);
-                    this.setState({ result: <p className="error"><b>不正なパスワードです</b></p> })
+                    this.setState({ result: <p className="error"><b>ユーザーが認証できませんでした</b></p> })
                 });
         }
     }
