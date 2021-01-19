@@ -42,7 +42,7 @@ class Reregistration extends React.Component<Props, any> {
                     putPwd(res.data.id, this.state.password)
                         .then(res => {
                             console.log(res.data);
-                            this.setState({ result: <p className="success"><b>ユーザー登録に成功しました</b></p> });
+                            this.setState({ result: <p className="success"><b>パスワードの変更に成功しました</b></p> });
                             this.setState({ isReregistered: true });
                         }).catch(error => {
                             console.error(error);
