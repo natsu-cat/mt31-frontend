@@ -28,8 +28,8 @@ export default class Registration extends React.Component<Props, any> {
         let user: string = this.state.username;
         user = user.charAt(0).toUpperCase() + user.slice(1);
         let pwd: string = this.state.password;
-        if (user.length < 6) {
-            this.setState({ result: <p className="error"><b>エラー： ユーザー名は6文字以上入力してください</b></p> })
+        if (user.length < 3) {
+            this.setState({ result: <p className="error"><b>エラー： ユーザー名は3文字以上入力してください</b></p> })
         }
         else if (!pwd.length) {
             this.setState({ result: <p className="error"><b>エラー： パスワードを入力してください</b></p> });
