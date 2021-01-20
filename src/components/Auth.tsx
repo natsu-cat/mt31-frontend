@@ -152,7 +152,7 @@ export function postSubject(data: FormData) {
  */
 
 export function getContext() {
-    return axios.get(URL +"contents", {
+    return axios.get(URL + "contents", {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `JWT ${sessionStorage.getItem("access")}`
@@ -161,7 +161,7 @@ export function getContext() {
 }
 
 export function postContext(data: any) {
-    return axios.post(URL +"contents/", data, {
+    return axios.post(URL + "contents/", data, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `JWT ${sessionStorage.getItem("access")}`
@@ -170,7 +170,7 @@ export function postContext(data: any) {
 }
 
 export function deleteContext(id: any) {
-     return axios.delete(URL + "contents/" + id, {
+    return axios.delete(URL + "contents/" + id, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `JWT ${sessionStorage.getItem("access")}`
