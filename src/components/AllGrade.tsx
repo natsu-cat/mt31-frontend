@@ -40,11 +40,11 @@ class Home extends React.Component<Props, any> {
     }
 
     handleChangeAllGRade() {
-        if (this.state.isAll) {
-            this.setState({ isAll: false });
-        } else {
-            this.setState({ isAll: true });
-        }
+        this.state.isAll ? (
+            this.setState({ isAll: false })
+        ) : (
+                this.setState({ isAll: true })
+            );
     }
 
     render() {
@@ -83,7 +83,31 @@ function showAllGradeItems(userDatas: any, changeHandler: () => void) {
         }
     }
     const columns = [
-        { dataField: "grade_id", text: "ID", hidden: true },
+        {
+            dataField: "grade_id",
+            text: "ID",
+            sort: true,
+            sortFunc: (a: any, b: any, order: any) => {
+                const numA: number = parseInt(a, 10);
+                const numB: number = parseInt(b, 10);
+                if (order === 'asc') {
+                    if (numA < numB) {
+                        return 1;
+                    } else if (numA > numB) {
+                        return -1;
+                    }
+                }
+                if (numA < numB) {
+                    return -1;
+                } else if (numA > numB) {
+                    return 1;
+                }
+                return 0;
+            },
+            editable: false,
+            filter: textFilter(),
+            hidden: true
+        },
         { dataField: "student_number", text: "学籍番号", sort: true, editable: false, filter: textFilter() },
         { dataField: "subject_name", text: "科目名", sort: true, editable: false, filter: textFilter() },
         { dataField: "lecture_name", text: "講師", sort: true, editable: false, filter: textFilter() },
@@ -162,7 +186,7 @@ function showAllGradeItems(userDatas: any, changeHandler: () => void) {
         <BootstrapTable
             data={data}
             columns={columns}
-            keyField={"grade_id"}
+            keyField="grade_id"
             striped
             hover
             bootstrap4
@@ -349,7 +373,7 @@ function showGradeItems(selectNum: number[], userDatas: any) {
                     <BootstrapTable
                         data={allData}
                         columns={columns}
-                        keyField={"grade_id"}
+                        keyField="grade_id"
                         striped
                         hover
                         bootstrap4
@@ -361,7 +385,7 @@ function showGradeItems(selectNum: number[], userDatas: any) {
                     <BootstrapTable
                         data={firstData}
                         columns={columns}
-                        keyField={"grade_id"}
+                        keyField="grade_id"
                         striped
                         hover
                         bootstrap4
@@ -374,7 +398,7 @@ function showGradeItems(selectNum: number[], userDatas: any) {
                     <BootstrapTable
                         data={secondData}
                         columns={columns}
-                        keyField={"grade_id"}
+                        keyField="grade_id"
                         striped
                         hover
                         bootstrap4
@@ -387,7 +411,7 @@ function showGradeItems(selectNum: number[], userDatas: any) {
                     <BootstrapTable
                         data={therdData}
                         columns={columns}
-                        keyField={"grade_id"}
+                        keyField="grade_id"
                         striped
                         hover
                         bootstrap4
@@ -400,7 +424,7 @@ function showGradeItems(selectNum: number[], userDatas: any) {
                     <BootstrapTable
                         data={fourthData}
                         columns={columns}
-                        keyField={"grade_id"}
+                        keyField="grade_id"
                         striped
                         hover
                         bootstrap4
