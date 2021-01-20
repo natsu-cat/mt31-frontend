@@ -137,7 +137,7 @@ function showIndivGrade(userDatas: any, username: string) {
                 <BootstrapTable
                     data={allData}
                     columns={columns}
-                    keyField={"grade_id"}
+                    keyField="grade_id"
                     striped
                     hover
                     bootstrap4
@@ -149,7 +149,7 @@ function showIndivGrade(userDatas: any, username: string) {
                 <BootstrapTable
                     data={firstData}
                     columns={columns}
-                    keyField={"grade_id"}
+                    keyField="grade_id"
                     striped
                     hover
                     bootstrap4
@@ -162,7 +162,7 @@ function showIndivGrade(userDatas: any, username: string) {
                 <BootstrapTable
                     data={secondData}
                     columns={columns}
-                    keyField={"grade_id"}
+                    keyField="grade_id"
                     striped
                     hover
                     bootstrap4
@@ -175,7 +175,7 @@ function showIndivGrade(userDatas: any, username: string) {
                 <BootstrapTable
                     data={therdData}
                     columns={columns}
-                    keyField={"grade_id"}
+                    keyField="grade_id"
                     striped
                     hover
                     bootstrap4
@@ -188,7 +188,7 @@ function showIndivGrade(userDatas: any, username: string) {
                 <BootstrapTable
                     data={fourthData}
                     columns={columns}
-                    keyField={"grade_id"}
+                    keyField="grade_id"
                     striped
                     hover
                     bootstrap4
