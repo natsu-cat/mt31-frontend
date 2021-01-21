@@ -35,21 +35,21 @@ function showElement(flag: number) {
     if (flag == 1) {
         return (
             <React.Fragment>
-                <Col xs="4" sm="4" md="auto" lg="auto" xl="12"><Nav.Link href="/home"> home </Nav.Link></Col>
-                <Col xs="4" sm="4" md="auto" lg="auto" xl="12"><Nav.Link href="/upload"> upload </Nav.Link></Col>
-                <Col xs="4" sm="4" md="auto" lg="auto" xl="12"><Nav.Link href="/bbs"> bbs</Nav.Link></Col>
-                <Col xs="4" sm="4" md="auto" lg="auto" xl="12"><Nav.Link href="/about"> about </Nav.Link></Col>
-                <Col xs="4" sm="4" md="auto" lg="auto" xl="12"><Nav.Link href="/registration"> registration</Nav.Link></Col>
-                <Col xs="4" sm="auto" md="auto" lg="auto" xl="12"><Nav.Link href="/reregistration"> reregistration</Nav.Link></Col>
+                <Col xs="6" sm="6" md="4" lg="12" xl="12"><Nav.Link href="/home"> 成績 </Nav.Link></Col>
+                <Col xs="6" sm="6" md="4" lg="12" xl="12"><Nav.Link href="/upload"> upload </Nav.Link></Col>
+                <Col xs="6" sm="6" md="4" lg="12" xl="12"><Nav.Link href="/bbs"> 掲示板</Nav.Link></Col>
+                <Col xs="6" sm="6" md="4" lg="12" xl="12"><Nav.Link href="/about"> about </Nav.Link></Col>
+                <Col xs="6" sm="6" md="4" lg="12" xl="12"><Nav.Link href="/registration"> ユーザー登録</Nav.Link></Col>
+                <Col xs="6" sm="6" md="4" lg="12" xl="12"><Nav.Link href="/reregistration"> パスワード変更</Nav.Link></Col>
             </React.Fragment>
         );
     } else {
         return (
             <React.Fragment>
-                <Col xs="3" sm="auto" md="auto" lg="auto" xl="12"><Nav.Link href="/home"> home </Nav.Link></Col>
-                <Col xs="3" sm="auto" md="auto" lg="auto" xl="12"><Nav.Link href="/bbs"> bbs</Nav.Link></Col>
-                <Col xs="3" sm="auto" md="auto" lg="auto" xl="12"><Nav.Link href="/about"> about </Nav.Link></Col>
-                <Col xs="3" sm="auto" md="auto" lg="auto" xl="12"><Nav.Link href="/reregistration"> reregistration</Nav.Link></Col>
+                <Col xs="6" sm="6" md="auto" lg="12" xl="12"><Nav.Link href="/home"> 成績 </Nav.Link></Col>
+                <Col xs="6" sm="6" md="auto" lg="12" xl="12"><Nav.Link href="/bbs"> 掲示板</Nav.Link></Col>
+                <Col xs="6" sm="6" md="auto" lg="12" xl="12"><Nav.Link href="/about"> about </Nav.Link></Col>
+                <Col xs="6" sm="6" md="auto" lg="12" xl="12"><Nav.Link href="/reregistration"> パスワード変更</Nav.Link></Col>
             </React.Fragment>
         );
     }
