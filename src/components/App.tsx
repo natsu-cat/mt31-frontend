@@ -12,18 +12,14 @@ class App extends React.Component<any, any> {
             <BrowserRouter>
                 <Switch>
                     <Route exact path="/login" render={() => (
-                        isLoggedIn ? (
-                            <Redirect to="/" />
-                        ) : (
-                                <Login />
-                            )
+                        isLoggedIn
+                            ? <Redirect to="/" />
+                            : <Login />
                     )} />
                     <Route path="/" render={() => (            //リダイレクト処理
-                        isLoggedIn ? (
-                            <Main />
-                        ) : (
-                                <Redirect to="/login" />
-                            )
+                        isLoggedIn
+                            ? <Main />
+                            : <Redirect to="/login" />
                     )} />
                 </Switch>
             </BrowserRouter>
