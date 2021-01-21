@@ -107,6 +107,7 @@ class Upload extends React.Component<Props, any> {
                     'Content-Type': 'application/json',
                     'Authorization': `JWT ${sessionStorage.getItem("access")}`
                 },
+                responseType: 'blob',
             }).then((res) => {
                 console.log(res.data);
                 this.handle_download(res);
@@ -115,15 +116,13 @@ class Upload extends React.Component<Props, any> {
     }
 
     handle_download(res: any){
-        var bom = new Uint8Array([0xEF, 0xBB,0xBF]);
-        var content =res.data;
-        var blob = new Blob([bom, content], { "type": "text/csv"});
+        var blob = new Blob([res.data], { "type": "application/zip"});
 
         if (window.navigator.msSaveBlob) {
-            window.navigator.msSaveBlob(blob , "test.csv");
+            window.navigator.msSaveBlob(blob , "csv.zip");
         }
         else{
-            this.setState({download: <a id="download" href="#" download="test.csv">ダウンロード</a>});
+            this.setState({download: <a id="download" href="#" download="csv.zip">ダウンロード</a>});
             document.getElementById("download").href = window.URL.createObjectURL(blob)
         }
     }
