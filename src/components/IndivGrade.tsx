@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Nav, Tab, Container } from 'react-bootstrap';
 import BootstrapTable from 'react-bootstrap-table-next';
-import { GetAdmis } from './GetAdmis';
+import { getAdmis } from './GetAdmis';
 import { sortEvaluation, sortSemester } from './Sort';
 
 interface Props {
@@ -39,7 +39,7 @@ export default class IndivGrade extends React.Component<Props, any> {
 }
 
 function showIndivGrade(userDatas: any, username: string) {
-    const ADMIS_YEARS = GetAdmis(username);
+    const ADMIS_YEARS = getAdmis(username);
     const allData = [];
     const firstData = [];
     const secondData = [];

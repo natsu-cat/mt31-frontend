@@ -4,7 +4,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 import Select from 'react-select'
-import { GetAdmis } from './GetAdmis';
+import { getAdmis, getUserArray } from './GetAdmis';
 import { sortEvaluation, sortSemester } from './Sort';
 
 interface Props {
@@ -18,23 +18,15 @@ class Home extends React.Component<Props, any> {
         super(props);
         this.state = {
             /*学生番号一覧 */
-            student_number: ["A0~9", "B0~9", "C0~9", "D0~9", "E0~9", "F0~9", "G0~9", "H0~9", "I0~9", "J0~9", "K0~9", "L0~9", "M0~9", "N0~9", "O0~9", "P0~9", "Q0~9", "R0~9", "S0~9", "T0~9", "U0~9", "V0~9", "W0~9", "X0~9", "Y0~9", "Z0~9"],
-            select_group: null,/*どの学生番号のグループが選ばれたか */
             select_number: null, /*どの学籍番号の人が選ばれたか */
             isAll: false    /*全データ表示の画面かどうか */
         };
-        this.handleChengeGroup = this.handleChengeGroup.bind(this);
         this.handleChengeNumber = this.handleChengeNumber.bind(this);
         this.handleChangeAllGRade = this.handleChangeAllGRade.bind(this);
     }
 
-    handleChengeGroup(event: any) {
-        this.setState({ select_group: event.label });
-        this.setState({ select_number: null })
-    }
-
     handleChengeNumber(event: any) {
-        let split_box = event.value.split("x").map(Number);
+        let split_box = getUserArray(event.value);
         this.setState({ select_number: split_box });
         this.props.outputHandler(split_box);
     }
@@ -59,8 +51,7 @@ class Home extends React.Component<Props, any> {
                         <Button variant="outline-primary" onClick={this.handleChangeAllGRade}>全成績</Button>
                         <Button variant="outline-primary" active>生徒別</Button>
                     </ButtonGroup>
-                    {showGroupItems(this.state.student_number, this.state.select_group, this.handleChengeGroup)}
-                    {showNumberItems(this.state.student_number, this.state.select_group, this.state.select_number, this.handleChengeNumber, this.props.userDatas)}
+                    {showNumberItems(this.state.select_number, this.handleChengeNumber, this.props.userDatas)}
                     {showGradeItems(this.state.select_number, this.props.userDatas)}
                 </Container>
             );
@@ -201,47 +192,25 @@ function showAllGradeItems(userDatas: any, changeHandler: () => void) {
     );
 }
 
-function showGroupItems(studentNum: string[], select_group: string, changeHandler: Function) {
-    let placeholder: string = "グループ";
-    if (select_group) {
-        placeholder = select_group;
-    }
-    const group_items: JSX.Element = <Col xs="12" sm="12" md="9" lg="9" xl="9">
-        {(() => {
-            let item = [];
-            for (let i in studentNum) {
-                item.push({ key: i, value: i, label: studentNum[i] });
-            }
-            return <Select placeholder={placeholder} multiple isSearchable onChange={(event) => changeHandler(event)} options={item} />
-        })()}
-    </Col>
-    return (
-        <Row className="justify-content-center">
-            {group_items}
-        </Row>
-    );
-}
-
-function showNumberItems(studentNum: string[], select_group: string, select_number: number[], changeHandler: Function, userDatas: any) {
+function showNumberItems(select_number: number[], changeHandler: Function, userDatas: any) {
     let placeholder: string = "学籍番号…";
     if (select_number) {
         placeholder = userDatas[select_number[0]][select_number[1]][select_number[2]][0].student_number;
     }
     const number_items = <Col xs="12" sm="12" md="9" lg="9" xl="9">
         {(() => {
-            let index = studentNum.indexOf(select_group);
-            var item = [];
-            if (userDatas.length > index) {
-                for (let i in userDatas[index]) {
-                    for (let y in userDatas[index][i]) {
-                        let suffix = index + 'x' + i + 'x' + y;
-                        item.push({ key: (parseInt(i, 10) * 10) + y, value: suffix, label: userDatas[index][i][y][0].student_number });
+            let cnt = 0;
+            const items = [];
+            for (let idx1 in userDatas) {
+                for (let idx2 in userDatas[idx1]) {
+                    for (let idx3 in userDatas[idx1][idx2]) {
+                        let sNumber = userDatas[idx1][idx2][idx3][0].student_number;
+                        items.push({ key: cnt, value: sNumber, label: sNumber });
+                        cnt++;
                     }
                 }
-            } else {
-                return <Select multiple isSearchable />;
             }
-            return <Select placeholder={placeholder} multiple isSearchable onChange={(event) => changeHandler(event)} options={item} />
+            return <Select placeholder={placeholder} multiple isSearchable onChange={(event) => changeHandler(event)} options={items} />
         })()}
     </Col>
     return (
@@ -273,7 +242,7 @@ function showGradeItems(selectNum: number[], userDatas: any) {
                 </Nav.Item>
             </Nav>
         );
-        const ADMIS_YEARS = GetAdmis(userDatas[selectNum[0]][selectNum[1]][selectNum[2]][0].student_number);
+        const ADMIS_YEARS = getAdmis(userDatas[selectNum[0]][selectNum[1]][selectNum[2]][0].student_number);
         const allData = [];
         const firstData = [];
         const secondData = [];
