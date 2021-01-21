@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Container } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
-import { GetAdmis } from './GetAdmis';
+import { getAdmis } from './GetAdmis';
 
 interface Props {
     userDatas: [];
@@ -57,7 +57,7 @@ class Info extends React.Component<Props, any> {
 export default Info;
 
 function showStudentCredit(userDatas: any, username: string) {
-    const ADMIS_YEARS = GetAdmis(username);
+    const ADMIS_YEARS = getAdmis(username);
     let allCredit: number = 0;
     let firstCredit: number = 0;
     let secondCredit: number = 0;
@@ -126,7 +126,7 @@ function showStudentCredit(userDatas: any, username: string) {
 }
 
 function showAdminCredit(userDatas: any, studentNum: any) {
-    const ADMIS_YEARS = GetAdmis(userDatas[studentNum[0]][studentNum[1]][studentNum[2]][0].student_number);
+    const ADMIS_YEARS = getAdmis(userDatas[studentNum[0]][studentNum[1]][studentNum[2]][0].student_number);
     let allCredit: number = 0;
     let firstCredit: number = 0;
     let secondCredit: number = 0;
