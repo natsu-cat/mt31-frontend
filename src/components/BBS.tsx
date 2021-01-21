@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import AnchorLink from 'react-anchor-link-smooth-scroll';
-import {words} from './Data';
-import {getContext,postContext,deleteContext} from './Auth';
+import { words } from './Data';
+import { getContext, postContext, deleteContext } from './Auth';
 
 interface Props {
     flag: number;
@@ -29,20 +29,20 @@ class BBS extends React.Component<Props, any> {
 
     get() {
         getContext()
-        .then(res => {
-            console.log(res.data);
-            this.setState({ posts: res.data });
-            this.setState({ loadingf: true });
-        })
+            .then(res => {
+                console.log(res.data);
+                this.setState({ posts: res.data });
+                this.setState({ loadingf: true });
+            })
     }
 
     post() {
-        if (this.state.context != null){
+        if (this.state.context != null) {
 
-            for(var i=0; i<words.length; i++){
-                if( this.state.context.indexOf(words[i]) != -1 ){
+            for (var i = 0; i < words.length; i++) {
+                if (this.state.context.indexOf(words[i]) != -1) {
                     alert("不適切な言葉が含まれています");
-                    return ;
+                    return;
                 }
             }
             var now = new Date();
@@ -107,18 +107,18 @@ class BBS extends React.Component<Props, any> {
                         if (this.state.keyword != "") { /*keywordが入力されたか */
                             if (this.state.posts[i].poster_content.indexOf(this.state.keyword) != -1) {/*keywordを含むものを表示 */
                                 item.push(
-                                    <div key={i}>
+                                    <div key={i} id={i.toString()}>
                                         <Row className="Contributor">
                                             <Col xs="auto" sm="auto" md="auto" lg="auto" xl="auto">
                                                 <a>{i + 1} </a>
                                                 <a>ID:{this.state.posts[i].poster_name} </a>
-                                                <a>{this.state.posts[i].post_data.replace( 'T', ' ').replace( 'Z', ' ')} </a>
+                                                <a>{this.state.posts[i].post_data.replace('T', ' ').replace('Z', ' ')} </a>
                                                 {delete_button}
                                             </Col>
                                         </Row>
                                         <Row className="Context">
                                             <Col xs="auto" sm="auto" md="auto" lg="auto" xl="auto">
-                                                <a id={(i - 1).toString()}>{this.state.posts[i].poster_content}</a>
+                                                <a>{this.state.posts[i].poster_content}</a>
                                             </Col>
                                         </Row>
                                     </div>
@@ -127,12 +127,12 @@ class BBS extends React.Component<Props, any> {
                         }
                         else {
                             item.push(
-                                <div key={i}>
+                                <div key={i} id={i.toString()}>
                                     <Row className="Contributor">
                                         <Col xs="auto" sm="auto" md="auto" lg="auto" xl="auto">
                                             <a>{i + 1} </a>
                                             <a>ID:{this.state.posts[i].poster_name} </a>
-                                            <a>{this.state.posts[i].post_data.replace( 'T', ' ').replace( 'Z', ' ')} </a>
+                                            <a>{this.state.posts[i].post_data.replace('T', ' ').replace('Z', ' ')} </a>
                                             {delete_button}
                                         </Col>
                                     </Row>
@@ -152,7 +152,7 @@ class BBS extends React.Component<Props, any> {
 
             in_page_link = <div>
                 <Row className="justify-content-center">
-                    <Col xs="4" sm="4" md="auto" lg="auto" xl="auto"><AnchorLink href={this.state.posts.length - 1}>投稿数：{this.state.posts.length}</AnchorLink></Col>
+                    <Col xs="4" sm="4" md="auto" lg="auto" xl="auto"><AnchorLink href={'#' + (this.state.posts.length - 1).toString()}>投稿数：{this.state.posts.length}</AnchorLink></Col>
                     <Col xs="4" sm="4" md="auto" lg="auto" xl="auto"><a id="bbs_link" onClick={() => this.handleChangeLimit(999)}>すべて</a></Col>
                     <Col xs="4" sm="4" md="auto" lg="auto" xl="auto"><a id="bbs_link" onClick={() => this.handleChangeLimit(10)}>最新10</a></Col>
                 </Row>
