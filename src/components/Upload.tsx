@@ -22,12 +22,14 @@ class Upload extends React.Component<Props, any> {
                 { value: "Student", label: "Studnet" },
                 { value: "Subject", label: "Subject" }
             ],
+            download: null,
             result: null
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeUrl = this.handleChangeUrl.bind(this);
         this.post_csv = this.post_csv.bind(this);
         this.conversion_csv = this.conversion_csv.bind(this);
+        this.handle_download = this.handle_download.bind(this);
     }
 
     handleChange(event: any) {
@@ -98,7 +100,7 @@ class Upload extends React.Component<Props, any> {
     conversion_csv(files: any){
 
         const data = new FormData();
-        data.append("xlsx", files[0]);
+        data.append("changefile", files[0]);
 
         axios.post("http://localhost:8000/api/teacher/change/", data,{
                 headers: {
@@ -106,8 +108,24 @@ class Upload extends React.Component<Props, any> {
                     'Authorization': `JWT ${sessionStorage.getItem("access")}`
                 },
             }).then((res) => {
-                console.log(res);
+                console.log(res.data);
+                this.handle_download(res);
+                
             })
+    }
+
+    handle_download(res: any){
+        var bom = new Uint8Array([0xEF, 0xBB,0xBF]);
+        var content =res.data;
+        var blob = new Blob([bom, content], { "type": "text/csv"});
+
+        if (window.navigator.msSaveBlob) {
+            window.navigator.msSaveBlob(blob , "test.csv");
+        }
+        else{
+            this.setState({download: <a id="download" href="#" download="test.csv">ダウンロード</a>});
+            document.getElementById("download").href = window.URL.createObjectURL(blob)
+        }
     }
 
     render() {
@@ -154,6 +172,7 @@ class Upload extends React.Component<Props, any> {
                                             <ReactFileReader handleFiles={this.conversion_csv} fileTypes={'.xlsx'}>
                                                 <Button variant="primary" type="submit">conversion</Button>
                                             </ReactFileReader>
+                                            {this.state.download}
                                         </Form.Group>
                                     </Form>
                                 </Col>
