@@ -40,11 +40,9 @@ class Home extends React.Component<Props, any> {
     }
 
     handleChangeAllGRade() {
-        this.state.isAll ? (
-            this.setState({ isAll: false })
-        ) : (
-                this.setState({ isAll: true })
-            );
+        this.state.isAll
+            ? this.setState({ isAll: false })
+            : this.setState({ isAll: true })
     }
 
     render() {
