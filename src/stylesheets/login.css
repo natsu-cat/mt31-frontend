@@ -12,3 +12,8 @@ form {
     max-width: 500px;
     margin: auto;
 }
+
+.login-a {
+    text-align: right;
+    color: #1A73E8;
+}
