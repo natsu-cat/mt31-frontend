@@ -152,9 +152,9 @@ class BBS extends React.Component<Props, any> {
 
             in_page_link = <div>
                 <Row className="justify-content-center">
-                    <Col xs="4" sm="4" md="auto" lg="auto" xl="auto"><AnchorLink href={'#' + (this.state.posts.length - 1).toString()}>投稿数：{this.state.posts.length}</AnchorLink></Col>
-                    <Col xs="4" sm="4" md="auto" lg="auto" xl="auto"><a id="bbs_link" onClick={() => this.handleChangeLimit(999)}>すべて</a></Col>
-                    <Col xs="4" sm="4" md="auto" lg="auto" xl="auto"><a id="bbs_link" onClick={() => this.handleChangeLimit(10)}>最新10</a></Col>
+                    <Col xs="auto" sm="auto" md="auto" lg="auto" xl="auto"><AnchorLink href={'#' + (this.state.posts.length - 1).toString()}>投稿数：{this.state.posts.length}</AnchorLink></Col>
+                    <Col xs="auto" sm="auto" md="auto" lg="auto" xl="auto"><a id="bbs_link" onClick={() => this.handleChangeLimit(999)}>すべて</a></Col>
+                    <Col xs="auto" sm="auto" md="auto" lg="auto" xl="auto"><a id="bbs_link" onClick={() => this.handleChangeLimit(10)}>最新10</a></Col>
                 </Row>
             </div>
         }

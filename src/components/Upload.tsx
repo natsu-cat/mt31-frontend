@@ -109,15 +109,17 @@ class Upload extends React.Component<Props, any> {
                 },
                 responseType: 'blob',
             }).then((res) => {
-                console.log(res.data);
                 this.handle_download(res);
-                
+                alert("ファイル変換完了");
+            }).catch(error => {
+                console.error(error.response);
+                alert("エラー：　ファイルを変換できませんでした。");
             })
     }
 
     handle_download(res: any){
-        var blob = new Blob([res.data], { "type": "application/zip"});
 
+        var blob = new Blob([res.data], { "type": "application/zip"});
         const URL = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
         document.body.appendChild(link);
@@ -150,7 +152,7 @@ class Upload extends React.Component<Props, any> {
                                     <Select isSearchable onChange={(event) => this.handleChange(event)} options={this.state.options} />
                                 </Col>
                                 <Col xs="auto" sm="auto" md="auto" lg="auto" xl="7" >
-                                    <Form onSubmit={this.post_csv}>
+                                    <Form>
                                         <Form.Group>
                                             <Form.Label>{this.state.select_label}</Form.Label>
                                             <ReactFileReader handleFiles={this.post_csv} fileTypes={'.csv'}>
@@ -164,7 +166,7 @@ class Upload extends React.Component<Props, any> {
                         <Tab.Pane eventKey="second">
                             <Row className="justify-content-center">
                                 <Col xs="auto" sm="auto" md="auto" lg="auto" xl="7" >
-                                    <Form onSubmit={this.post_csv}>
+                                    <Form>
                                         <Form.Group>
                                             <Form.Label>ファイルを選択してください</Form.Label>
                                             <ReactFileReader handleFiles={this.conversion_csv} fileTypes={'.xlsx'}>
