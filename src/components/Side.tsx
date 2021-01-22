@@ -36,9 +36,9 @@ function showElement(flag: number) {
         return (
             <React.Fragment>
                 <Col xs="6" sm="6" md="4" lg="12" xl="12"><Nav.Link href="/home"> 成績 </Nav.Link></Col>
-                <Col xs="6" sm="6" md="4" lg="12" xl="12"><Nav.Link href="/upload"> upload </Nav.Link></Col>
+                <Col xs="6" sm="6" md="4" lg="12" xl="12"><Nav.Link href="/upload"> アップロード </Nav.Link></Col>
                 <Col xs="6" sm="6" md="4" lg="12" xl="12"><Nav.Link href="/bbs"> 掲示板</Nav.Link></Col>
-                <Col xs="6" sm="6" md="4" lg="12" xl="12"><Nav.Link href="/about"> about </Nav.Link></Col>
+                <Col xs="6" sm="6" md="4" lg="12" xl="12"><Nav.Link href="/about"> 作品について </Nav.Link></Col>
                 <Col xs="6" sm="6" md="4" lg="12" xl="12"><Nav.Link href="/registration"> ユーザー登録</Nav.Link></Col>
                 <Col xs="6" sm="6" md="4" lg="12" xl="12"><Nav.Link href="/reregistration"> パスワード変更</Nav.Link></Col>
             </React.Fragment>
@@ -48,7 +48,7 @@ function showElement(flag: number) {
             <React.Fragment>
                 <Col xs="6" sm="6" md="auto" lg="12" xl="12"><Nav.Link href="/home"> 成績 </Nav.Link></Col>
                 <Col xs="6" sm="6" md="auto" lg="12" xl="12"><Nav.Link href="/bbs"> 掲示板</Nav.Link></Col>
-                <Col xs="6" sm="6" md="auto" lg="12" xl="12"><Nav.Link href="/about"> about </Nav.Link></Col>
+                <Col xs="6" sm="6" md="auto" lg="12" xl="12"><Nav.Link href="/about">作品について</Nav.Link></Col>
                 <Col xs="6" sm="6" md="auto" lg="12" xl="12"><Nav.Link href="/reregistration"> パスワード変更</Nav.Link></Col>
             </React.Fragment>
         );
