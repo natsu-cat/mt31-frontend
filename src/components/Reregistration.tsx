@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import { Form, Button, Container, Row, Col, Nav } from 'react-bootstrap';
 import { postKey, putPwd } from './Auth';
 
 interface Props {
@@ -15,6 +15,7 @@ class Reregistration extends React.Component<Props, any> {
             re_password: '',
             isReregistered: false,
             result: null,
+            url: location.href.slice(-6),
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -31,7 +32,7 @@ class Reregistration extends React.Component<Props, any> {
 
         }
         else if (this.state.password == this.state.re_password) {
-            let secret_key_str = sessionStorage.getItem("secret_key");
+            let secret_key_str = localStorage.getItem("secret_key");
             let secret_key: number = 0;
             if (secret_key_str != null) {
                 secret_key = parseInt(secret_key_str, 10);
@@ -56,40 +57,66 @@ class Reregistration extends React.Component<Props, any> {
     }
     render() {
         if (!this.state.isReregistered) {
-            return (
-                <Container>
-                    <Row>
-                        <Col>
-                            <Form onSubmit={this.handleSubmit}>
-                                <p><b>パスワード変更</b></p>
-                                {this.state.result}
-                                <Form.Group controlId="password">
-                                    <Form.Label>新しいパスワード</Form.Label>
-                                    <Form.Control
-                                        type="password"
-                                        placeholder="パスワードを入力してください"
-                                        onChange={this.handleChange}
-                                        value={this.state.password}
-                                    />
-                                </Form.Group>
-                                <Form.Group controlId="re_password">
-                                    <Form.Label>新しいパスワード（再入力）</Form.Label>
-                                    <Form.Control
-                                        type="password"
-                                        placeholder="パスワードを再入力してください"
-                                        onChange={this.handleChange}
-                                        value={this.state.re_password}
-                                    />
-                                </Form.Group>
-                                <Button variant="primary" type="submit">パスワード変更</Button>
-                            </Form>
-                        </Col>
-                    </Row>
-                </Container>
-            );
+            const items = (
+                <Col>
+                    <Form onSubmit={this.handleSubmit}>
+                        <p><b>パスワード変更</b></p>
+                        {this.state.result}
+                        <Form.Group controlId="password">
+                            <Form.Label>新しいパスワード</Form.Label>
+                            <Form.Control
+                                type="password"
+                                placeholder="パスワードを入力してください"
+                                onChange={this.handleChange}
+                                value={this.state.password}
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="re_password">
+                            <Form.Label>新しいパスワード（再入力）</Form.Label>
+                            <Form.Control
+                                type="password"
+                                placeholder="パスワードを再入力してください"
+                                onChange={this.handleChange}
+                                value={this.state.re_password}
+                            />
+                        </Form.Group>
+                        <Button variant="primary" type="submit">パスワード変更</Button>
+                    </Form>
+                </Col>
+            )
+            if (this.state.url == 'change') {
+                return (
+                    <Container>
+                        <Row className="center">
+                            {items}
+                        </Row>
+                    </Container>
+                );
+            } else {
+                return (
+                    <Container>
+                        <Row>
+                            {items}
+                        </Row>
+                    </Container>
+                )
+            }
         }
         else {
-            return this.state.result;
+            if (this.state.url == 'change') {
+                return (
+                    <Container>
+                        <Row className="center">
+                            <Col xs="12" sm="12" md="12" lg="12" xl="12" className="text-center">
+                                {this.state.result}
+                                <Nav.Link href="/login">ログイン画面に戻る</Nav.Link>
+                            </Col>
+                        </Row>
+                    </Container>
+                )
+            } else {
+                return this.state.result;
+            }
         }
     }
 }
