@@ -14,7 +14,7 @@ class About extends React.Component {
             <Container className="about_item">
                 <Row>
                     <Col xs="12" sm="12" md="12" lg="12" xl="12">
-                        <h3 className="title_center">成績紹介システムについて</h3>
+                        <h3 className="title_center">成績照会システムについて</h3>
                     </Col>
                     <Col xs="auto" sm="auto" md="auto" lg="auto" xl="auto">
                         <a>
@@ -28,7 +28,7 @@ class About extends React.Component {
                         <h4 className="title_center">開発環境</h4>
                     </Col>
                     <Col xs="auto" sm="auto" md="auto" lg="auto" xl="auto">
-                        <a>PyCharm  Python  VisualStudioCode  TypeScript</a>
+                        <a>PyCharm  Python(Django)  VisualStudioCode  TypeScript(React.js)</a>
                     </Col>
                 </Row>
                 <Row>
