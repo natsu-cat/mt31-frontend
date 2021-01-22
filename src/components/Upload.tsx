@@ -118,13 +118,12 @@ class Upload extends React.Component<Props, any> {
     handle_download(res: any){
         var blob = new Blob([res.data], { "type": "application/zip"});
 
-        if (window.navigator.msSaveBlob) {
-            window.navigator.msSaveBlob(blob , "csv.zip");
-        }
-        else{
-            this.setState({download: <a id="download" href="#" download="csv.zip">ダウンロード</a>});
-            document.getElementById("download").href = window.URL.createObjectURL(blob)
-        }
+        const URL = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        document.body.appendChild(link);
+        link.href = URL;
+        link.setAttribute('download', "conversion.zip");
+        link.click();
     }
 
     render() {
