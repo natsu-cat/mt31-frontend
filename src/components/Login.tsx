@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import { Form, Button, Container, Row, Col, Nav } from 'react-bootstrap';
 import { postUser, getUser } from './Auth';
 import '../stylesheets/login.css';
 
@@ -32,7 +32,7 @@ export default class Login extends React.Component<any, any> {
           .then(res => {
             console.log(res.data);
             sessionStorage.setItem("flag", res.data.admin_flag);
-            sessionStorage.setItem("secret_key", res.data.secret_key);
+            localStorage.setItem("secret_key", res.data.secret_key);
             sessionStorage.setItem("isLoggedIn", "true");
             location.href = "/home";                                        //認証通ったのでページ遷移する
           }).catch(error => {
@@ -80,7 +80,10 @@ export default class Login extends React.Component<any, any> {
               </Form.Group>
               <Button variant="primary" type="submit">
                 ログイン
-                </Button>
+              </Button>
+              <div className="login-a">
+                <Nav.Link href="/change">パスワードを忘れた場合</Nav.Link>
+              </div>
             </Form>
           </Col>
         </Row>
