@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 //components
 import Login from './Login';
 import Main from './Main';
+import Reregistration from './Reregistration';
 
 class App extends React.Component<any, any> {
     render() {
@@ -11,6 +12,11 @@ class App extends React.Component<any, any> {
         return (
             <BrowserRouter>
                 <Switch>
+                    <Route exact path="/change" render={() => (
+                        isLoggedIn
+                            ? <Redirect to="/" />
+                            : <Reregistration />
+                    )} />
                     <Route exact path="/login" render={() => (
                         isLoggedIn
                             ? <Redirect to="/" />
