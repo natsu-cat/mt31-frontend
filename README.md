@@ -21,3 +21,9 @@
 ## fortawesome
 
 `npm install --save-dev @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome`
+
+
+### もしAllGrade.tsxがエラー出る場合
+node_modules > @types > react-bootstrap-table2-pagenator > index.d.tsの18行目の
+これを`declare function paginationFactory(options: PaginationOptions): PaginationCtxOptions;`
+こうする`declare function paginationFactory(options?: PaginationOptions): PaginationCtxOptions;`
