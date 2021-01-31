@@ -156,7 +156,7 @@ class Upload extends React.Component<Props, any> {
                                         <Form.Group>
                                             <Form.Label>{this.state.select_label}</Form.Label>
                                             <ReactFileReader handleFiles={this.post_csv} fileTypes={'.csv'}>
-                                                <Button variant="primary" type="submit">uplaod</Button>
+                                                <Button variant="primary" type="submit">upload</Button>
                                             </ReactFileReader>
                                         </Form.Group>
                                     </Form>
